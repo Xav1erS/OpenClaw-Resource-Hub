@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw资源中心 - 一站式OpenClaw工具、模板、教程平台</title>
+    <meta name="description" content="OpenClaw资源中心，提供100+任务模板、成本计算器、工作流展示、小工具和教程。降低OpenClaw使用门槛，提升效率。">
+    <meta name="keywords" content="OpenClaw,资源中心,任务模板,成本计算,工作流,教程,工具,AI Agent,自动化,效率工具">
+    <meta name="author" content="OpenClaw Team">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="OpenClaw资源中心 - 一站式OpenClaw工具、模板、教程平台">
+    <meta property="og:description" content="OpenClaw资源中心，提供100+任务模板、成本计算器、工作流展示、小工具和教程。降低OpenClaw使用门槛，提升效率。">
+    <meta property="og:url" content="https://openclaw-hub.vercel.app">
+    <meta property="og:image" content="https://openclaw-hub.vercel.app/og-image.png">
+    <meta property="og:site_name" content="OpenClaw Resource Hub">
+    <meta property="og:locale" content="zh_CN">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@OpenClaw">
+    <meta name="twitter:creator" content="@OpenClaw">
+    <meta name="twitter:title" content="OpenClaw资源中心 - 一站式OpenClaw工具、模板、教程平台">
+    <meta name="twitter:description" content="100+资源，一站式获取。降低OpenClaw使用门槛，提升效率。">
+    <meta name="twitter:image" content="https://openclaw-hub.vercel.app/og-image.png">
+    
+    <link rel="canonical" href="https://openclaw-hub.vercel.app">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦞</text></svg>">
+    
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX', {
+            page_path: window.location.pathname,
+            anonymize_ip: true
+        });
+        
+        function trackEvent(eventName, params = {}) {
+            gtag('event', eventName, params);
+        }
+        
+        function trackPageView(pageName) {
+            gtag('event', 'page_view', {
+                page_title: pageName,
+                page_location: window.location.href,
+                page_path: window.location.pathname
+            });
+        }
+    </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --bg-primary: #020617;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-color: #f43f5e;
+            --accent-hover: #e11d48;
+            --accent-active: #be123c;
+            --success-color: #22c55e;
+            --warning-color: #eab308;
+            --danger-color: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-glow-red: 0 0 30px rgba(244, 63, 94, 0.4);
+            --shadow-glow-red-soft: 0 0 20px rgba(244, 63, 94, 0.2);
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(ellipse at 20% 20%, rgba(244, 63, 94, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(244, 63, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(244, 63, 94, 0.05) 0%, transparent 70%);
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-hover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 0%, rgba(244, 63, 94, 0.3) 50%, transparent 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card-hover::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            border: 1px solid rgba(244, 63, 94, 0);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .card-hover:hover::before {
+            opacity: 1;
+        }
+        
+        .card-hover:hover::after {
+            border-color: rgba(244, 63, 94, 0.6);
+            box-shadow: var(--shadow-glow-red);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: var(--shadow-xl), var(--shadow-glow-red-soft);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .btn-primary:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(244, 63, 94, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-primary:active {
+            background: linear-gradient(135deg, #be123c 0%, #e11d48 100%);
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(244, 63, 94, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            position: relative;
+        }
+        
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 0%, rgba(244, 63, 94, 0.2) 50%, transparent 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn-secondary:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(51, 65, 85, 0.9);
+            transform: translateY(-2px);
+            border-color: rgba(244, 63, 94, 0.4);
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2);
+        }
+        
+        .btn-secondary:active {
+            background-color: rgba(51, 65, 85, 0.9);
+            transform: translateY(0);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #475569 0%, #334155 100%);
+            border-radius: 5px;
+            border: 2px solid var(--bg-secondary);
+            transition: all 0.2s ease;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+        }
+        
+        .language-transition {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .language-changing {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        
+        .language-switch-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .language-switch-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+            border-color: rgba(244, 63, 94, 0.5);
+        }
+        
+        .lang-dropdown button {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .lang-dropdown button::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .lang-dropdown button:hover::before {
+            opacity: 1;
+        }
+        
+        .lang-dropdown button:hover {
+            background-color: rgba(244, 63, 94, 0.15);
+            padding-left: calc(1rem + 3px);
+        }
+        
+        .input-field {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border-color: rgba(51, 65, 85, 0.8);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .input-field:hover {
+            border-color: rgba(71, 85, 105, 1);
+        }
+        
+        .input-field:focus {
+            border-color: #f43f5e;
+            box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.15), 0 0 20px rgba(244, 63, 94, 0.15);
+            background-color: rgba(30, 41, 59, 0.9);
+        }
+        
+        .dropdown-menu {
+            box-shadow: var(--shadow-xl), var(--shadow-glow-red-soft);
+            animation: dropdownIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+        }
+        
+        @keyframes dropdownIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .focus-ring:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.3);
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f43f5e 0%, #fb7185 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+        }
+        
+        .nav-item:hover::after {
+            width: 80%;
+        }
+        
+        .select-field {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5rem 1.5rem;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 1.5em;
+            background: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="stars" id="stars"></div>
+    <div x-data="app()" x-init="init()" class="min-h-screen relative z-10">
+        <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="#" @click.prevent="currentPage = 'home'" class="flex items-center space-x-2">
+                            <span class="text-2xl">🦞</span>
+                            <span class="text-xl font-bold text-white">OpenClaw Resource Hub</span>
+                        </a>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center space-x-1">
+                        <template x-for="page in pages" :key="page.id">
+                            <button 
+                                @click="currentPage = page.id"
+                                :class="[
+                                    'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                                    currentPage === page.id 
+                                        ? 'bg-primary-600 text-white' 
+                                        : 'text-slate-300 hover:text-white hover:bg-slate-700'
+                                ]"
+                                x-text="page.name"
+                            ></button>
+                        </template>
+                        
+                        <div class="ml-4 lang-dropdown relative">
+                            <button 
+                                @click="toggleLangDropdown()"
+                                class="language-switch-btn flex items-center space-x-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-white text-sm font-medium transition-all border border-slate-700"
+                            >
+                                <span x-text="currentLanguageFlag"></span>
+                                <span x-text="currentLanguageName"></span>
+                                <svg class="w-4 h-4 transition-transform" :class="langDropdownOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            
+                            <div 
+                                x-show="langDropdownOpen" 
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute right-0 mt-2 w-48 bg-slate-800 rounded-xl shadow-xl border border-slate-700 z-50 overflow-hidden"
+                            >
+                                <template x-for="lang in languages" :key="lang.code">
+                                    <button 
+                                        @click="switchLanguage(lang.code)"
+                                        :class="[
+                                            'w-full flex items-center space-x-3 px-4 py-3 text-left transition-colors',
+                                            currentLang === lang.code 
+                                                ? 'bg-primary-600/20 text-primary-400' 
+                                                : 'text-slate-300 hover:bg-slate-700'
+                                        ]"
+                                    >
+                                        <span x-text="lang.flag"></span>
+                                        <span x-text="lang.name"></span>
+                                        <svg 
+                                            x-show="currentLang === lang.code" 
+                                            class="w-5 h-5 ml-auto text-primary-500" 
+                                            fill="none" 
+                                            stroke="currentColor" 
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex md:hidden items-center space-x-2 lang-dropdown relative">
+                        <button 
+                            @click="toggleLangDropdown()"
+                            class="language-switch-btn flex items-center space-x-1 px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-white text-sm font-medium transition-all border border-slate-700"
+                        >
+                            <span x-text="currentLanguageFlag"></span>
+                            <svg class="w-4 h-4 transition-transform" :class="langDropdownOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <div 
+                            x-show="langDropdownOpen" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95"
+                            class="absolute right-0 top-full mt-2 w-40 bg-slate-800 rounded-xl shadow-xl border border-slate-700 z-50 overflow-hidden"
+                        >
+                            <template x-for="lang in languages" :key="lang.code">
+                                <button 
+                                    @click="switchLanguage(lang.code)"
+                                    :class="[
+                                        'w-full flex items-center space-x-2 px-4 py-3 text-left transition-colors',
+                                        currentLang === lang.code 
+                                            ? 'bg-primary-600/20 text-primary-400' 
+                                            : 'text-slate-300 hover:bg-slate-700'
+                                    ]"
+                                >
+                                    <span x-text="lang.flag"></span>
+                                    <span x-text="lang.name"></span>
+                                    <svg 
+                                        x-show="currentLang === lang.code" 
+                                        class="w-4 h-4 ml-auto text-primary-500" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </button>
+                            </template>
+                        </div>
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700">
+                            <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                            <svg x-show="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="mobileMenuOpen" x-transition class="md:hidden border-t border-slate-700">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <template x-for="page in pages" :key="page.id">
+                        <button 
+                            @click="currentPage = page.id; mobileMenuOpen = false"
+                            :class="[
+                                'block w-full text-left px-3 py-2 rounded-lg text-base font-medium',
+                                currentPage === page.id 
+                                    ? 'bg-primary-600 text-white' 
+                                    : 'text-slate-300 hover:text-white hover:bg-slate-700'
+                            ]"
+                            x-text="page.name"
+                        ></button>
+                    </template>
+                </div>
+            </div>
+        </nav>
+        
+        <main class="pt-16 min-h-screen">
+            <div x-show="currentPage === 'home'" x-transition :class="['language-transition', { 'language-changing': languageChanging }]">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="text-center mb-16">
+                        <h1 class="text-4xl font-bold text-white mb-4" x-text="t.home.title"></h1>
+                        <p class="text-xl text-slate-400 max-w-2xl mx-auto" x-text="t.home.subtitle"></p>
+                    </div>
+                    
+                    <div class="mb-16">
+                        <h2 class="text-2xl font-bold text-white mb-8 text-center" x-text="t.home.quickNav"></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <template x-for="page in pages" :key="page.id">
+                                <div 
+                                    @click="currentPage = page.id"
+                                    class="bg-slate-800 rounded-xl p-6 cursor-pointer card-hover border border-slate-700 hover:border-primary-500"
+                                >
+                                    <div class="text-3xl mb-4" x-text="page.icon"></div>
+                                    <h3 class="text-xl font-semibold text-white mb-2" x-text="page.name"></h3>
+                                    <p class="text-slate-400" x-text="page.description"></p>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <h2 class="text-xl font-bold text-white mb-6" x-text="t.home.hotResources"></h2>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3 p-3 bg-slate-700/50 rounded-lg">
+                                    <span class="text-primary-500">•</span>
+                                    <span class="text-slate-300" x-text="t.home.marketResearchAgent"></span>
+                                </div>
+                                <div class="flex items-center space-x-3 p-3 bg-slate-700/50 rounded-lg">
+                                    <span class="text-primary-500">•</span>
+                                    <span class="text-slate-300" x-text="t.home.xiaohongshuAgent"></span>
+                                </div>
+                                <div class="flex items-center space-x-3 p-3 bg-slate-700/50 rounded-lg">
+                                    <span class="text-primary-500">•</span>
+                                    <span class="text-slate-300" x-text="t.home.tokenGuide"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <h2 class="text-xl font-bold text-white mb-6" x-text="t.home.latestData"></h2>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                    <span class="text-slate-400" x-text="t.home.communityWorkflows"></span>
+                                    <span class="text-white font-bold">5,420</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                    <span class="text-slate-400" x-text="t.home.activeContributors"></span>
+                                    <span class="text-white font-bold">1,234</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                    <span class="text-slate-400" x-text="t.home.todayVisits"></span>
+                                    <span class="text-white font-bold">8,932</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="currentPage === 'task-library'" x-transition x-data="taskLibrary()">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">📚 任务模板库</h1>
+                        <p class="text-slate-400">50+ 精选任务模板，一键复制使用</p>
+                    </div>
+                    
+                    <div class="mb-8 space-y-4">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input 
+                                type="text" 
+                                x-model="searchQuery"
+                                @input.debounce.300ms="filterTasks()"
+                                placeholder="搜索任务模板..."
+                                class="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 transition-colors"
+                            >
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button 
+                                @click="selectedCategory = ''; filterTasks()"
+                                :class="[
+                                    'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                    selectedCategory === '' 
+                                        ? 'bg-primary-600 text-white' 
+                                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                ]"
+                            >
+                                全部
+                            </button>
+                            <template x-for="cat in categories" :key="cat.id">
+                                <button 
+                                    @click="selectedCategory = cat.name; filterTasks()"
+                                    :class="[
+                                        'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                        selectedCategory === cat.name 
+                                            ? 'bg-primary-600 text-white' 
+                                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                    ]"
+                                >
+                                    <span x-text="cat.icon"></span>
+                                    <span x-text="cat.name"></span>
+                                </button>
+                            </template>
+                            <button 
+                                @click="showFavorites = !showFavorites; filterTasks()"
+                                :class="[
+                                    'px-4 py-2 rounded-lg text-sm font-medium transition-all ml-auto',
+                                    showFavorites 
+                                        ? 'bg-pink-600 text-white' 
+                                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                ]"
+                            >
+                                ❤️ 收藏
+                            </button>
+                            <button 
+                                @click="sortByUsage = !sortByUsage; filterTasks()"
+                                :class="[
+                                    'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                    sortByUsage 
+                                        ? 'bg-yellow-600 text-white' 
+                                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                ]"
+                            >
+                                🔥 热门
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <template x-for="task in filteredTasks" :key="task.id">
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 card-hover hover:border-primary-500 transition-all">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="task.category"></span>
+                                        <h3 class="text-lg font-semibold text-white" x-text="task.name"></h3>
+                                    </div>
+                                    <button 
+                                        @click="toggleFavorite(task.id)"
+                                        class="p-2 rounded-lg hover:bg-slate-700 transition-colors"
+                                        :class="isFavorite(task.id) ? 'text-pink-500' : 'text-slate-400'"
+                                    >
+                                        <svg x-show="!isFavorite(task.id)" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                        <svg x-show="isFavorite(task.id)" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                
+                                <p class="text-slate-400 text-sm mb-4 line-clamp-2" x-text="task.description"></p>
+                                
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <template x-for="tool in task.preview.toolsUsed" :key="tool">
+                                        <span class="px-2 py-1 bg-slate-700 text-slate-300 text-xs rounded" x-text="tool"></span>
+                                    </template>
+                                </div>
+                                
+                                <div class="flex items-center justify-between text-xs text-slate-400 mb-4">
+                                    <span x-text="'⏱️ ' + task.preview.estimatedTime"></span>
+                                    <span x-text="'💰 ' + task.preview.estimatedCost"></span>
+                                    <span x-text="'📊 ' + task.usageCount.toLocaleString() + ' 次'"></span>
+                                </div>
+                                
+                                <div class="flex gap-2">
+                                    <button 
+                                        @click="copyTemplate(task)"
+                                        class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
+                                    >
+                                        📋 复制
+                                    </button>
+                                    <button 
+                                        @click="showDetail(task)"
+                                        class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors"
+                                    >
+                                        详情
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <div x-show="filteredTasks.length === 0" class="text-center py-12">
+                        <p class="text-slate-400 text-lg">没有找到匹配的任务模板</p>
+                    </div>
+                    
+                    <div x-show="showModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <div class="fixed inset-0 bg-black/50" @click="showModal = false"></div>
+                        <div class="relative bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-700">
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="selectedTask?.category"></span>
+                                        <h2 class="text-2xl font-bold text-white" x-text="selectedTask?.name"></h2>
+                                    </div>
+                                    <button @click="showModal = false" class="p-2 rounded-lg hover:bg-slate-700 transition-colors text-slate-400">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                
+                                <p class="text-slate-300 mb-6" x-text="selectedTask?.description"></p>
+                                
+                                <div class="grid grid-cols-2 gap-4 mb-6">
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <p class="text-slate-400 text-sm mb-1">预计时间</p>
+                                        <p class="text-white font-semibold" x-text="selectedTask?.preview.estimatedTime"></p>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <p class="text-slate-400 text-sm mb-1">预计成本</p>
+                                        <p class="text-white font-semibold" x-text="selectedTask?.preview.estimatedCost"></p>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <p class="text-slate-400 text-sm mb-1">复杂度</p>
+                                        <p class="text-white font-semibold" x-text="selectedTask?.preview.complexity"></p>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <p class="text-slate-400 text-sm mb-1">使用次数</p>
+                                        <p class="text-white font-semibold" x-text="selectedTask?.usageCount.toLocaleString()"></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3">工作步骤</h3>
+                                    <div class="space-y-2">
+                                        <template x-for="(step, index) in selectedTask?.preview.steps" :key="index">
+                                            <div class="flex items-center space-x-3">
+                                                <span class="w-6 h-6 flex items-center justify-center bg-primary-600 text-white text-xs font-bold rounded-full" x-text="index + 1"></span>
+                                                <span class="text-slate-300" x-text="step"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3">配置模板</h3>
+                                    <div class="bg-slate-900 rounded-lg p-4 overflow-x-auto">
+                                        <pre class="text-sm text-slate-300 whitespace-pre-wrap" x-text="selectedTask?.copyFormat"></pre>
+                                    </div>
+                                </div>
+                                
+                                <button 
+                                    @click="copyTemplate(selectedTask); showModal = false"
+                                    class="w-full px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors"
+                                >
+                                    📋 复制配置模板
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div x-show="showToast" x-transition class="fixed bottom-4 right-4 z-50">
+                        <div class="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>已复制到剪贴板！</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="currentPage === 'cost-calculator'" x-transition x-data="costCalculator()" x-init="init()">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">💰 成本计算器</h1>
+                        <p class="text-slate-400">预估您的 AI Agent 使用成本，找到最划算的方案</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-4">📋 场景预设</h2>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                    <template x-for="(preset, id) in scenarioPresets" :key="id">
+                                        <button
+                                            @click="selectScenario(id)"
+                                            :class="[
+                                                'p-3 rounded-lg text-left transition-all',
+                                                selectedScenario === id
+                                                    ? 'bg-primary-600 text-white'
+                                                    : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                                            ]"
+                                        >
+                                            <div class="font-medium" x-text="preset.name"></div>
+                                            <div class="text-xs opacity-80" x-text="preset.description"></div>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-4">⚙️ 参数设置</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">模型选择</label>
+                                        <select
+                                            x-model="selectedModel"
+                                            @change="calculate()"
+                                            class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                        >
+                                            <template x-for="(model, id) in modelPricing" :key="id">
+                                                <option :value="id" x-text="model.name"></option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">每日任务数</label>
+                                            <input
+                                                type="number"
+                                                x-model.number="dailyTasks"
+                                                @input="calculate()"
+                                                min="1"
+                                                max="1000"
+                                                class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                            >
+                                        </div>
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">每任务步数</label>
+                                            <input
+                                                type="number"
+                                                x-model.number="stepsPerTask"
+                                                @input="calculate()"
+                                                min="1"
+                                                max="1000"
+                                                class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-4">📊 成本结果</h2>
+                                <div x-show="costResult" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                    <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+                                        <div class="text-slate-400 text-sm">每日</div>
+                                        <div class="text-2xl font-bold text-primary-500" x-text="'$' + costResult.daily.toFixed(2)"></div>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+                                        <div class="text-slate-400 text-sm">每周</div>
+                                        <div class="text-2xl font-bold text-primary-400" x-text="'$' + costResult.weekly.toFixed(2)"></div>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+                                        <div class="text-slate-400 text-sm">每月</div>
+                                        <div class="text-2xl font-bold text-primary-300" x-text="'$' + costResult.monthly.toFixed(2)"></div>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+                                        <div class="text-slate-400 text-sm">每年</div>
+                                        <div class="text-2xl font-bold text-primary-200" x-text="'$' + costResult.yearly.toFixed(2)"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-4">📈 30天成本趋势</h2>
+                                <canvas id="costChart" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-4">💡 优化建议</h2>
+                                <div x-show="suggestions.length === 0" class="text-slate-400 text-center py-4">
+                                    当前已经是最优选择！
+                                </div>
+                                <div class="space-y-3">
+                                    <template x-for="suggestion in suggestions" :key="suggestion.modelId">
+                                        <div
+                                            @click="selectedModel = suggestion.modelId; calculate()"
+                                            class="bg-slate-700/50 rounded-lg p-4 cursor-pointer hover:bg-slate-700 transition-colors"
+                                        >
+                                            <div class="flex justify-between items-start mb-2">
+                                                <span class="font-medium text-white" x-text="suggestion.model.name"></span>
+                                                <span :class="[
+                                                    'px-2 py-1 rounded text-xs font-medium',
+                                                    suggestion.type === 'high' ? 'bg-green-600/20 text-green-400' : 'bg-yellow-600/20 text-yellow-400'
+                                                ]" x-text="suggestion.type === 'high' ? '高性价比' : '推荐'">
+                                                </span>
+                                            </div>
+                                            <div class="text-sm text-slate-400">
+                                                每月可省 <span class="text-green-400 font-semibold" x-text="'$' + suggestion.savings.toFixed(2)"></span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-4">🏷️ 可分享结果卡</h2>
+                                <div class="bg-slate-700 rounded-lg p-4 mb-4">
+                                    <div class="text-center">
+                                        <div class="text-primary-500 font-bold text-lg mb-2">🦞 My OpenClaw Agent Cost</div>
+                                        <div class="text-slate-400 text-sm mb-4" x-show="costResult">
+                                            <div>Tasks per day: <span x-text="dailyTasks"></span></div>
+                                            <div>Steps per task: <span x-text="stepsPerTask"></span></div>
+                                            <div>Model: <span x-text="modelPricing[selectedModel].name"></span></div>
+                                        </div>
+                                        <div x-show="costResult">
+                                            <div class="text-2xl font-bold text-primary-500" x-text="'Daily: $' + costResult.daily.toFixed(2)"></div>
+                                            <div class="text-xl font-semibold text-primary-300" x-text="'Monthly: $' + costResult.monthly.toFixed(2)"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button
+                                        @click="downloadPNG()"
+                                        class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
+                                    >
+                                        📥 下载 PNG
+                                    </button>
+                                    <button
+                                        @click="share()"
+                                        class="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
+                                    >
+                                        🔗 分享
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h2 class="text-xl font-semibold text-white">📜 历史记录</h2>
+                                    <button
+                                        @click="showHistory = !showHistory"
+                                        class="text-sm text-primary-500 hover:text-primary-400"
+                                        x-text="showHistory ? '收起' : '展开'"
+                                    ></button>
+                                </div>
+                                <div x-show="showHistory" class="space-y-2 max-h-64 overflow-y-auto">
+                                    <div x-show="history.length === 0" class="text-slate-400 text-center py-4">
+                                        暂无历史记录
+                                    </div>
+                                    <template x-for="entry in history" :key="entry.id">
+                                        <div
+                                            @click="loadFromHistory(entry)"
+                                            class="bg-slate-700/50 rounded-lg p-3 cursor-pointer hover:bg-slate-700 transition-colors"
+                                        >
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm text-white" x-text="entry.params.modelName"></span>
+                                                <span class="text-sm text-primary-500" x-text="'$' + entry.costResult.monthly.toFixed(2)"></span>
+                                            </div>
+                                            <div class="text-xs text-slate-400" x-text="formatDate(entry.timestamp)"></div>
+                                        </div>
+                                    </template>
+                                    <button
+                                        x-show="history.length > 0"
+                                        @click="clearAllHistory()"
+                                        class="w-full mt-2 px-4 py-2 text-sm text-red-400 hover:text-red-300"
+                                    >
+                                        清除历史
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <h2 class="text-xl font-semibold text-white mb-4">📊 模型对比</h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-slate-700">
+                                        <th class="text-left py-3 px-4 text-slate-400">模型</th>
+                                        <th class="text-right py-3 px-4 text-slate-400">月成本</th>
+                                        <th class="text-right py-3 px-4 text-slate-400">输入价格</th>
+                                        <th class="text-right py-3 px-4 text-slate-400">输出价格</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template x-for="comparison in modelComparisons" :key="comparison.modelId">
+                                        <tr
+                                            @click="selectedModel = comparison.modelId; calculate()"
+                                            :class="[
+                                                'cursor-pointer transition-colors',
+                                                comparison.isSelected ? 'bg-primary-600/20' : 'hover:bg-slate-700/50'
+                                            ]"
+                                        >
+                                            <td class="py-3 px-4">
+                                                <span :class="comparison.isSelected ? 'text-primary-400 font-semibold' : 'text-white'" x-text="comparison.model.name"></span>
+                                            </td>
+                                            <td class="py-3 px-4 text-right">
+                                                <span :class="comparison.isSelected ? 'text-primary-400 font-semibold' : 'text-white'" x-text="'$' + comparison.cost.monthly.toFixed(2)"></span>
+                                            </td>
+                                            <td class="py-3 px-4 text-right text-slate-400" x-text="'$' + comparison.model.inputPrice + '/M'"></td>
+                                            <td class="py-3 px-4 text-right text-slate-400" x-text="'$' + comparison.model.outputPrice + '/M'"></td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 text-center">
+                        <div class="text-2xl font-bold text-white mb-4">How expensive is your AI agent?</div>
+                        <button
+                            @click="share()"
+                            class="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition-all transform hover:scale-105"
+                        >
+                            📤 Share Result
+                        </button>
+                    </div>
+
+                    <div x-show="showToast" x-transition class="fixed bottom-4 right-4 z-50">
+                        <div class="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span x-text="toastMessage"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="currentPage === 'workflows'" x-transition x-data="workflowGallery()" x-init="init()">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">🔄 工作流展示</h1>
+                        <p class="text-slate-400">50+ 精选工作流配置，一键复制使用</p>
+                    </div>
+                    
+                    <div class="mb-8 space-y-4">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input 
+                                type="text" 
+                                x-model="searchQuery"
+                                @input.debounce.300ms="filterWorkflows()"
+                                placeholder="搜索工作流..."
+                                class="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 transition-colors"
+                            >
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button 
+                                @click="selectedCategory = ''; filterWorkflows()"
+                                :class="[
+                                    'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                    selectedCategory === '' 
+                                        ? 'bg-primary-600 text-white' 
+                                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                ]"
+                            >
+                                全部
+                            </button>
+                            <template x-for="cat in categories" :key="cat.id">
+                                <button 
+                                    @click="selectedCategory = cat.name; filterWorkflows()"
+                                    :class="[
+                                        'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                        selectedCategory === cat.name 
+                                            ? 'bg-primary-600 text-white' 
+                                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                    ]"
+                                >
+                                    <span x-text="cat.icon"></span>
+                                    <span x-text="cat.name"></span>
+                                </button>
+                            </template>
+                            <button 
+                                @click="showFavorites = !showFavorites; filterWorkflows()"
+                                :class="[
+                                    'px-4 py-2 rounded-lg text-sm font-medium transition-all ml-auto',
+                                    showFavorites 
+                                        ? 'bg-pink-600 text-white' 
+                                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                ]"
+                            >
+                                ❤️ 收藏
+                            </button>
+                            <button 
+                                @click="sortByUsage = !sortByUsage; filterWorkflows()"
+                                :class="[
+                                    'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                    sortByUsage 
+                                        ? 'bg-yellow-600 text-white' 
+                                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                ]"
+                            >
+                                🔥 热门
+                            </button>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-slate-400 text-sm py-2">标签筛选:</span>
+                            <template x-for="tag in allTags" :key="tag">
+                                <button 
+                                    @click="toggleTag(tag)"
+                                    :class="[
+                                        'px-3 py-1 rounded-full text-xs font-medium transition-all',
+                                        selectedTags.includes(tag)
+                                            ? 'bg-primary-600 text-white' 
+                                            : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                                    ]"
+                                    x-text="tag"
+                                ></button>
+                            </template>
+                            <button 
+                                @click="selectedTags = []; filterWorkflows()"
+                                class="px-3 py-1 rounded-full text-xs font-medium bg-slate-600 text-slate-300 hover:bg-slate-500 transition-all"
+                                x-show="selectedTags.length > 0"
+                            >
+                                清除标签
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <template x-for="workflow in filteredWorkflows" :key="workflow.id">
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 card-hover hover:border-primary-500 transition-all">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="workflow.category"></span>
+                                        <h3 class="text-lg font-semibold text-white" x-text="workflow.name"></h3>
+                                    </div>
+                                    <button 
+                                        @click="toggleFavorite(workflow.id)"
+                                        class="p-2 rounded-lg hover:bg-slate-700 transition-colors"
+                                        :class="isFavorite(workflow.id) ? 'text-pink-500' : 'text-slate-400'"
+                                    >
+                                        <svg x-show="!isFavorite(workflow.id)" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                        <svg x-show="isFavorite(workflow.id)" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                
+                                <p class="text-slate-400 text-sm mb-4 line-clamp-2" x-text="workflow.description"></p>
+                                
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <template x-for="tag in workflow.tags" :key="tag">
+                                        <span class="px-2 py-1 bg-slate-700 text-slate-300 text-xs rounded" x-text="tag"></span>
+                                    </template>
+                                </div>
+                                
+                                <div class="flex items-center justify-between text-xs text-slate-400 mb-4">
+                                    <span x-text="'👤 ' + workflow.author"></span>
+                                    <span x-text="'⭐ ' + workflow.stars.toLocaleString()"></span>
+                                    <span x-text="'📊 ' + workflow.usage.toLocaleString() + ' 次'"></span>
+                                </div>
+                                
+                                <div class="flex gap-2">
+                                    <button 
+                                        @click="copyConfig(workflow)"
+                                        class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
+                                    >
+                                        📋 复制配置
+                                    </button>
+                                    <button 
+                                        @click="showDetail(workflow)"
+                                        class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors"
+                                    >
+                                        详情
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <div x-show="filteredWorkflows.length === 0" class="text-center py-12">
+                        <p class="text-slate-400 text-lg">没有找到匹配的工作流</p>
+                    </div>
+                    
+                    <div x-show="showModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <div class="fixed inset-0 bg-black/50" @click="showModal = false"></div>
+                        <div class="relative bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-700">
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="selectedWorkflow?.category"></span>
+                                        <h2 class="text-2xl font-bold text-white" x-text="selectedWorkflow?.name"></h2>
+                                    </div>
+                                    <button @click="showModal = false" class="p-2 rounded-lg hover:bg-slate-700 transition-colors text-slate-400">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                
+                                <p class="text-slate-300 mb-6" x-text="selectedWorkflow?.description"></p>
+                                
+                                <div class="grid grid-cols-2 gap-4 mb-6">
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <p class="text-slate-400 text-sm mb-1">作者</p>
+                                        <p class="text-white font-semibold" x-text="selectedWorkflow?.author"></p>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <p class="text-slate-400 text-sm mb-1">点赞数</p>
+                                        <p class="text-white font-semibold" x-text="selectedWorkflow?.stars.toLocaleString()"></p>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <p class="text-slate-400 text-sm mb-1">使用次数</p>
+                                        <p class="text-white font-semibold" x-text="selectedWorkflow?.usage.toLocaleString()"></p>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <p class="text-slate-400 text-sm mb-1">分类</p>
+                                        <p class="text-white font-semibold" x-text="selectedWorkflow?.category"></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3">标签</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <template x-for="tag in selectedWorkflow?.tags" :key="tag">
+                                            <span class="px-3 py-1 bg-slate-700 text-slate-300 text-sm rounded" x-text="tag"></span>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3">YAML 配置</h3>
+                                    <div class="bg-slate-900 rounded-lg p-4 overflow-x-auto">
+                                        <pre class="text-sm text-slate-300 whitespace-pre-wrap" x-text="selectedWorkflow?.config"></pre>
+                                    </div>
+                                </div>
+                                
+                                <button 
+                                    @click="copyConfig(selectedWorkflow); showModal = false"
+                                    class="w-full px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors"
+                                >
+                                    📋 复制配置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div x-show="showToast" x-transition class="fixed bottom-4 right-4 z-50">
+                        <div class="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>已复制到剪贴板！</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="currentPage === 'tools'" x-transition x-data="tools()" x-init="init()">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">🛠️ 小工具箱</h1>
+                        <p class="text-slate-400">实用工具集合，提升您的开发效率</p>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <button 
+                            @click="activeTool = 'prompt-optimizer'"
+                            :class="[
+                                'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                activeTool === 'prompt-optimizer' 
+                                    ? 'bg-primary-600 text-white' 
+                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                            ]"
+                        >
+                            ✨ Prompt优化器
+                        </button>
+                        <button 
+                            @click="activeTool = 'config-generator'"
+                            :class="[
+                                'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                activeTool === 'config-generator' 
+                                    ? 'bg-primary-600 text-white' 
+                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                            ]"
+                        >
+                            ⚙️ 配置生成器
+                        </button>
+                        <button 
+                            @click="activeTool = 'error-analyzer'"
+                            :class="[
+                                'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                activeTool === 'error-analyzer' 
+                                    ? 'bg-primary-600 text-white' 
+                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                            ]"
+                        >
+                            🔍 错误日志分析器
+                        </button>
+                        <button 
+                            @click="activeTool = 'deployment-checklist'"
+                            :class="[
+                                'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                activeTool === 'deployment-checklist' 
+                                    ? 'bg-primary-600 text-white' 
+                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                            ]"
+                        >
+                            ✅ 部署检查清单
+                        </button>
+                        <button 
+                            @click="activeTool = 'token-estimator'"
+                            :class="[
+                                'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                activeTool === 'token-estimator' 
+                                    ? 'bg-primary-600 text-white' 
+                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                            ]"
+                        >
+                            📊 Token预估器
+                        </button>
+                    </div>
+                    
+                    <div x-show="activeTool === 'prompt-optimizer'" class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <h2 class="text-xl font-semibold text-white mb-4">✨ Prompt优化器</h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-300 mb-2">原始 Prompt</label>
+                                <textarea 
+                                    x-model="promptOptimizer.originalPrompt"
+                                    placeholder="输入您的原始 Prompt..."
+                                    class="w-full h-48 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 resize-none"
+                                ></textarea>
+                                <button 
+                                    @click="optimizePrompt()"
+                                    class="mt-4 px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+                                >
+                                    优化 Prompt
+                                </button>
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 mb-2">优化建议</label>
+                                <div class="space-y-2 mb-4" x-show="promptOptimizer.suggestions.length > 0">
+                                    <template x-for="suggestion in promptOptimizer.suggestions" :key="suggestion.type">
+                                        <div class="bg-slate-700/50 rounded-lg p-3">
+                                            <span class="text-primary-400 font-medium" x-text="suggestion.type"></span>
+                                            <span class="text-slate-300 text-sm" x-text="': ' + suggestion.suggestion"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                                <label class="block text-slate-300 mb-2">优化后 Prompt</label>
+                                <textarea 
+                                    x-model="promptOptimizer.optimizedPrompt"
+                                    placeholder="优化后的 Prompt 将显示在这里..."
+                                    class="w-full h-48 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 resize-none"
+                                    readonly
+                                ></textarea>
+                                <button 
+                                    @click="copyOptimizedPrompt()"
+                                    x-show="promptOptimizer.isOptimized"
+                                    class="mt-4 px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+                                >
+                                    📋 复制
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div x-show="activeTool === 'config-generator'" class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <h2 class="text-xl font-semibold text-white mb-4">⚙️ 配置生成器</h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-slate-300 mb-2">名称</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="configGenerator.name"
+                                        @input="generateConfig()"
+                                        class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2">模型选择</label>
+                                    <select 
+                                        x-model="configGenerator.model"
+                                        @change="generateConfig()"
+                                        class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                    >
+                                        <option value="claude-opus-4.6">Claude Opus 4.6</option>
+                                        <option value="claude-sonnet-4.6">Claude Sonnet 4.6</option>
+                                        <option value="gpt-4o">GPT-4o</option>
+                                        <option value="gpt-4o-mini">GPT-4o Mini</option>
+                                        <option value="deepseek-v3">DeepSeek V3</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2">API Key</label>
+                                    <input 
+                                        type="password" 
+                                        x-model="configGenerator.apiKey"
+                                        @input="generateConfig()"
+                                        placeholder="sk-..."
+                                        class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-primary-500"
+                                    >
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input 
+                                            type="checkbox" 
+                                            x-model="configGenerator.heartbeat"
+                                            @change="generateConfig()"
+                                            class="w-4 h-4 text-primary-600 bg-slate-700 border-slate-600 rounded focus:ring-primary-500"
+                                        >
+                                        <span class="text-slate-300">开启心跳机制</span>
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">最大 Token</label>
+                                        <input 
+                                            type="number" 
+                                            x-model.number="configGenerator.maxTokens"
+                                            @input="generateConfig()"
+                                            min="100"
+                                            max="128000"
+                                            class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                        >
+                                    </div>
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">温度</label>
+                                        <input 
+                                            type="number" 
+                                            x-model.number="configGenerator.temperature"
+                                            @input="generateConfig()"
+                                            min="0"
+                                            max="2"
+                                            step="0.1"
+                                            class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 mb-2">config.yaml</label>
+                                <div class="bg-slate-900 rounded-lg p-4 overflow-x-auto h-80">
+                                    <pre class="text-sm text-slate-300 whitespace-pre-wrap" x-text="configGenerator.configYaml"></pre>
+                                </div>
+                                <div class="flex gap-2 mt-4">
+                                    <button 
+                                        @click="copyConfig()"
+                                        class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+                                    >
+                                        📋 复制
+                                    </button>
+                                    <button 
+                                        @click="downloadConfig()"
+                                        class="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors"
+                                    >
+                                        📥 下载 .yaml
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div x-show="activeTool === 'error-analyzer'" class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <h2 class="text-xl font-semibold text-white mb-4">🔍 错误日志分析器</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-slate-300 mb-2">错误日志</label>
+                                <textarea 
+                                    x-model="errorAnalyzer.errorLog"
+                                    placeholder="粘贴您的错误日志..."
+                                    class="w-full h-40 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 resize-none"
+                                ></textarea>
+                                <button 
+                                    @click="analyzeError()"
+                                    class="mt-4 px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+                                >
+                                    分析错误
+                                </button>
+                            </div>
+                            <div x-show="errorAnalyzer.analysisResult" class="mt-6">
+                                <div 
+                                    :class="[
+                                        'rounded-lg p-4 border',
+                                        errorAnalyzer.analysisResult.severity === 'error' ? 'bg-red-900/20 border-red-700' :
+                                        errorAnalyzer.analysisResult.severity === 'warning' ? 'bg-yellow-900/20 border-yellow-700' :
+                                        'bg-blue-900/20 border-blue-700'
+                                    ]"
+                                >
+                                    <h3 
+                                        :class="[
+                                            'text-lg font-semibold mb-2',
+                                            errorAnalyzer.analysisResult.severity === 'error' ? 'text-red-400' :
+                                            errorAnalyzer.analysisResult.severity === 'warning' ? 'text-yellow-400' :
+                                            'text-blue-400'
+                                        ]"
+                                        x-text="errorAnalyzer.analysisResult.title"
+                                    ></h3>
+                                    <p class="text-slate-300" x-text="errorAnalyzer.analysisResult.solution"></p>
+                                </div>
+                                <div x-show="errorAnalyzer.analysisResult.relatedErrors.length > 0" class="mt-4">
+                                    <h4 class="text-slate-300 font-medium mb-2">相关错误</h4>
+                                    <div class="space-y-2">
+                                        <template x-for="err in errorAnalyzer.analysisResult.relatedErrors" :key="err.title">
+                                            <div class="bg-slate-700/50 rounded-lg p-3">
+                                                <span class="text-primary-400 font-medium" x-text="err.title"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div x-show="activeTool === 'deployment-checklist'" class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <h2 class="text-xl font-semibold text-white mb-4">✅ 部署检查清单</h2>
+                        <div class="mb-6">
+                            <div class="flex justify-between text-sm mb-2">
+                                <span class="text-slate-300">完成进度</span>
+                                <span class="text-primary-400 font-medium" x-text="deploymentChecklist.progress + '%'"></span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-3">
+                                <div 
+                                    class="bg-primary-600 h-3 rounded-full transition-all duration-500"
+                                    :style="{ width: deploymentChecklist.progress + '%' }"
+                                ></div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <template x-for="check in deploymentChecklist.checks" :key="check.id">
+                                <div 
+                                    @click="check.done = !check.done; updateChecklistProgress()"
+                                    class="flex items-center space-x-3 p-4 bg-slate-700/50 rounded-lg cursor-pointer hover:bg-slate-700 transition-colors"
+                                >
+                                    <div 
+                                        :class="[
+                                            'w-6 h-6 rounded flex items-center justify-center border-2',
+                                            check.done 
+                                                ? 'bg-green-600 border-green-600' 
+                                                : 'border-slate-500'
+                                        ]"
+                                    >
+                                        <svg x-show="check.done" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <span 
+                                        :class="[
+                                            'text-slate-300',
+                                            check.done ? 'line-through opacity-50' : ''
+                                        ]"
+                                        x-text="check.name"
+                                    ></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div x-show="activeTool === 'token-estimator'" class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <h2 class="text-xl font-semibold text-white mb-4">📊 Token预估器</h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-slate-300 mb-2">输入文本</label>
+                                    <textarea 
+                                        x-model="tokenEstimator.inputText"
+                                        placeholder="输入您的文本..."
+                                        class="w-full h-48 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 resize-none"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2">模型选择</label>
+                                    <select 
+                                        x-model="tokenEstimator.model"
+                                        class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                    >
+                                        <template x-for="(pricing, id) in modelPricing" :key="id">
+                                            <option :value="id" x-text="pricing.name"></option>
+                                        </template>
+                                    </select>
+                                </div>
+                                <button 
+                                    @click="estimateTokens()"
+                                    class="w-full px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+                                >
+                                    预估 Token
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+                                        <p class="text-slate-400 text-sm mb-1">输入 Token</p>
+                                        <p class="text-2xl font-bold text-primary-400" x-text="tokenEstimator.inputTokens.toLocaleString()"></p>
+                                    </div>
+                                    <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+                                        <p class="text-slate-400 text-sm mb-1">预估输出 Token</p>
+                                        <p class="text-2xl font-bold text-primary-400" x-text="tokenEstimator.outputTokens.toLocaleString()"></p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+                                    <p class="text-slate-400 text-sm mb-1">预估成本</p>
+                                    <p class="text-3xl font-bold text-green-400" x-text="'$' + tokenEstimator.estimatedCost.toFixed(6)"></p>
+                                </div>
+                                <div class="bg-slate-700/50 rounded-lg p-4">
+                                    <h4 class="text-slate-300 font-medium mb-2">价格信息</h4>
+                                    <div class="space-y-1 text-sm">
+                                        <p class="text-slate-400">
+                                            输入: <span class="text-primary-400" x-text="'$' + modelPricing[tokenEstimator.model].inputPrice + '/M tokens'"></span>
+                                        </p>
+                                        <p class="text-slate-400">
+                                            输出: <span class="text-primary-400" x-text="'$' + modelPricing[tokenEstimator.model].outputPrice + '/M tokens'"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div x-show="showToast" x-transition class="fixed bottom-4 right-4 z-50">
+                        <div class="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span x-text="toastMessage"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="currentPage === 'tutorials'" x-transition x-data="tutorialsModule()">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">📖 教程中心</h1>
+                        <p class="text-slate-400">从入门到精通，全面掌握OpenClaw</p>
+                    </div>
+                    
+                    <div class="mb-8 space-y-4">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input 
+                                type="text" 
+                                x-model="searchQuery"
+                                placeholder="搜索教程..."
+                                class="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 transition-colors"
+                            >
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button 
+                                @click="selectedCategory = ''"
+                                :class="[
+                                    'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                    selectedCategory === '' 
+                                        ? 'bg-primary-600 text-white' 
+                                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                ]"
+                            >
+                                全部
+                            </button>
+                            <template x-for="cat in categories" :key="cat.id">
+                                <button 
+                                    @click="selectedCategory = cat.name"
+                                    :class="[
+                                        'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                                        selectedCategory === cat.name 
+                                            ? 'bg-primary-600 text-white' 
+                                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                    ]"
+                                >
+                                    <span x-text="cat.icon"></span>
+                                    <span x-text="cat.name"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <template x-for="category in categories" :key="category.id">
+                        <div x-show="!selectedCategory || selectedCategory === category.name" class="mb-12">
+                            <h2 class="text-xl font-bold text-white mb-6">
+                                <span x-text="category.icon"></span>
+                                <span x-text="category.name"></span>
+                            </h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <template x-for="tutorial in getTutorialsByCategory(category.name)" :key="tutorial.id">
+                                    <div 
+                                        @click="showTutorialDetail(tutorial)"
+                                        class="bg-slate-800 rounded-xl p-6 border border-slate-700 card-hover hover:border-primary-500 cursor-pointer transition-all"
+                                    >
+                                        <div class="flex items-start justify-between mb-4">
+                                            <div>
+                                                <span 
+                                                    class="inline-block px-3 py-1 text-xs font-medium rounded-full mb-2"
+                                                    :class="getDifficultyColor(tutorial.difficulty)"
+                                                    x-text="tutorial.difficulty"
+                                                ></span>
+                                                <h3 class="text-lg font-semibold text-white mb-2 line-clamp-2" x-text="tutorial.title"></h3>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between text-sm text-slate-400">
+                                            <span x-text="'⏱️ ' + tutorial.readTime"></span>
+                                            <span x-text="'👁️ ' + tutorial.views.toLocaleString()"></span>
+                                            <span x-text="'❤️ ' + tutorial.likes.toLocaleString()"></span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <div x-show="selectedCategory && filteredTutorials.length === 0" class="text-center py-12">
+                        <p class="text-slate-400 text-lg">没有找到匹配的教程</p>
+                    </div>
+                    
+                    <div x-show="showDetail" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <div class="fixed inset-0 bg-black/50" @click="closeDetail()"></div>
+                        <div class="relative bg-slate-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700">
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span 
+                                                class="inline-block px-3 py-1 text-xs font-medium rounded-full"
+                                                :class="getDifficultyColor(selectedTutorial?.difficulty)"
+                                                x-text="selectedTutorial?.difficulty"
+                                            ></span>
+                                            <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full" x-text="selectedTutorial?.category"></span>
+                                        </div>
+                                        <h2 class="text-2xl font-bold text-white" x-text="selectedTutorial?.title"></h2>
+                                    </div>
+                                    <button @click="closeDetail()" class="p-2 rounded-lg hover:bg-slate-700 transition-colors text-slate-400">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center gap-6 mb-6 text-sm text-slate-400">
+                                    <span x-text="'⏱️ 阅读时间: ' + selectedTutorial?.readTime"></span>
+                                    <span x-text="'👁️ ' + selectedTutorial?.views.toLocaleString() + ' 次阅读'"></span>
+                                    <span x-text="'❤️ ' + selectedTutorial?.likes.toLocaleString() + ' 个赞'"></span>
+                                </div>
+                                
+                                <div class="prose prose-invert max-w-none">
+                                    <div class="whitespace-pre-wrap text-slate-300 leading-relaxed" x-text="selectedTutorial?.content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="currentPage === 'community'" x-transition x-data="communityModule()">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">👥 社区</h1>
+                        <p class="text-slate-400">连接开发者，分享创意，共同成长</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-6">🔥 热门 Workflow</h2>
+                                <div class="space-y-4">
+                                    <template x-for="workflow in trendingWorkflows" :key="workflow.id">
+                                        <div class="bg-slate-700/50 rounded-lg p-4 card-hover transition-all">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h3 class="text-lg font-semibold text-white mb-1" x-text="workflow.name"></h3>
+                                                    <p class="text-slate-400 text-sm mb-2" x-text="'作者: ' + workflow.author"></p>
+                                                    <div class="flex items-center gap-4 text-sm text-slate-400">
+                                                        <span x-text="'⭐ ' + workflow.stars.toLocaleString()"></span>
+                                                        <span x-text="'📊 ' + workflow.usage.toLocaleString() + ' 次使用'"></span>
+                                                    </div>
+                                                </div>
+                                                <button 
+                                                    class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
+                                                >
+                                                    查看详情
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-6">❓ 最近问题</h2>
+                                <div class="space-y-4">
+                                    <template x-for="question in recentQuestions" :key="question.id">
+                                        <div class="bg-slate-700/50 rounded-lg p-4 card-hover transition-all">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h3 class="text-lg font-semibold text-white mb-1" x-text="question.title"></h3>
+                                                    <p class="text-slate-400 text-sm mb-2" x-text="'提问者: ' + question.author"></p>
+                                                    <div class="flex items-center gap-4 text-sm text-slate-400">
+                                                        <span x-text="'💬 ' + question.answers + ' 个回答'"></span>
+                                                        <span x-text="'👁️ ' + question.views.toLocaleString() + ' 次浏览'"></span>
+                                                    </div>
+                                                </div>
+                                                <button 
+                                                    class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors"
+                                                >
+                                                    查看详情
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-6">🏆 贡献者排行</h2>
+                                <div class="space-y-4">
+                                    <template x-for="(contributor, index) in topContributors" :key="contributor.id">
+                                        <div class="flex items-center gap-4">
+                                            <div 
+                                                class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold"
+                                                :class="[
+                                                    index === 0 ? 'bg-yellow-500 text-yellow-900' :
+                                                    index === 1 ? 'bg-slate-400 text-slate-900' :
+                                                    index === 2 ? 'bg-amber-600 text-amber-900' :
+                                                    'bg-slate-700 text-slate-300'
+                                                ]"
+                                                x-text="contributor.name.charAt(0)"
+                                            ></div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="text-white font-medium" x-text="contributor.name"></span>
+                                                    <span x-show="index === 0" class="text-yellow-500">👑</span>
+                                                </div>
+                                                <div class="text-slate-400 text-sm">
+                                                    <span x-text="contributor.workflows + ' 个 Workflow'"></span>
+                                                    <span class="mx-2">•</span>
+                                                    <span x-text="'⭐ ' + contributor.stars.toLocaleString()"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 bg-slate-800 rounded-xl p-6 border border-slate-700">
+                                <h2 class="text-xl font-semibold text-white mb-6">📊 社区数据</h2>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                        <span class="text-slate-400">社区 Workflow</span>
+                                        <span class="text-white font-bold">5,420 个</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                        <span class="text-slate-400">活跃贡献者</span>
+                                        <span class="text-white font-bold">1,234 人</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                        <span class="text-slate-400">今日访问</span>
+                                        <span class="text-white font-bold">8,932 次</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                        <span class="text-slate-400">总使用次数</span>
+                                        <span class="text-white font-bold">125.5 万次</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="bg-slate-800 border-t border-slate-700 mt-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="text-center text-slate-400">
+                    <p>© 2026 OpenClaw Resource Hub. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="js/task-data.js"></script>
+    <script src="js/workflow-data.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/tools.js"></script>
+    <script src="js/tutorials.js"></script>
+    <script>
+        function app() {
+            return {
+                currentPage: 'home',
+                mobileMenuOpen: false,
+                pages: [
+                    { id: 'home', name: '首页', icon: '🏠', description: '欢迎来到OpenClaw资源中心' },
+                    { id: 'task-library', name: '模板库', icon: '📚', description: '100+精选任务模板' },
+                    { id: 'cost-calculator', name: '成本计算', icon: '💰', description: '预估Token成本' },
+                    { id: 'workflows', name: '工作流', icon: '🔄', description: '100+工作流展示' },
+                    { id: 'tools', name: '工具', icon: '🛠️', description: '实用小工具箱' },
+                    { id: 'tutorials', name: '教程', icon: '📖', description: '从入门到精通' },
+                    { id: 'community', name: '社区', icon: '👥', description: '连接开发者' }
+                ],
+                
+                init() {
+                    if (typeof trackPageView === 'function') {
+                        trackPageView('home');
+                    }
+                    
+                    const hash = window.location.hash.slice(1);
+                    if (hash && this.pages.some(p => p.id === hash)) {
+                        this.currentPage = hash;
+                    }
+                    
+                    this.$watch('currentPage', (page) => {
+                        window.location.hash = page;
+                        if (typeof trackPageView === 'function') {
+                            trackPageView(page);
+                        }
+                    });
+                    
+                    window.addEventListener('hashchange', () => {
+                        const hash = window.location.hash.slice(1);
+                        if (hash && this.pages.some(p => p.id === hash)) {
+                            this.currentPage = hash;
+                        }
+                    });
+                }
+            }
+        }
+        
+        function taskLibrary() {
+            return {
+                searchQuery: '',
+                selectedCategory: '',
+                showFavorites: false,
+                sortByUsage: false,
+                filteredTasks: [],
+                categories: typeof taskCategories !== 'undefined' ? taskCategories : [],
+                tasks: typeof taskTemplates !== 'undefined' ? taskTemplates : [],
+                favorites: JSON.parse(localStorage.getItem('taskFavorites') || '[]'),
+                showModal: false,
+                selectedTask: null,
+                showToast: false,
+                
+                init() {
+                    this.filterTasks();
+                },
+                
+                filterTasks() {
+                    let result = [...this.tasks];
+                    
+                    if (this.searchQuery) {
+                        const query = this.searchQuery.toLowerCase();
+                        result = result.filter(task => 
+                            task.name.toLowerCase().includes(query) ||
+                            task.description.toLowerCase().includes(query) ||
+                            task.category.toLowerCase().includes(query)
+                        );
+                    }
+                    
+                    if (this.selectedCategory) {
+                        result = result.filter(task => task.category === this.selectedCategory);
+                    }
+                    
+                    if (this.showFavorites) {
+                        result = result.filter(task => this.favorites.includes(task.id));
+                    }
+                    
+                    if (this.sortByUsage) {
+                        result.sort((a, b) => b.usageCount - a.usageCount);
+                    }
+                    
+                    this.filteredTasks = result;
+                },
+                
+                toggleFavorite(taskId) {
+                    const index = this.favorites.indexOf(taskId);
+                    if (index > -1) {
+                        this.favorites.splice(index, 1);
+                    } else {
+                        this.favorites.push(taskId);
+                    }
+                    localStorage.setItem('taskFavorites', JSON.stringify(this.favorites));
+                    this.filterTasks();
+                },
+                
+                isFavorite(taskId) {
+                    return this.favorites.includes(taskId);
+                },
+                
+                copyTemplate(task) {
+                    navigator.clipboard.writeText(task.copyFormat).then(() => {
+                        this.showToast = true;
+                        setTimeout(() => this.showToast = false, 2000);
+                        
+                        task.usageCount++;
+                        
+                        if (typeof trackEvent === 'function') {
+                            trackEvent('template_copy', {
+                                template_id: task.id,
+                                category: task.category
+                            });
+                        }
+                    }).catch(err => {
+                        console.error('复制失败:', err);
+                    });
+                },
+                
+                showDetail(task) {
+                    this.selectedTask = task;
+                    this.showModal = true;
+                }
+            }
+        }
+        
+        function workflowGallery() {
+            return {
+                searchQuery: '',
+                selectedCategory: '',
+                selectedTags: [],
+                showFavorites: false,
+                sortByUsage: false,
+                filteredWorkflows: [],
+                categories: typeof workflowCategories !== 'undefined' ? workflowCategories : [],
+                allTags: typeof allTags !== 'undefined' ? allTags : [],
+                workflows: typeof workflows !== 'undefined' ? workflows : [],
+                favorites: JSON.parse(localStorage.getItem('workflowFavorites') || '[]'),
+                showModal: false,
+                selectedWorkflow: null,
+                showToast: false,
+                
+                init() {
+                    this.filterWorkflows();
+                },
+                
+                filterWorkflows() {
+                    let result = [...this.workflows];
+                    
+                    if (this.searchQuery) {
+                        const query = this.searchQuery.toLowerCase();
+                        result = result.filter(workflow => 
+                            workflow.name.toLowerCase().includes(query) ||
+                            workflow.description.toLowerCase().includes(query) ||
+                            workflow.category.toLowerCase().includes(query) ||
+                            workflow.tags.some(tag => tag.toLowerCase().includes(query))
+                        );
+                    }
+                    
+                    if (this.selectedCategory) {
+                        result = result.filter(workflow => workflow.category === this.selectedCategory);
+                    }
+                    
+                    if (this.selectedTags.length > 0) {
+                        result = result.filter(workflow => 
+                            this.selectedTags.some(tag => workflow.tags.includes(tag))
+                        );
+                    }
+                    
+                    if (this.showFavorites) {
+                        result = result.filter(workflow => this.favorites.includes(workflow.id));
+                    }
+                    
+                    if (this.sortByUsage) {
+                        result.sort((a, b) => b.usage - a.usage);
+                    }
+                    
+                    this.filteredWorkflows = result;
+                },
+                
+                toggleTag(tag) {
+                    const index = this.selectedTags.indexOf(tag);
+                    if (index > -1) {
+                        this.selectedTags.splice(index, 1);
+                    } else {
+                        this.selectedTags.push(tag);
+                    }
+                    this.filterWorkflows();
+                },
+                
+                toggleFavorite(workflowId) {
+                    const index = this.favorites.indexOf(workflowId);
+                    if (index > -1) {
+                        this.favorites.splice(index, 1);
+                    } else {
+                        this.favorites.push(workflowId);
+                    }
+                    localStorage.setItem('workflowFavorites', JSON.stringify(this.favorites));
+                    this.filterWorkflows();
+                },
+                
+                isFavorite(workflowId) {
+                    return this.favorites.includes(workflowId);
+                },
+                
+                copyConfig(workflow) {
+                    navigator.clipboard.writeText(workflow.config).then(() => {
+                        this.showToast = true;
+                        setTimeout(() => this.showToast = false, 2000);
+                        
+                        workflow.usage++;
+                        
+                        if (typeof trackEvent === 'function') {
+                            trackEvent('workflow_copy', {
+                                workflow_id: workflow.id,
+                                category: workflow.category
+                            });
+                        }
+                    }).catch(err => {
+                        console.error('复制失败:', err);
+                    });
+                },
+                
+                showDetail(workflow) {
+                    this.selectedWorkflow = workflow;
+                    this.showModal = true;
+                }
+            }
+        }
+        
+        function communityModule() {
+            return {
+                topContributors: [
+                    { id: 1, name: 'OpenClaw官方', workflows: 20, stars: 5420 },
+                    { id: 2, name: 'AI开发者小王', workflows: 15, stars: 3210 },
+                    { id: 3, name: 'Prompt工程师', workflows: 12, stars: 2890 },
+                    { id: 4, name: '自动化大师', workflows: 10, stars: 2150 },
+                    { id: 5, name: '效率达人', workflows: 8, stars: 1680 }
+                ],
+                trendingWorkflows: [
+                    { id: 'wf-001', name: '自动化日报生成', author: 'AI开发者小王', stars: 890, usage: 5420 },
+                    { id: 'wf-002', name: '竞品监控Agent', author: 'Prompt工程师', stars: 760, usage: 4890 },
+                    { id: 'wf-003', name: '市场分析报告生成器', author: 'OpenClaw官方', stars: 1250, usage: 8560 },
+                    { id: 'wf-004', name: '代码审查助手', author: '自动化大师', stars: 620, usage: 3210 },
+                    { id: 'wf-005', name: '内容创作工作流', author: '效率达人', stars: 540, usage: 2890 }
+                ],
+                recentQuestions: [
+                    { id: 'q-001', title: '如何降低Token消耗？', author: '新手小白', answers: 12, views: 542 },
+                    { id: 'q-002', title: 'Claude和GPT-4o哪个更适合？', author: '犹豫用户', answers: 8, views: 321 },
+                    { id: 'q-003', title: '如何配置多Agent协作？', author: '进阶用户', answers: 15, views: 456 },
+                    { id: 'q-004', title: 'OpenClaw支持本地模型吗？', author: '隐私关注者', answers: 6, views: 234 }
+                ]
+            };
+        }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "OpenClaw Resource Hub",
+        "description": "OpenClaw一站式资源聚合平台",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>
