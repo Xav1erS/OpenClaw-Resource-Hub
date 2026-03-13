@@ -14,11 +14,10 @@
 
   const copy = {
     zh: {
-      brand: "OpenClaw Resource Hub",
       pageTag: "传播优先",
       title: "成本计算器",
-      subtitle: "先用人话问卷估算 Agent 成本，再把结果导出成一张可以转发的分享卡片。",
-      helper: "默认模式不要求你理解内部参数。只有在你真的需要精调时，再展开高级模式。",
+      subtitle: "左侧做选择，右侧立即给出推荐、成本和分享卡片。",
+      helper: "默认模式先用人话问卷估算，只有真正需要精调时才展开高级模式。",
       nav: [
         { name: "快速开始", href: "/pages/quickstart.html" },
         { name: "命令中心", href: "/pages/command-center.html" },
@@ -26,16 +25,22 @@
         { name: "教程", href: "/pages/tutorials.html" },
         { name: "更新日志", href: "/pages/release-notes.html" }
       ],
+      navCurrent: "成本计算器",
+      brandTop: "OPENCLAW",
+      brandBottom: "Resource Hub",
+      langZh: "中文",
+      langEn: "EN",
       stats: [
         { label: "估算方式", value: "4 题问卷" },
-        { label: "分享链路", value: "PNG / 文案 / 链接" },
-        { label: "目标场景", value: "社交传播" }
+        { label: "输出形式", value: "结论 + 分享卡" },
+        { label: "页面目标", value: "边算边分享" }
       ],
       presetTitle: "快速预设",
-      questionnaireTitle: "你的日常使用强度更像哪一种？",
-      questionnaireBody: "先回答 4 个每天都会遇到的问题，系统会自动映射成推荐模型和内部工作量。",
+      presetBody: "想先看大概区间，就从预设开始。",
+      questionnaireTitle: "你的使用更像哪一种？",
+      questionnaireBody: "这 4 个问题会驱动推荐模型、内部工作量和分享文案。",
       presets: {
-        starter: { label: "轻量试跑", desc: "第一次跑起来，先看最低可用成本。" },
+        starter: { label: "轻量试跑", desc: "第一次尝试，先看最低可用成本。" },
         operator: { label: "日常运营", desc: "中等频率，需要稳定输出。" },
         content: { label: "内容团队", desc: "输出偏长，更适合内容生产。" },
         browser: { label: "网页链路", desc: "经常联网或操作网页。" },
@@ -48,29 +53,30 @@
         output: { key: "输出长度", title: "输出通常有多长？", options: { short: "简短结论", medium: "中等篇幅", long: "长输出" } }
       },
       advancedTitle: "高级模式",
-      advancedBody: "如果你已经知道自己的运行量，可以手动覆盖系统映射值。默认会一直跟随问卷答案。",
+      advancedBody: "你可以手动覆盖推荐模型、每日运行次数和单次步数。修改后右侧结果会立刻刷新。",
       advancedOn: "当前跟随问卷",
       advancedOff: "当前为手动覆盖",
       advancedToggleOpen: "展开高级模式",
       advancedToggleClose: "收起高级模式",
       advancedSync: "重新跟随问卷",
       advancedFields: { model: "推荐模型", dailyTasks: "每日运行次数", stepsPerTask: "单次链路步数" },
-      resultTitle: "解释型结果",
-      resultLead: "这里不只是给你一串数字，而是告诉你这个 Agent 现在大概是什么量级、为什么会花这些钱。",
+      asideLabel: "实时结果",
+      resultTitle: "推荐与成本",
+      resultLead: "结果面板固定在右侧，选择后不用回到顶部找结果。",
       recommendedModel: "推荐模型",
       dailyCost: "日成本",
       monthlyCost: "月成本",
       warning: "成本等级",
-      workload: "映射后的内部工作量",
-      workloadBody: "问卷会自动换算成内部工作量，供高级模式和模型对比复用。",
+      workloadTitle: "映射后的工作量",
+      workloadBody: "问卷会自动换算成内部工作量，方便继续用高级模式精调。",
       suggestionsTitle: "最重要的优化建议",
       comparisonTitle: "模型对比",
-      comparisonBody: "如果你的目标是传播效果，先看每天和每月大概花多少钱，再决定是否值得上更贵的模型。",
+      comparisonBody: "先看成本差距，再决定质量升级是否值得。",
       shareTitle: "分享卡片",
-      shareBody: "这张卡片需要在别人截图后也能看懂，不要求对方先理解 OpenClaw 的内部术语。",
-      generateCard: "生成分享卡片",
+      shareBody: "分享动作现在贴着结果面板，操作链不断裂。",
+      generateCard: "刷新卡片",
       downloadCard: "下载 PNG",
-      copyText: "复制分享文案",
+      copyText: "复制文案",
       shareNow: "分享或复制链接",
       generatedLabel: "卡片预览",
       copied: "已复制",
@@ -78,15 +84,17 @@
       shared: "已完成分享",
       shareFallback: "已复制分享文案和链接",
       shareUnsupported: "当前浏览器不支持原生分享",
-      advancedHint: "高级模式一旦修改，就会优先使用你手动输入的值。",
-      footer: "这个页面现在只做一件事：把预算结论变成可传播、可决策的结果。"
+      advancedHint: "一旦手动修改高级模式，系统会优先采用你的输入值。",
+      footer: "这一页现在把估算、解释和分享放在同一个操作链里。",
+      usagePerDay: "次/天",
+      stepsPerRun: "步/次",
+      savingsLabel: "预计每月节省"
     },
     en: {
-      brand: "OpenClaw Resource Hub",
       pageTag: "Share-First",
       title: "Cost Calculator",
-      subtitle: "Estimate your agent cost with a human-readable questionnaire, then export the result as a shareable card.",
-      helper: "The default mode does not ask you to understand internal parameters. Open advanced mode only when you need tighter control.",
+      subtitle: "Pick on the left and review the live recommendation, cost, and share card on the right.",
+      helper: "The default flow starts with human-readable questions. Open advanced mode only when you want exact workload control.",
       nav: [
         { name: "Quick Start", href: "/pages/quickstart.html" },
         { name: "Command Center", href: "/pages/command-center.html" },
@@ -94,14 +102,20 @@
         { name: "Tutorials", href: "/pages/tutorials.html" },
         { name: "Release Notes", href: "/pages/release-notes.html" }
       ],
+      navCurrent: "Cost Calculator",
+      brandTop: "OPENCLAW",
+      brandBottom: "Resource Hub",
+      langZh: "中文",
+      langEn: "EN",
       stats: [
         { label: "Estimator", value: "4-question flow" },
-        { label: "Sharing", value: "PNG / text / link" },
-        { label: "Designed for", value: "Social distribution" }
+        { label: "Output", value: "Decision + card" },
+        { label: "Goal", value: "Calculate and share" }
       ],
       presetTitle: "Quick Presets",
-      questionnaireTitle: "What does your daily workload look like?",
-      questionnaireBody: "Answer four plain-language questions and the page maps them into a recommended model and internal workload.",
+      presetBody: "If you only need a fast range, start from a preset.",
+      questionnaireTitle: "What does your usage look like?",
+      questionnaireBody: "These four answers drive the recommended model, internal workload, and share copy.",
       presets: {
         starter: { label: "Starter", desc: "A first run with the smallest acceptable budget." },
         operator: { label: "Operator", desc: "A steady daily workflow with balanced output." },
@@ -116,29 +130,30 @@
         output: { key: "Output length", title: "How long is the output?", options: { short: "Short answer", medium: "Medium length", long: "Long output" } }
       },
       advancedTitle: "Advanced Mode",
-      advancedBody: "If you already know your workload, you can override the mapped values. By default it stays linked to the questionnaire.",
+      advancedBody: "Override the suggested model, runs per day, and steps per run. The live panel updates immediately from your manual values.",
       advancedOn: "Currently linked to questionnaire",
       advancedOff: "Currently using manual override",
       advancedToggleOpen: "Open advanced mode",
       advancedToggleClose: "Close advanced mode",
       advancedSync: "Relink to questionnaire",
-      advancedFields: { model: "Suggested model", dailyTasks: "Runs per day", stepsPerTask: "Steps in one run" },
-      resultTitle: "Interpreted Result",
-      resultLead: "This section should explain what kind of agent you are operating, not just print a price tag.",
+      advancedFields: { model: "Suggested model", dailyTasks: "Runs per day", stepsPerTask: "Steps per run" },
+      asideLabel: "Live result",
+      resultTitle: "Recommendation and cost",
+      resultLead: "The result panel stays in view while you answer questions.",
       recommendedModel: "Recommended model",
       dailyCost: "Daily cost",
       monthlyCost: "Monthly cost",
       warning: "Cost level",
-      workload: "Mapped internal workload",
-      workloadBody: "The questionnaire converts your answers into an internal workload so advanced mode and model comparison can reuse the same estimate.",
+      workloadTitle: "Mapped workload",
+      workloadBody: "The questionnaire converts to an internal workload so you can keep tuning from advanced mode.",
       suggestionsTitle: "Top optimization moves",
       comparisonTitle: "Model comparison",
-      comparisonBody: "If sharing is the goal, focus on daily and monthly spend first, then decide whether the quality jump is worth it.",
+      comparisonBody: "Check the cost gap first, then decide whether the quality upgrade is worth it.",
       shareTitle: "Share Card",
-      shareBody: "The card should make sense even after a screenshot, without forcing the viewer to learn OpenClaw internals first.",
-      generateCard: "Generate card",
+      shareBody: "Sharing now lives next to the result so the action chain stays intact.",
+      generateCard: "Refresh card",
       downloadCard: "Download PNG",
-      copyText: "Copy share text",
+      copyText: "Copy text",
       shareNow: "Share or copy link",
       generatedLabel: "Card preview",
       copied: "Copied",
@@ -147,39 +162,26 @@
       shareFallback: "Share text and link copied",
       shareUnsupported: "Native share is not available here",
       advancedHint: "Once advanced mode is edited, your manual values take priority.",
-      footer: "This page now does one job: turn budget math into a decision-ready, share-ready conclusion."
+      footer: "This page now keeps estimate, explanation, and sharing inside the same action loop.",
+      usagePerDay: "runs/day",
+      stepsPerRun: "steps/run",
+      savingsLabel: "Potential monthly savings"
     }
   };
 
-  function t() {
-    return copy[state.lang];
-  }
+  function t() { return copy[state.lang]; }
+  function track(name, params) { if (typeof window.trackEvent === "function") window.trackEvent(name, { lang: state.lang, ...(params || {}) }); }
+  function escapeHtml(value) { return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+  function money(value) { return `$${value.toFixed(2)}`; }
+  function questionOptionLabel(question, optionKey, lang = state.lang) { return copy[lang].questions[question].options[optionKey]; }
+  function warningLabel(level, lang = state.lang) { return window.warningLabels[lang][level]; }
+  function workloadChip(label) { return `<span class="rounded-full border border-white/10 bg-white/5 px-3 py-2">${label}</span>`; }
 
-  function track(name, params) {
-    if (typeof window.trackEvent === "function") {
-      window.trackEvent(name, { lang: state.lang, ...(params || {}) });
-    }
-  }
-
-  function escapeHtml(value) {
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/\"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-  }
-
-  function money(value) {
-    return `$${value.toFixed(2)}`;
-  }
-
-  function questionOptionLabel(question, optionKey, lang = state.lang) {
-    return copy[lang].questions[question].options[optionKey];
-  }
-
-  function warningLabel(level, lang = state.lang) {
-    return window.warningLabels[lang][level];
+  function syncAdvancedFromAnswers() {
+    const mapped = window.mapQuestionnaireToWorkload(state.answers);
+    state.advanced.model = mapped.recommendedModel;
+    state.advanced.dailyTasks = mapped.dailyTasks;
+    state.advanced.stepsPerTask = mapped.stepsPerTask;
   }
 
   function applyPreset(presetId) {
@@ -193,13 +195,6 @@
     renderApp();
   }
 
-  function syncAdvancedFromAnswers() {
-    const mapped = window.mapQuestionnaireToWorkload(state.answers);
-    state.advanced.model = mapped.recommendedModel;
-    state.advanced.dailyTasks = mapped.dailyTasks;
-    state.advanced.stepsPerTask = mapped.stepsPerTask;
-  }
-
   function getSummary() {
     const mapped = window.mapQuestionnaireToWorkload(state.answers);
     const effective = state.advancedLinked
@@ -207,8 +202,6 @@
       : { ...state.advanced };
     const result = window.calculateCost(effective.model, Number(effective.dailyTasks), Number(effective.stepsPerTask));
     const model = window.modelPricing[effective.model];
-    const suggestions = window.getOptimizationSuggestions(effective.model, Number(effective.dailyTasks), Number(effective.stepsPerTask));
-    const comparisons = window.compareModels(Number(effective.dailyTasks), Number(effective.stepsPerTask), effective.model);
     const summary = {
       lang: state.lang,
       modelId: effective.model,
@@ -219,16 +212,14 @@
       monthlyCost: result.monthly,
       warning: result.warning,
       warningLabel: warningLabel(result.warning.level),
-      suggestions,
-      comparisons,
+      suggestions: window.getOptimizationSuggestions(effective.model, Number(effective.dailyTasks), Number(effective.stepsPerTask)),
+      comparisons: window.compareModels(Number(effective.dailyTasks), Number(effective.stepsPerTask), effective.model),
       frequencyKey: state.answers.frequency,
       complexityKey: state.answers.complexity,
       frequencyLabel: questionOptionLabel("frequency", state.answers.frequency),
       complexityLabel: questionOptionLabel("complexity", state.answers.complexity),
       frequencyLabelZh: questionOptionLabel("frequency", state.answers.frequency, "zh"),
-      frequencyLabelEn: questionOptionLabel("frequency", state.answers.frequency, "en"),
-      takeawayZh: "",
-      takeawayEn: ""
+      frequencyLabelEn: questionOptionLabel("frequency", state.answers.frequency, "en")
     };
     summary.takeawayZh = window.buildCostNarrative(summary, "zh");
     summary.takeawayEn = window.buildCostNarrative(summary, "en");
@@ -274,11 +265,11 @@
   }
 
   function renderSuggestionList() {
-    const savingsLabel = state.lang === "zh" ? "预计每月节省" : "Potential monthly savings";
+    const text = t();
     return state.summary.suggestions.map((item) => `
       <li class="rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-4 text-sm leading-6 text-slate-200">
         ${escapeHtml(state.lang === "zh" ? item.textZh : item.text)}
-        <div class="mt-2 text-xs uppercase tracking-[0.2em] text-emerald-300">${savingsLabel} ${money(item.savings)}</div>
+        <div class="mt-2 text-xs uppercase tracking-[0.2em] text-emerald-300">${text.savingsLabel} ${money(item.savings)}</div>
       </li>
     `).join("");
   }
@@ -297,70 +288,67 @@
     `).join("");
   }
 
-  function workloadChip(label) {
-    return `<span class="rounded-full border border-white/10 bg-white/5 px-3 py-2">${label}</span>`;
-  }
-
   function renderApp() {
     refreshShareCard();
     const text = t();
+    const usageChip = `${state.summary.dailyTasks} ${text.usagePerDay}`;
+    const stepChip = `${state.summary.stepsPerTask} ${text.stepsPerRun}`;
+
     document.documentElement.lang = state.lang === "zh" ? "zh-CN" : "en";
     document.title = `${text.title} | OpenClaw Resource Hub`;
-
-    const usageChip = state.lang === "zh" ? `${state.summary.dailyTasks} 次/天` : `${state.summary.dailyTasks} runs/day`;
-    const stepChip = state.lang === "zh" ? `${state.summary.stepsPerTask} 步/次` : `${state.summary.stepsPerTask} steps/run`;
-
     document.body.className = "min-h-screen bg-slate-950 text-slate-100";
     document.body.innerHTML = `
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.18),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(56,189,248,0.16),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#111827_100%)]">
         <div class="pointer-events-none fixed inset-0 opacity-40" style="background-image:linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px); background-size: 30px 30px;"></div>
         <header class="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
           <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-            <a href="/index.html" class="flex items-center gap-3">
-              <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-orange-400/30 bg-orange-500/10 text-sm font-semibold tracking-[0.22em] text-orange-200">OC</span>
-              <div>
-                <div class="text-xs uppercase tracking-[0.34em] text-slate-400">${text.pageTag}</div>
-                <div class="text-lg font-semibold text-white">${text.brand}</div>
+            <a href="/index.html" class="flex min-w-0 items-center gap-3">
+              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-orange-400/30 bg-orange-500/10 text-sm font-semibold tracking-[0.18em] text-orange-200">OC</span>
+              <div class="min-w-0">
+                <div class="truncate text-sm uppercase tracking-[0.28em] text-slate-400">${text.brandTop}</div>
+                <div class="truncate text-lg font-semibold text-white">${text.brandBottom}</div>
               </div>
             </a>
             <nav class="hidden items-center gap-5 text-sm text-slate-300 xl:flex">
               ${text.nav.map((item) => `<a href="${item.href}" class="transition hover:text-white">${item.name}</a>`).join("")}
+              <span class="text-white">${text.navCurrent}</span>
             </nav>
             <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs">
-              <button data-lang="zh" class="rounded-full px-3 py-1 transition ${state.lang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">中文</button>
-              <button data-lang="en" class="rounded-full px-3 py-1 transition ${state.lang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">EN</button>
+              <button data-lang="zh" class="rounded-full px-3 py-1 transition ${state.lang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langZh}</button>
+              <button data-lang="en" class="rounded-full px-3 py-1 transition ${state.lang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langEn}</button>
             </div>
           </div>
         </header>
 
         <main class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <section class="grid gap-8 lg:grid-cols-[1.18fr,0.82fr] lg:items-end">
+          <section class="grid gap-8 lg:grid-cols-[1.1fr,0.9fr] lg:items-end">
             <div>
               <p class="mb-4 text-xs uppercase tracking-[0.38em] text-orange-200">${text.pageTag}</p>
               <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">${text.title}</h1>
               <p class="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">${text.subtitle}</p>
               <p class="mt-5 max-w-3xl text-sm leading-7 text-slate-400">${text.helper}</p>
             </div>
-            <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            <div class="grid gap-3 sm:grid-cols-3">
               ${text.stats.map((item) => `
                 <article class="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
                   <div class="text-sm text-slate-400">${item.label}</div>
-                  <div class="mt-2 text-2xl font-semibold text-white">${item.value}</div>
+                  <div class="mt-2 text-2xl font-semibold leading-tight text-white">${item.value}</div>
                 </article>
               `).join("")}
             </div>
           </section>
 
-          <section class="mt-10 grid gap-6 lg:grid-cols-[1.05fr,0.95fr]">
+          <section class="mt-10 grid gap-6 xl:grid-cols-[1.08fr,0.92fr]">
             <div class="space-y-6">
               <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
                 <h2 class="text-2xl font-semibold text-white">${text.presetTitle}</h2>
-                <p class="mt-2 text-sm leading-7 text-slate-300">${text.questionnaireBody}</p>
+                <p class="mt-2 text-sm leading-7 text-slate-300">${text.presetBody}</p>
                 <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">${renderPresetCards()}</div>
               </article>
 
               <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
                 <h2 class="text-2xl font-semibold text-white">${text.questionnaireTitle}</h2>
+                <p class="mt-2 text-sm leading-7 text-slate-300">${text.questionnaireBody}</p>
                 <div class="mt-6 grid gap-4 xl:grid-cols-2">${renderQuestionBlocks()}</div>
               </article>
 
@@ -370,9 +358,7 @@
                     <h2 class="text-2xl font-semibold text-white">${text.advancedTitle}</h2>
                     <p class="mt-2 max-w-2xl text-sm leading-7 text-slate-300">${text.advancedBody}</p>
                   </div>
-                  <button data-toggle-advanced class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">
-                    ${state.advancedOpen ? text.advancedToggleClose : text.advancedToggleOpen}
-                  </button>
+                  <button data-toggle-advanced class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${state.advancedOpen ? text.advancedToggleClose : text.advancedToggleOpen}</button>
                 </div>
                 <div class="mt-4 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.22em]">
                   <span class="rounded-full border ${state.advancedLinked ? "border-emerald-300/30 bg-emerald-400/10 text-emerald-200" : "border-amber-300/30 bg-amber-400/10 text-amber-200"} px-3 py-2">${state.advancedLinked ? text.advancedOn : text.advancedOff}</span>
@@ -380,93 +366,61 @@
                 </div>
                 ${state.advancedOpen ? `
                   <div class="mt-6 grid gap-4 md:grid-cols-3">
-                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                      <div class="text-sm text-slate-400">${text.advancedFields.model}</div>
-                      <select data-advanced="model" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none">
-                        ${Object.entries(window.modelPricing).map(([modelId, model]) => `<option value="${modelId}" ${state.advanced.model === modelId ? "selected" : ""}>${model.name}</option>`).join("")}
-                      </select>
-                    </label>
-                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                      <div class="text-sm text-slate-400">${text.advancedFields.dailyTasks}</div>
-                      <input data-advanced="dailyTasks" type="number" min="1" value="${state.advanced.dailyTasks}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none">
-                    </label>
-                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                      <div class="text-sm text-slate-400">${text.advancedFields.stepsPerTask}</div>
-                      <input data-advanced="stepsPerTask" type="number" min="1" value="${state.advanced.stepsPerTask}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none">
-                    </label>
+                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.model}</div><select data-advanced="model" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none">${Object.entries(window.modelPricing).map(([modelId, model]) => `<option value="${modelId}" ${state.advanced.model === modelId ? "selected" : ""}>${model.name}</option>`).join("")}</select></label>
+                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.dailyTasks}</div><input data-advanced="dailyTasks" type="number" min="1" value="${state.advanced.dailyTasks}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
+                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.stepsPerTask}</div><input data-advanced="stepsPerTask" type="number" min="1" value="${state.advanced.stepsPerTask}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
                   </div>
-                  <div class="mt-4">
-                    <button data-relink class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:text-white">${text.advancedSync}</button>
-                  </div>
+                  <div class="mt-4"><button data-relink class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:text-white">${text.advancedSync}</button></div>
                 ` : ""}
               </article>
+
+              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.suggestionsTitle}</h2><ul class="mt-5 space-y-3">${renderSuggestionList()}</ul></article>
+              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.comparisonTitle}</h2><p class="mt-2 text-sm leading-7 text-slate-300">${text.comparisonBody}</p><div class="mt-5 grid gap-4 md:grid-cols-2">${renderComparisonCards()}</div></article>
             </div>
 
-            <div class="space-y-6">
-              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6">
-                <h2 class="text-2xl font-semibold text-white">${text.resultTitle}</h2>
-                <p class="mt-2 text-sm leading-7 text-slate-300">${text.resultLead}</p>
-                <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            <aside class="xl:sticky xl:top-24">
+              <article class="space-y-6 rounded-[32px] border border-white/10 bg-white/[0.05] p-6 shadow-2xl shadow-slate-950/30">
+                <div class="text-xs uppercase tracking-[0.24em] text-orange-200">${text.asideLabel}</div>
+                <div>
+                  <h2 class="text-3xl font-semibold text-white">${text.resultTitle}</h2>
+                  <p class="mt-3 text-sm leading-7 text-slate-300">${text.resultLead}</p>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
                   <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.recommendedModel}</div><div class="mt-3 text-2xl font-semibold text-white">${state.summary.modelName}</div></div>
                   <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.warning}</div><div class="mt-3 text-2xl font-semibold" style="color:${state.summary.warning.accent}">${state.summary.warningLabel}</div></div>
                   <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.dailyCost}</div><div class="mt-3 text-3xl font-semibold text-white">${money(state.summary.dailyCost)}</div></div>
                   <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.monthlyCost}</div><div class="mt-3 text-3xl font-semibold text-white">${money(state.summary.monthlyCost)}</div></div>
                 </div>
-                <div class="mt-5 rounded-3xl border border-white/10 bg-slate-950/70 p-5">
-                  <div class="text-sm text-slate-400">${text.workload}</div>
-                  <div class="mt-3 flex flex-wrap gap-3 text-sm text-slate-200">
-                    ${workloadChip(state.summary.frequencyLabel)}
-                    ${workloadChip(state.summary.complexityLabel)}
-                    ${workloadChip(usageChip)}
-                    ${workloadChip(stepChip)}
-                  </div>
+                <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
+                  <div class="text-sm text-slate-400">${text.workloadTitle}</div>
+                  <div class="mt-3 flex flex-wrap gap-3 text-sm text-slate-200">${workloadChip(state.summary.frequencyLabel)}${workloadChip(state.summary.complexityLabel)}${workloadChip(usageChip)}${workloadChip(stepChip)}</div>
                   <p class="mt-4 text-sm leading-7 text-slate-300">${text.workloadBody}</p>
                   <p class="mt-4 text-base leading-8 text-white">${state.summary.takeaway}</p>
                 </div>
-              </article>
-
-              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6">
-                <h2 class="text-2xl font-semibold text-white">${text.suggestionsTitle}</h2>
-                <ul class="mt-5 space-y-3">${renderSuggestionList()}</ul>
-              </article>
-
-              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6">
-                <h2 class="text-2xl font-semibold text-white">${text.comparisonTitle}</h2>
-                <p class="mt-2 text-sm leading-7 text-slate-300">${text.comparisonBody}</p>
-                <div class="mt-5 grid gap-4 md:grid-cols-2">${renderComparisonCards()}</div>
-              </article>
-            </div>
-          </section>
-
-          <section class="mt-10 rounded-[36px] border border-white/10 bg-slate-950/55 p-6">
-            <div class="grid gap-6 lg:grid-cols-[0.9fr,1.1fr]">
-              <div>
-                <h2 class="text-3xl font-semibold text-white">${text.shareTitle}</h2>
-                <p class="mt-3 max-w-xl text-sm leading-7 text-slate-300">${text.shareBody}</p>
-                <div class="mt-6 grid gap-3 sm:grid-cols-2">
-                  <button data-generate-card class="rounded-full bg-orange-500 px-5 py-3 text-sm font-medium text-slate-950 transition hover:bg-orange-400">${text.generateCard}</button>
-                  <button data-download-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.downloadCard}</button>
-                  <button data-copy-share class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.copyText}</button>
-                  <button data-share-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.shareNow}</button>
+                <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
+                  <h3 class="text-2xl font-semibold text-white">${text.shareTitle}</h3>
+                  <p class="mt-3 text-sm leading-7 text-slate-300">${text.shareBody}</p>
+                  <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                    <button data-generate-card class="rounded-full bg-orange-500 px-5 py-3 text-sm font-medium text-slate-950 transition hover:bg-orange-400">${text.generateCard}</button>
+                    <button data-download-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.downloadCard}</button>
+                    <button data-copy-share class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.copyText}</button>
+                    <button data-share-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.shareNow}</button>
+                  </div>
+                  <div class="mt-5 rounded-[28px] border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-4">
+                    <div class="mb-3 flex items-center justify-between gap-3"><div class="text-sm uppercase tracking-[0.24em] text-slate-400">${text.generatedLabel}</div><div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">${state.summary.warningLabel}</div></div>
+                    <img src="${state.shareDataUrl}" alt="Share card preview" class="w-full rounded-[24px] border border-white/10 bg-slate-950 object-cover shadow-2xl shadow-slate-950/40">
+                  </div>
                 </div>
-              </div>
-              <div class="rounded-[32px] border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-5">
-                <div class="mb-4 flex items-center justify-between gap-3">
-                  <div class="text-sm uppercase tracking-[0.24em] text-slate-400">${text.generatedLabel}</div>
-                  <div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">${state.summary.warningLabel}</div>
-                </div>
-                <img src="${state.shareDataUrl}" alt="Share card preview" class="w-full rounded-[28px] border border-white/10 bg-slate-950 object-cover shadow-2xl shadow-slate-950/40">
-              </div>
-            </div>
+              </article>
+            </aside>
           </section>
 
           <footer class="mt-10 border-t border-white/10 pt-6 text-sm text-slate-400">${text.footer}</footer>
         </main>
 
-        <div id="cost-toast" class="pointer-events-none fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-full border border-white/10 bg-slate-950/90 px-4 py-2 text-sm text-slate-100 shadow-lg shadow-slate-950/50 ${state.toast ? "opacity-100" : "opacity-0"} transition">${state.toast || ""}</div>
+        <div class="pointer-events-none fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-full border border-white/10 bg-slate-950/90 px-4 py-2 text-sm text-slate-100 shadow-lg shadow-slate-950/50 ${state.toast ? "opacity-100" : "opacity-0"} transition">${state.toast || ""}</div>
       </div>
     `;
-
     bindEvents();
   }
 
@@ -536,11 +490,7 @@
     if (generate) {
       generate.addEventListener("click", () => {
         refreshShareCard();
-        track("cost_card_generated", {
-          model: state.summary.modelId,
-          daily_cost: Number(state.summary.dailyCost.toFixed(2)),
-          monthly_cost: Number(state.summary.monthlyCost.toFixed(2))
-        });
+        track("cost_card_generated", { model: state.summary.modelId, daily_cost: Number(state.summary.dailyCost.toFixed(2)), monthly_cost: Number(state.summary.monthlyCost.toFixed(2)) });
         renderApp();
         showToast(t().cardReady);
       });
@@ -573,13 +523,9 @@
         try {
           const result = await window.shareCostResult(state.summary, state.lang, state.shareCanvas);
           track("cost_share_triggered", { mode: result.mode, model: state.summary.modelId, warning: state.summary.warning.level });
-          if (result.mode === "native") {
-            showToast(t().shared);
-          } else if (result.mode === "clipboard") {
-            showToast(t().shareFallback);
-          } else {
-            showToast(t().shareUnsupported);
-          }
+          if (result.mode === "native") showToast(t().shared);
+          else if (result.mode === "clipboard") showToast(t().shareFallback);
+          else showToast(t().shareUnsupported);
         } catch (error) {
           console.error(error);
           showToast(t().shareUnsupported);
