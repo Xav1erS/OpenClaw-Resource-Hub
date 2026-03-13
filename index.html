@@ -109,12 +109,31 @@
                             700: '#b45309',
                             800: '#92400e',
                             900: '#78350f',
-                        }
+                        },
+                        'openclaw-bg': '#0B0E14',
+                        'openclaw-nav': '#111827',
+                        'openclaw-card': '#1F2937',
+                        'openclaw-card-hover': '#374151',
+                        'openclaw-primary': '#F97316',
+                        'openclaw-accent': '#60A5FA',
+                        'openclaw-text': '#FFFFFF',
+                        'openclaw-text-secondary': '#9CA3AF',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                    fontSize: {
+                        'lg-title': ['32px', { lineHeight: '1.2', fontWeight: '700' }],
+                        'md-subtitle': ['14px', { lineHeight: '1.6', fontWeight: '400' }],
+                        'number': ['36px', { lineHeight: '1', fontWeight: '700' }],
+                    },
+                    borderRadius: {
+                        'card': '12px',
+                        'btn': '8px',
                     },
                     boxShadow: {
+                        'card': '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+                        'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                         'glow': '0 0 40px rgba(99, 102, 241, 0.3)',
                         'glow-soft': '0 0 20px rgba(99, 102, 241, 0.15)',
                     }
@@ -126,6 +145,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="global.css">
     
     <style>
         :root {
@@ -637,10 +658,10 @@
     <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
 </head>
-<body class="min-h-screen">
+<body class="openclaw-bg min-h-screen">
     <div class="stars" id="stars"></div>
     <div x-data="app()" x-init="init()" class="min-h-screen relative z-10">
-        <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700">
+        <nav class="openclaw-nav fixed top-0 left-0 right-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
@@ -808,50 +829,41 @@
                             <template x-for="page in pages" :key="page.id">
                                 <div 
                                     @click="currentPage = page.id"
-                                    class="bg-slate-800 rounded-xl p-6 cursor-pointer card-hover border border-slate-700 hover:border-primary-500"
+                                    class="openclaw-card animate-fadeIn"
                                 >
-                                    <div class="text-3xl mb-4" x-text="page.icon"></div>
-                                    <h3 class="text-xl font-semibold text-white mb-2" x-text="page.name"></h3>
-                                    <p class="text-slate-400" x-text="page.description"></p>
+                                    <div class="flex items-start gap-4">
+                                        <div class="text-3xl" x-text="page.icon"></div>
+                                        <div>
+                                            <h3 class="text-xl font-semibold text-white mb-2" x-text="page.name"></h3>
+                                            <p class="text-openclaw-text-secondary" x-text="page.description"></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </template>
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
-                            <h2 class="text-xl font-bold text-white mb-6" x-text="t.home.hotResources"></h2>
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-3 p-3 bg-slate-700/50 rounded-lg">
-                                    <span class="text-primary-500">•</span>
-                                    <span class="text-slate-300" x-text="t.home.marketResearchAgent"></span>
-                                </div>
-                                <div class="flex items-center space-x-3 p-3 bg-slate-700/50 rounded-lg">
-                                    <span class="text-primary-500">•</span>
-                                    <span class="text-slate-300" x-text="t.home.xiaohongshuAgent"></span>
-                                </div>
-                                <div class="flex items-center space-x-3 p-3 bg-slate-700/50 rounded-lg">
-                                    <span class="text-primary-500">•</span>
-                                    <span class="text-slate-300" x-text="t.home.tokenGuide"></span>
-                                </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="openclaw-card animate-fadeIn" style="animation-delay: 0.7s;">
+                            <div class="flex items-center gap-3 mb-4">
+                                <svg class="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"></path>
+                                </svg>
+                                <h3 class="text-white font-semibold text-lg" x-text="t.home.hotResources"></h3>
                             </div>
+                            <p class="text-openclaw-text-secondary text-sm" x-text="t.home.marketResearchAgent"></p>
                         </div>
                         
-                        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
-                            <h2 class="text-xl font-bold text-white mb-6" x-text="t.home.latestData"></h2>
-                            <div class="space-y-4">
-                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
-                                    <span class="text-slate-400" x-text="t.home.communityWorkflows"></span>
-                                    <span class="text-white font-bold">5,420</span>
-                                </div>
-                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
-                                    <span class="text-slate-400" x-text="t.home.activeContributors"></span>
-                                    <span class="text-white font-bold">1,234</span>
-                                </div>
-                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
-                                    <span class="text-slate-400" x-text="t.home.todayVisits"></span>
-                                    <span class="text-white font-bold">8,932</span>
-                                </div>
+                        <div class="openclaw-card animate-fadeIn" style="animation-delay: 0.8s;">
+                            <div class="flex items-center gap-3 mb-4">
+                                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                                <h3 class="text-white font-semibold text-lg" x-text="t.home.latestData"></h3>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-openclaw-text-secondary text-sm" x-text="t.home.communityWorkflows"></span>
+                                <span class="text-white font-bold text-xl">5,420</span>
                             </div>
                         </div>
                     </div>
@@ -875,7 +887,7 @@
                                 x-model="searchQuery"
                                 @input.debounce.300ms="filterTasks()"
                                 placeholder="搜索任务模板..."
-                                class="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 transition-colors"
+                                class="openclaw-input w-full pl-10"
                             >
                         </div>
                         
@@ -932,7 +944,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <template x-for="task in filteredTasks" :key="task.id">
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 card-hover hover:border-primary-500 transition-all">
+                            <div class="openclaw-card">
                                 <div class="flex justify-between items-start mb-4">
                                     <div>
                                         <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="task.category"></span>
@@ -952,7 +964,7 @@
                                     </button>
                                 </div>
                                 
-                                <p class="text-slate-400 text-sm mb-4 line-clamp-2" x-text="task.description"></p>
+                                <p class="text-openclaw-text-secondary text-sm mb-4 line-clamp-2" x-text="task.description"></p>
                                 
                                 <div class="flex flex-wrap gap-2 mb-4">
                                     <template x-for="tool in task.preview.toolsUsed" :key="tool">
@@ -970,10 +982,8 @@
                                     <button 
                                         @click="copyTemplate(task)"
                                         :class="[
-                                            'flex-1 px-4 py-2 text-white text-sm font-medium rounded-lg transition-all',
-                                            copyButtonAnimating === task.id 
-                                                ? 'bg-emerald-600 scale-95' 
-                                                : 'bg-primary-600 hover:bg-primary-700'
+                                            'openclaw-btn flex-1',
+                                            copyButtonAnimating === task.id ? 'bg-emerald-600 scale-95' : ''
                                         ]"
                                     >
                                         <span x-show="copyButtonAnimating !== task.id">📋 复制</span>
@@ -981,7 +991,7 @@
                                     </button>
                                     <button 
                                         @click="showDetail(task)"
-                                        class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors"
+                                        class="border-2 border-openclaw-primary text-openclaw-primary px-4 py-2 rounded-lg font-semibold hover:bg-openclaw-primary hover:text-white transition-all"
                                     >
                                         详情
                                     </button>
@@ -1112,7 +1122,7 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div class="lg:col-span-2 space-y-6">
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <h2 class="text-xl font-semibold text-white mb-4">📋 场景预设</h2>
                                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                     <template x-for="(preset, id) in scenarioPresets" :key="id">
@@ -1132,7 +1142,7 @@
                                 </div>
                             </div>
 
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <h2 class="text-xl font-semibold text-white mb-4">⚙️ 参数设置</h2>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
@@ -1140,7 +1150,7 @@
                                         <select
                                             x-model="selectedModel"
                                             @change="calculate()"
-                                            class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                            class="openclaw-input w-full"
                                         >
                                             <template x-for="(model, id) in modelPricing" :key="id">
                                                 <option :value="id" x-text="model.name"></option>
@@ -1156,7 +1166,7 @@
                                                 @input="calculate()"
                                                 min="1"
                                                 max="1000"
-                                                class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                                class="openclaw-input w-full"
                                             >
                                         </div>
                                         <div>
@@ -1167,14 +1177,14 @@
                                                 @input="calculate()"
                                                 min="1"
                                                 max="1000"
-                                                class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                                                class="openclaw-input w-full"
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <h2 class="text-xl font-semibold text-white mb-4">📊 成本结果</h2>
                                 <div x-show="costResult" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                     <div class="bg-slate-700/50 rounded-lg p-4 text-center">
@@ -1206,14 +1216,14 @@
                                 </div>
                             </div>
 
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <h2 class="text-xl font-semibold text-white mb-4">📈 30天成本趋势</h2>
                                 <canvas id="costChart" height="200"></canvas>
                             </div>
                         </div>
 
                         <div class="space-y-6">
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <h2 class="text-xl font-semibold text-white mb-4">💡 优化建议</h2>
                                 <div x-show="suggestions.length === 0" class="text-slate-400 text-center py-4">
                                     当前已经是最优选择！
@@ -1240,7 +1250,7 @@
                                 </div>
                             </div>
 
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <h2 class="text-xl font-semibold text-white mb-4">🏷️ 可分享结果卡</h2>
                                 <div class="bg-slate-700 rounded-lg p-4 mb-4">
                                     <div class="text-center">
@@ -1259,20 +1269,20 @@
                                 <div class="flex gap-2">
                                     <button
                                         @click="downloadPNG()"
-                                        class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
+                                        class="openclaw-btn flex-1"
                                     >
                                         📥 下载 PNG
                                     </button>
                                     <button
                                         @click="share()"
-                                        class="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
+                                        class="border-2 border-openclaw-primary text-openclaw-primary px-4 py-2 rounded-lg font-semibold hover:bg-openclaw-primary hover:text-white transition-all flex-1"
                                     >
                                         🔗 分享
                                     </button>
                                 </div>
                             </div>
 
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <div class="flex justify-between items-center mb-4">
                                     <h2 class="text-xl font-semibold text-white">📜 历史记录</h2>
                                     <button
@@ -1383,7 +1393,7 @@
                                 x-model="searchQuery"
                                 @input.debounce.300ms="filterCases()"
                                 placeholder="搜索案例..."
-                                class="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 transition-colors"
+                                class="openclaw-input w-full pl-10"
                             >
                         </div>
                         
@@ -1439,7 +1449,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <template x-for="showcase in filteredCases" :key="showcase.id">
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 card-hover hover:border-primary-500 transition-all">
+                            <div class="openclaw-card">
                                 <div class="flex justify-between items-start mb-4">
                                     <div>
                                         <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="showcase.category"></span>
@@ -1491,7 +1501,7 @@
                                 
                                 <button 
                                     @click="showDetail(showcase)"
-                                    class="w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
+                                    class="openclaw-btn w-full"
                                 >
                                     查看详情 →
                                 </button>
@@ -2211,7 +2221,7 @@
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div class="lg:col-span-2">
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <h2 class="text-xl font-semibold text-white mb-6">🔥 热门 Workflow</h2>
                                 <div class="space-y-4">
                                     <template x-for="workflow in trendingWorkflows" :key="workflow.id">
@@ -2263,7 +2273,7 @@
                         </div>
                         
                         <div>
-                            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                            <div class="openclaw-card">
                                 <h2 class="text-xl font-semibold text-white mb-6">🏆 贡献者排行</h2>
                                 <div class="space-y-4">
                                     <template x-for="(contributor, index) in topContributors" :key="contributor.id">

@@ -1,0 +1,171 @@
+/* ========================================
+   OpenClaw Design System - 全局样式
+   复制到项目的 global.css 或 styles.css
+   ======================================== */
+
+/* 1. 背景星点肌理 */
+.openclaw-bg {
+  background-color: #0B0E14;
+  background-image: 
+    radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 20% 80%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 60% 40%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 80% 20%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 40% 60%, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(1px 1px at 90% 90%, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 200px 200px;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* 2. 导航栏样式 */
+.openclaw-nav {
+  background-color: #111827;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: 64px;
+  backdrop-filter: blur(8px);
+}
+
+/* 3. 卡片基础样式 */
+.openclaw-card {
+  background-color: #1F2937;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.openclaw-card:hover {
+  background-color: #374151;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-4px);
+}
+
+/* 4. 按钮样式 */
+.openclaw-btn {
+  background-color: #F97316;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.openclaw-btn:hover {
+  background-color: #EA580C;
+  transform: scale(1.02);
+}
+
+.openclaw-btn:active {
+  transform: scale(0.98);
+}
+
+/* 5. 输入框样式 */
+.openclaw-input {
+  background-color: #1F2937;
+  border: 1px solid #374151;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.openclaw-input:focus {
+  outline: none;
+  border-color: #60A5FA;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+/* 6. 文字颜色 */
+.openclaw-text-primary {
+  color: #FFFFFF;
+}
+
+.openclaw-text-secondary {
+  color: #9CA3AF;
+}
+
+.openclaw-text-accent {
+  color: #F97316;
+}
+
+/* 7. 图标颜色 */
+.icon-blue {
+  color: #60A5FA;
+}
+
+.icon-orange {
+  color: #F97316;
+}
+
+.icon-green {
+  color: #34D399;
+}
+
+.icon-yellow {
+  color: #FBBF24;
+}
+
+/* 8. 字体大小 */
+.text-lg-title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.text-md-subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: #9CA3AF;
+  line-height: 1.6;
+}
+
+.text-body {
+  font-size: 14px;
+  color: #E5E7EB;
+  line-height: 1.6;
+}
+
+.text-number {
+  font-size: 36px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* 9. 响应式调整 */
+@media (max-width: 640px) {
+  .openclaw-nav {
+    height: 56px;
+  }
+
+  .text-lg-title {
+    font-size: 24px;
+  }
+
+  .openclaw-card {
+    padding: 16px;
+  }
+}
+
+/* 10. 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
