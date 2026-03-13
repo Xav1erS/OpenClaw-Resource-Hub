@@ -14,8 +14,9 @@ function app() {
                 { id: 'cost-calculator', name: t.pages.costCalculator, icon: '💰', description: this.currentLang === 'zh' ? '预估Token成本' : 'Estimate token costs' },
                 { id: 'workflows', name: t.pages.workflows, icon: '🔄', description: this.currentLang === 'zh' ? '50+工作流展示' : '50+ workflow showcase' },
                 { id: 'tools', name: t.pages.tools, icon: '🛠️', description: this.currentLang === 'zh' ? '实用小工具箱' : 'Useful toolbox' },
-                { id: 'tutorials', name: t.pages.tutorials, icon: '📖', description: this.currentLang === 'zh' ? '从入门到精通' : 'From beginner to expert' },
-                { id: 'community', name: t.pages.community, icon: '👥', description: this.currentLang === 'zh' ? '连接开发者' : 'Connect with developers' }
+                { id: 'tutorials', name: t.pages.tutorials, icon: '📖', description: this.currentLang === 'zh' ? '从入门到精通' : 'From beginner to expert' }
+                // { id: 'community', name: t.pages.community, icon: '👥', description: this.currentLang === 'zh' ? '连接开发者' : 'Connect with developers' }
+                // 社区板块临时隐藏 - 2026-03-13 - 原因：内容未准备好
             ];
         },
         
@@ -38,6 +39,10 @@ function app() {
         get currentLanguageFlag() {
             const lang = this.languages.find(l => l.code === this.currentLang);
             return lang ? lang.flag : '';
+        },
+        
+        get appTitle() {
+            return this.currentLang === 'zh' ? 'OpenClaw 资源中心' : 'OpenClaw Resource Hub';
         },
         
         switchLanguage(lang) {
@@ -72,18 +77,26 @@ function app() {
             }
             
             const hash = window.location.hash.slice(1);
-            if (hash && this.pages.some(p => p.id === hash)) {
+            if (hash && hash !== 'community' && this.pages.some(p => p.id === hash)) {
                 this.currentPage = hash;
+            } else if (hash === 'community') {
+                this.currentPage = 'home';
+                window.location.hash = 'home';
             }
             
             this.$watch('currentPage', (page) => {
-                window.location.hash = page;
+                if (page !== 'community') {
+                    window.location.hash = page;
+                }
             });
             
             window.addEventListener('hashchange', () => {
                 const hash = window.location.hash.slice(1);
-                if (hash && this.pages.some(p => p.id === hash)) {
+                if (hash && hash !== 'community' && this.pages.some(p => p.id === hash)) {
                     this.currentPage = hash;
+                } else if (hash === 'community') {
+                    this.currentPage = 'home';
+                    window.location.hash = 'home';
                 }
             });
             

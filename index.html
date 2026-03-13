@@ -55,13 +55,6 @@
         }
     </script>
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
-    
-    <script src="js/translations.js"></script>
-    <script src="js/main.js"></script>
-    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -69,16 +62,16 @@
                 extend: {
                     colors: {
                         primary: {
-                            50: '#fff1f2',
-                            100: '#ffe4e6',
-                            200: '#fecdd3',
-                            300: '#fda4af',
-                            400: '#fb7185',
-                            500: '#f43f5e',
-                            600: '#e11d48',
-                            700: '#be123c',
-                            800: '#9f1239',
-                            900: '#881337',
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
                         },
                         slate: {
                             50: '#f8fafc',
@@ -92,12 +85,47 @@
                             800: '#1e293b',
                             900: '#0f172a',
                             950: '#020617',
+                        },
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        amber: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glow': '0 0 40px rgba(99, 102, 241, 0.3)',
+                        'glow-soft': '0 0 20px rgba(99, 102, 241, 0.15)',
                     }
                 }
             }
         }
     </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -106,18 +134,24 @@
             --bg-card: #1e293b;
             --text-primary: #f1f5f9;
             --text-secondary: #94a3b8;
-            --accent-color: #f43f5e;
-            --accent-hover: #e11d48;
-            --accent-active: #be123c;
-            --success-color: #22c55e;
-            --warning-color: #eab308;
+            --text-tertiary: #64748b;
+            --accent-color: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-active: #4338ca;
+            --accent-light: #a5b4fc;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
             --danger-color: #ef4444;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --info-color: #3b82f6;
+            
+            --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            --shadow-glow-red: 0 0 30px rgba(244, 63, 94, 0.4);
-            --shadow-glow-red-soft: 0 0 20px rgba(244, 63, 94, 0.2);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+            --shadow-glow-soft: 0 0 20px rgba(99, 102, 241, 0.15);
             
             --font-size-xs: 0.75rem;
             --font-size-sm: 0.875rem;
@@ -127,17 +161,40 @@
             --font-size-2xl: 1.5rem;
             --font-size-3xl: 1.875rem;
             --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
             
-            --line-height-tight: 1.25;
-            --line-height-snug: 1.375;
+            --line-height-tight: 1.1;
+            --line-height-snug: 1.25;
             --line-height-normal: 1.5;
             --line-height-relaxed: 1.625;
-            --line-height-loose: 2;
+            --line-height-loose: 1.75;
             
             --font-weight-normal: 400;
             --font-weight-medium: 500;
             --font-weight-semibold: 600;
             --font-weight-bold: 700;
+            
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+            
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            --transition-fast: 150ms;
+            --transition-base: 200ms;
+            --transition-slow: 300ms;
+            
+            --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-in: cubic-bezier(0.4, 0, 1, 1);
+            --ease-out: cubic-bezier(0, 0, 0.2, 1);
         }
         
         body {
@@ -145,12 +202,20 @@
             color: var(--text-primary);
             position: relative;
             overflow-x: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             font-size: var(--font-size-base);
             line-height: var(--line-height-normal);
             font-weight: var(--font-weight-normal);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         .text-xs {
@@ -230,7 +295,7 @@
         }
 
         .text-gradient {
-            background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #a5b4fc 50%, #818cf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -246,12 +311,12 @@
         }
 
         a {
-            color: #f43f5e;
-            transition: color 0.2s ease;
+            color: #818cf8;
+            transition: color var(--transition-base) var(--ease-default);
         }
 
         a:hover {
-            color: #fb7185;
+            color: #a5b4fc;
         }
         
         body::before {
@@ -264,9 +329,9 @@
             pointer-events: none;
             z-index: 0;
             background-image: 
-                radial-gradient(ellipse at 20% 20%, rgba(244, 63, 94, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(244, 63, 94, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(244, 63, 94, 0.05) 0%, transparent 70%);
+                radial-gradient(ellipse at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(129, 140, 248, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 40%, rgba(165, 180, 252, 0.08) 0%, transparent 60%);
         }
         
         .stars {
@@ -293,11 +358,12 @@
         }
         
         .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-slow) var(--ease-default);
             box-shadow: var(--shadow-sm);
             position: relative;
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(71, 85, 105, 0.5);
         }
         
         .card-hover::before {
@@ -306,13 +372,13 @@
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, transparent 0%, rgba(244, 63, 94, 0.3) 50%, transparent 100%);
+            background: linear-gradient(135deg, transparent 0%, rgba(99, 102, 241, 0.4) 50%, transparent 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity var(--transition-base) var(--ease-default);
         }
         
         .card-hover::after {
@@ -320,8 +386,8 @@
             position: absolute;
             inset: -1px;
             border-radius: inherit;
-            border: 1px solid rgba(244, 63, 94, 0);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0);
+            transition: all var(--transition-base) var(--ease-default);
             pointer-events: none;
         }
         
@@ -330,19 +396,20 @@
         }
         
         .card-hover:hover::after {
-            border-color: rgba(244, 63, 94, 0.6);
-            box-shadow: var(--shadow-glow-red);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: var(--shadow-glow);
         }
         
         .card-hover:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: var(--shadow-xl), var(--shadow-glow-red-soft);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl), var(--shadow-glow-soft);
+            border-color: rgba(99, 102, 241, 0.3);
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            transition: all var(--transition-base) var(--ease-default);
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.18);
             position: relative;
             overflow: hidden;
         }
@@ -351,9 +418,9 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.18) 50%, transparent 100%);
             transform: translateX(-100%);
-            transition: transform 0.5s ease;
+            transition: transform 0.6s var(--ease-out);
         }
         
         .btn-primary:hover::before {
@@ -361,22 +428,22 @@
         }
         
         .btn-primary:hover {
-            background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(244, 63, 94, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 28px rgba(99, 102, 241, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.22);
         }
         
         .btn-primary:active {
-            background: linear-gradient(135deg, #be123c 0%, #e11d48 100%);
+            background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
             transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(244, 63, 94, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.35), inset 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         
         .btn-secondary {
             background-color: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(71, 85, 105, 0.5);
+            backdrop-filter: blur(12px);
+            transition: all var(--transition-base) var(--ease-default);
+            border: 1px solid rgba(71, 85, 105, 0.6);
             position: relative;
         }
         
@@ -386,13 +453,13 @@
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, transparent 0%, rgba(244, 63, 94, 0.2) 50%, transparent 100%);
+            background: linear-gradient(135deg, transparent 0%, rgba(99, 102, 241, 0.3) 50%, transparent 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity var(--transition-base) var(--ease-default);
         }
         
         .btn-secondary:hover::before {
@@ -400,16 +467,16 @@
         }
         
         .btn-secondary:hover {
-            background-color: rgba(51, 65, 85, 0.9);
+            background-color: rgba(51, 65, 85, 0.95);
             transform: translateY(-2px);
-            border-color: rgba(244, 63, 94, 0.4);
-            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
         }
         
         .btn-secondary:active {
-            background-color: rgba(51, 65, 85, 0.9);
+            background-color: rgba(51, 65, 85, 0.95);
             transform: translateY(0);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
         }
         
         ::-webkit-scrollbar {
@@ -426,11 +493,11 @@
             background: linear-gradient(180deg, #475569 0%, #334155 100%);
             border-radius: 5px;
             border: 2px solid var(--bg-secondary);
-            transition: all 0.2s ease;
+            transition: all var(--transition-base) var(--ease-default);
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+            background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
         }
         
         .language-transition {
@@ -443,19 +510,19 @@
         }
         
         .language-switch-btn {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-base) var(--ease-default);
             background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
         }
         
         .language-switch-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
-            border-color: rgba(244, 63, 94, 0.5);
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+            border-color: rgba(99, 102, 241, 0.5);
         }
         
         .lang-dropdown button {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-base) var(--ease-default);
             position: relative;
         }
         
@@ -466,9 +533,9 @@
             top: 0;
             bottom: 0;
             width: 3px;
-            background: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+            background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
             opacity: 0;
-            transition: opacity 0.2s ease;
+            transition: opacity var(--transition-base) var(--ease-default);
         }
         
         .lang-dropdown button:hover::before {
@@ -476,15 +543,15 @@
         }
         
         .lang-dropdown button:hover {
-            background-color: rgba(244, 63, 94, 0.15);
+            background-color: rgba(99, 102, 241, 0.12);
             padding-left: calc(1rem + 3px);
         }
         
         .input-field {
             background-color: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border-color: rgba(51, 65, 85, 0.8);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-base) var(--ease-default);
         }
         
         .input-field:hover {
@@ -492,16 +559,16 @@
         }
         
         .input-field:focus {
-            border-color: #f43f5e;
-            box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.15), 0 0 20px rgba(244, 63, 94, 0.15);
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), 0 0 24px rgba(99, 102, 241, 0.18);
             background-color: rgba(30, 41, 59, 0.9);
         }
         
         .dropdown-menu {
-            box-shadow: var(--shadow-xl), var(--shadow-glow-red-soft);
-            animation: dropdownIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-xl), var(--shadow-glow-soft);
+            animation: dropdownIn 0.2s var(--ease-out);
+            background: rgba(30, 41, 59, 0.96);
+            backdrop-filter: blur(24px);
         }
         
         @keyframes dropdownIn {
@@ -517,7 +584,7 @@
         
         .focus-ring:focus {
             outline: none;
-            box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.3);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.35);
         }
         
         .nav-item {
@@ -531,8 +598,8 @@
             left: 50%;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #f43f5e 0%, #fb7185 100%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, #6366f1 0%, #a5b4fc 100%);
+            transition: all var(--transition-slow) var(--ease-default);
             transform: translateX(-50%);
         }
         
@@ -558,10 +625,17 @@
             content: '';
             width: 4px;
             height: 1.5em;
-            background: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+            background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
             border-radius: 2px;
         }
     </style>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
 </head>
 <body class="min-h-screen">
     <div class="stars" id="stars"></div>
@@ -572,7 +646,7 @@
                     <div class="flex items-center">
                         <a href="#" @click.prevent="currentPage = 'home'" class="flex items-center space-x-2">
                             <span class="text-2xl">🦞</span>
-                            <span class="text-xl font-bold text-white">OpenClaw Resource Hub</span>
+                            <span class="text-xl font-bold text-white" x-text="appTitle"></span>
                         </a>
                     </div>
                     
@@ -610,31 +684,34 @@
                                 x-transition:leave="transition ease-in duration-150"
                                 x-transition:leave-start="opacity-100 scale-100"
                                 x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute right-0 mt-2 w-48 bg-slate-800 rounded-xl shadow-xl border border-slate-700 z-50 overflow-hidden"
+                                class="absolute right-0 mt-2 w-48 bg-slate-800 rounded-xl shadow-xl border border-slate-700 z-[9999] overflow-hidden dropdown-menu"
+                                style="min-width: 200px;"
                             >
-                                <template x-for="lang in languages" :key="lang.code">
-                                    <button 
-                                        @click="switchLanguage(lang.code)"
-                                        :class="[
-                                            'w-full flex items-center space-x-3 px-4 py-3 text-left transition-colors',
-                                            currentLang === lang.code 
-                                                ? 'bg-primary-600/20 text-primary-400' 
-                                                : 'text-slate-300 hover:bg-slate-700'
-                                        ]"
-                                    >
-                                        <span x-text="lang.flag"></span>
-                                        <span x-text="lang.name"></span>
-                                        <svg 
-                                            x-show="currentLang === lang.code" 
-                                            class="w-5 h-5 ml-auto text-primary-500" 
-                                            fill="none" 
-                                            stroke="currentColor" 
-                                            viewBox="0 0 24 24"
+                                <div class="p-1">
+                                    <template x-for="lang in languages" :key="lang.code">
+                                        <button 
+                                            @click="switchLanguage(lang.code)"
+                                            :class="[
+                                                'w-full flex items-center space-x-3 px-4 py-3 text-left transition-all rounded-lg mb-1',
+                                                currentLang === lang.code 
+                                                    ? 'bg-primary-600/20 text-primary-400' 
+                                                    : 'text-slate-300 hover:bg-slate-700'
+                                            ]"
                                         >
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                        </svg>
-                                    </button>
-                                </template>
+                                            <span class="text-xl" x-text="lang.flag"></span>
+                                            <span class="font-medium" x-text="lang.name"></span>
+                                            <svg 
+                                                x-show="currentLang === lang.code" 
+                                                class="w-5 h-5 ml-auto text-primary-500" 
+                                                fill="none" 
+                                                stroke="currentColor" 
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </button>
+                                    </template>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -658,31 +735,34 @@
                             x-transition:leave="transition ease-in duration-150"
                             x-transition:leave-start="opacity-100 scale-100"
                             x-transition:leave-end="opacity-0 scale-95"
-                            class="absolute right-0 top-full mt-2 w-40 bg-slate-800 rounded-xl shadow-xl border border-slate-700 z-50 overflow-hidden"
+                            class="absolute right-0 top-full mt-2 w-48 bg-slate-800 rounded-xl shadow-xl border border-slate-700 z-[9999] overflow-hidden dropdown-menu"
+                            style="min-width: 180px;"
                         >
-                            <template x-for="lang in languages" :key="lang.code">
-                                <button 
-                                    @click="switchLanguage(lang.code)"
-                                    :class="[
-                                        'w-full flex items-center space-x-2 px-4 py-3 text-left transition-colors',
-                                        currentLang === lang.code 
-                                            ? 'bg-primary-600/20 text-primary-400' 
-                                            : 'text-slate-300 hover:bg-slate-700'
-                                    ]"
-                                >
-                                    <span x-text="lang.flag"></span>
-                                    <span x-text="lang.name"></span>
-                                    <svg 
-                                        x-show="currentLang === lang.code" 
-                                        class="w-4 h-4 ml-auto text-primary-500" 
-                                        fill="none" 
-                                        stroke="currentColor" 
-                                        viewBox="0 0 24 24"
+                            <div class="p-1">
+                                <template x-for="lang in languages" :key="lang.code">
+                                    <button 
+                                        @click="switchLanguage(lang.code)"
+                                        :class="[
+                                            'w-full flex items-center space-x-2 px-4 py-3 text-left transition-all rounded-lg mb-1',
+                                            currentLang === lang.code 
+                                                ? 'bg-primary-600/20 text-primary-400' 
+                                                : 'text-slate-300 hover:bg-slate-700'
+                                        ]"
                                     >
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                </button>
-                            </template>
+                                        <span class="text-xl" x-text="lang.flag"></span>
+                                        <span class="font-medium" x-text="lang.name"></span>
+                                        <svg 
+                                            x-show="currentLang === lang.code" 
+                                            class="w-4 h-4 ml-auto text-primary-500" 
+                                            fill="none" 
+                                            stroke="currentColor" 
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </button>
+                                </template>
+                            </div>
                         </div>
                         <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700">
                             <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -889,9 +969,15 @@
                                 <div class="flex gap-2">
                                     <button 
                                         @click="copyTemplate(task)"
-                                        class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
+                                        :class="[
+                                            'flex-1 px-4 py-2 text-white text-sm font-medium rounded-lg transition-all',
+                                            copyButtonAnimating === task.id 
+                                                ? 'bg-emerald-600 scale-95' 
+                                                : 'bg-primary-600 hover:bg-primary-700'
+                                        ]"
                                     >
-                                        📋 复制
+                                        <span x-show="copyButtonAnimating !== task.id">📋 复制</span>
+                                        <span x-show="copyButtonAnimating === task.id">✓ 已复制</span>
                                     </button>
                                     <button 
                                         @click="showDetail(task)"
@@ -974,12 +1060,44 @@
                         </div>
                     </div>
                     
-                    <div x-show="showToast" x-transition class="fixed bottom-4 right-4 z-50">
-                        <div class="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div x-show="showToast" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-4" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+                        <div class="bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            <span>已复制到剪贴板！</span>
+                            <span class="font-medium" x-text="toastMessage"></span>
+                        </div>
+                    </div>
+                    
+                    <div x-show="showRedirectModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" @click="showRedirectModal = false"></div>
+                        <div class="relative bg-slate-800 rounded-2xl max-w-md w-full border border-slate-700 shadow-2xl">
+                            <div class="p-6">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-emerald-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-2">复制成功！</h3>
+                                    <p class="text-slate-400 mb-6">模板已复制到剪贴板，现在前往OpenClaw使用吧！</p>
+                                </div>
+                                
+                                <div class="flex gap-3">
+                                    <button 
+                                        @click="showRedirectModal = false"
+                                        class="flex-1 px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-colors"
+                                    >
+                                        稍后
+                                    </button>
+                                    <button 
+                                        @click="goToOpenClaw()"
+                                        class="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-xl transition-colors"
+                                    >
+                                        🚀 去使用
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1069,11 +1187,21 @@
                                     </div>
                                     <div class="bg-slate-700/50 rounded-lg p-4 text-center">
                                         <div class="text-slate-400 text-sm">每月</div>
-                                        <div class="text-2xl font-bold text-primary-300" x-text="'$' + costResult.monthly.toFixed(2)"></div>
+                                        <div class="text-2xl font-bold" :style="{ color: costResult.warning.color }" x-text="'$' + costResult.monthly.toFixed(2)"></div>
                                     </div>
                                     <div class="bg-slate-700/50 rounded-lg p-4 text-center">
                                         <div class="text-slate-400 text-sm">每年</div>
                                         <div class="text-2xl font-bold text-primary-200" x-text="'$' + costResult.yearly.toFixed(2)"></div>
+                                    </div>
+                                </div>
+                                <div x-show="costResult" class="mt-4">
+                                    <div :class="['rounded-lg p-4 flex items-center space-x-3', costResult.warning.bgColor]">
+                                        <svg class="w-6 h-6 flex-shrink-0" :style="{ color: costResult.warning.color }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                        </svg>
+                                        <div>
+                                            <p class="font-medium" :class="costResult.warning.textColor" x-text="costResult.warning.message"></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1238,11 +1366,11 @@
                 </div>
             </div>
             
-            <div x-show="currentPage === 'workflows'" x-transition x-data="workflowGallery()" x-init="init()">
+            <div x-show="currentPage === 'workflows'" x-transition x-data="showcaseGallery()" x-init="init()">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div class="mb-8">
-                        <h1 class="text-3xl font-bold text-white mb-2">🔄 工作流展示</h1>
-                        <p class="text-slate-400">50+ 精选工作流配置，一键复制使用</p>
+                        <h1 class="text-3xl font-bold text-white mb-2">🌟 Community Showcase</h1>
+                        <p class="text-slate-400">精选完整案例，从入门到精通，包含详细教程和配置</p>
                     </div>
                     
                     <div class="mb-8 space-y-4">
@@ -1253,15 +1381,15 @@
                             <input 
                                 type="text" 
                                 x-model="searchQuery"
-                                @input.debounce.300ms="filterWorkflows()"
-                                placeholder="搜索工作流..."
+                                @input.debounce.300ms="filterCases()"
+                                placeholder="搜索案例..."
                                 class="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-primary-500 transition-colors"
                             >
                         </div>
                         
                         <div class="flex flex-wrap gap-2">
                             <button 
-                                @click="selectedCategory = ''; filterWorkflows()"
+                                @click="selectedCategory = ''; filterCases()"
                                 :class="[
                                     'px-4 py-2 rounded-lg text-sm font-medium transition-all',
                                     selectedCategory === '' 
@@ -1273,7 +1401,7 @@
                             </button>
                             <template x-for="cat in categories" :key="cat.id">
                                 <button 
-                                    @click="selectedCategory = cat.name; filterWorkflows()"
+                                    @click="selectedCategory = cat.name; filterCases()"
                                     :class="[
                                         'px-4 py-2 rounded-lg text-sm font-medium transition-all',
                                         selectedCategory === cat.name 
@@ -1281,12 +1409,11 @@
                                             : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                                     ]"
                                 >
-                                    <span x-text="cat.icon"></span>
                                     <span x-text="cat.name"></span>
                                 </button>
                             </template>
                             <button 
-                                @click="showFavorites = !showFavorites; filterWorkflows()"
+                                @click="showFavorites = !showFavorites; filterCases()"
                                 :class="[
                                     'px-4 py-2 rounded-lg text-sm font-medium transition-all ml-auto',
                                     showFavorites 
@@ -1297,7 +1424,7 @@
                                 ❤️ 收藏
                             </button>
                             <button 
-                                @click="sortByUsage = !sortByUsage; filterWorkflows()"
+                                @click="sortByUsage = !sortByUsage; filterCases()"
                                 :class="[
                                     'px-4 py-2 rounded-lg text-sm font-medium transition-all',
                                     sortByUsage 
@@ -1308,97 +1435,91 @@
                                 🔥 热门
                             </button>
                         </div>
-                        
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-slate-400 text-sm py-2">标签筛选:</span>
-                            <template x-for="tag in allTags" :key="tag">
-                                <button 
-                                    @click="toggleTag(tag)"
-                                    :class="[
-                                        'px-3 py-1 rounded-full text-xs font-medium transition-all',
-                                        selectedTags.includes(tag)
-                                            ? 'bg-primary-600 text-white' 
-                                            : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                                    ]"
-                                    x-text="tag"
-                                ></button>
-                            </template>
-                            <button 
-                                @click="selectedTags = []; filterWorkflows()"
-                                class="px-3 py-1 rounded-full text-xs font-medium bg-slate-600 text-slate-300 hover:bg-slate-500 transition-all"
-                                x-show="selectedTags.length > 0"
-                            >
-                                清除标签
-                            </button>
-                        </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <template x-for="workflow in filteredWorkflows" :key="workflow.id">
+                        <template x-for="showcase in filteredCases" :key="showcase.id">
                             <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 card-hover hover:border-primary-500 transition-all">
                                 <div class="flex justify-between items-start mb-4">
                                     <div>
-                                        <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="workflow.category"></span>
-                                        <h3 class="text-lg font-semibold text-white" x-text="workflow.name"></h3>
+                                        <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="showcase.category"></span>
+                                        <h3 class="text-lg font-semibold text-white" x-text="showcase.title"></h3>
                                     </div>
                                     <button 
-                                        @click="toggleFavorite(workflow.id)"
+                                        @click="toggleFavorite(showcase.id)"
                                         class="p-2 rounded-lg hover:bg-slate-700 transition-colors"
-                                        :class="isFavorite(workflow.id) ? 'text-pink-500' : 'text-slate-400'"
+                                        :class="isFavorite(showcase.id) ? 'text-pink-500' : 'text-slate-400'"
                                     >
-                                        <svg x-show="!isFavorite(workflow.id)" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg x-show="!isFavorite(showcase.id)" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                         </svg>
-                                        <svg x-show="isFavorite(workflow.id)" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <svg x-show="isFavorite(showcase.id)" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                         </svg>
                                     </button>
                                 </div>
                                 
-                                <p class="text-slate-400 text-sm mb-4 line-clamp-2" x-text="workflow.description"></p>
+                                <p class="text-slate-400 text-sm mb-4 line-clamp-2" x-text="showcase.description"></p>
                                 
                                 <div class="flex flex-wrap gap-2 mb-4">
-                                    <template x-for="tag in workflow.tags" :key="tag">
+                                    <span 
+                                        class="px-2 py-1 text-xs font-medium rounded"
+                                        :class="getDifficultyColor(showcase.difficulty)"
+                                        x-text="showcase.difficulty"
+                                    ></span>
+                                    <span class="px-2 py-1 bg-slate-700 text-slate-300 text-xs rounded" x-text="'⏱️ ' + showcase.estimatedTime"></span>
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <template x-for="tag in showcase.tags.slice(0, 3)" :key="tag">
                                         <span class="px-2 py-1 bg-slate-700 text-slate-300 text-xs rounded" x-text="tag"></span>
                                     </template>
+                                    <span x-show="showcase.tags.length > 3" class="px-2 py-1 bg-slate-700 text-slate-400 text-xs rounded" x-text="'+' + (showcase.tags.length - 3)"></span>
                                 </div>
                                 
                                 <div class="flex items-center justify-between text-xs text-slate-400 mb-4">
-                                    <span x-text="'👤 ' + workflow.author"></span>
-                                    <span x-text="'⭐ ' + workflow.stars.toLocaleString()"></span>
-                                    <span x-text="'📊 ' + workflow.usage.toLocaleString() + ' 次'"></span>
+                                    <div class="flex items-center space-x-1">
+                                        <span x-text="showcase.authorAvatar"></span>
+                                        <span x-text="showcase.author"></span>
+                                        <svg x-show="showcase.verified" class="w-3.5 h-3.5 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <span x-text="'⭐ ' + showcase.stars.toLocaleString()"></span>
+                                    <span x-text="'📊 ' + showcase.usage.toLocaleString() + ' 次'"></span>
                                 </div>
                                 
-                                <div class="flex gap-2">
-                                    <button 
-                                        @click="copyConfig(workflow)"
-                                        class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
-                                    >
-                                        📋 复制配置
-                                    </button>
-                                    <button 
-                                        @click="showDetail(workflow)"
-                                        class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-colors"
-                                    >
-                                        详情
-                                    </button>
-                                </div>
+                                <button 
+                                    @click="showDetail(showcase)"
+                                    class="w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
+                                >
+                                    查看详情 →
+                                </button>
                             </div>
                         </template>
                     </div>
                     
-                    <div x-show="filteredWorkflows.length === 0" class="text-center py-12">
-                        <p class="text-slate-400 text-lg">没有找到匹配的工作流</p>
+                    <div x-show="filteredCases.length === 0" class="text-center py-12">
+                        <p class="text-slate-400 text-lg">没有找到匹配的案例</p>
                     </div>
                     
                     <div x-show="showModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4">
-                        <div class="fixed inset-0 bg-black/50" @click="showModal = false"></div>
-                        <div class="relative bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-700">
+                        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" @click="showModal = false"></div>
+                        <div class="relative bg-slate-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700">
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-6">
                                     <div>
-                                        <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full mb-2" x-text="selectedWorkflow?.category"></span>
-                                        <h2 class="text-2xl font-bold text-white" x-text="selectedWorkflow?.name"></h2>
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="inline-block px-3 py-1 bg-primary-600/20 text-primary-400 text-xs font-medium rounded-full" x-text="selectedCase?.category"></span>
+                                            <span 
+                                                class="inline-block px-3 py-1 text-xs font-medium rounded-full"
+                                                :class="getDifficultyColor(selectedCase?.difficulty)"
+                                                x-text="selectedCase?.difficulty"
+                                            ></span>
+                                            <span class="inline-block px-3 py-1 bg-slate-700/50 text-slate-300 text-xs font-medium rounded-full" x-text="'⏱️ ' + selectedCase?.estimatedTime"></span>
+                                        </div>
+                                        <h2 class="text-2xl font-bold text-white" x-text="selectedCase?.title"></h2>
+                                        <p class="text-slate-400 mt-2" x-text="selectedCase?.description"></p>
                                     </div>
                                     <button @click="showModal = false" class="p-2 rounded-lg hover:bg-slate-700 transition-colors text-slate-400">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1407,59 +1528,176 @@
                                     </button>
                                 </div>
                                 
-                                <p class="text-slate-300 mb-6" x-text="selectedWorkflow?.description"></p>
-                                
-                                <div class="grid grid-cols-2 gap-4 mb-6">
-                                    <div class="bg-slate-700/50 rounded-lg p-4">
-                                        <p class="text-slate-400 text-sm mb-1">作者</p>
-                                        <p class="text-white font-semibold" x-text="selectedWorkflow?.author"></p>
+                                <div class="flex items-center space-x-3 mb-6 pb-6 border-b border-slate-700">
+                                    <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-2xl" x-text="selectedCase?.authorAvatar"></div>
+                                    <div>
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-white font-semibold" x-text="selectedCase?.author"></span>
+                                            <svg x-show="selectedCase?.verified" class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-slate-400 text-sm">
+                                            <span x-text="'⭐ ' + selectedCase?.stars.toLocaleString()"></span>
+                                            <span class="mx-2">•</span>
+                                            <span x-text="'📊 ' + selectedCase?.usage.toLocaleString() + ' 次使用'"></span>
+                                        </p>
                                     </div>
-                                    <div class="bg-slate-700/50 rounded-lg p-4">
-                                        <p class="text-slate-400 text-sm mb-1">点赞数</p>
-                                        <p class="text-white font-semibold" x-text="selectedWorkflow?.stars.toLocaleString()"></p>
-                                    </div>
-                                    <div class="bg-slate-700/50 rounded-lg p-4">
-                                        <p class="text-slate-400 text-sm mb-1">使用次数</p>
-                                        <p class="text-white font-semibold" x-text="selectedWorkflow?.usage.toLocaleString()"></p>
-                                    </div>
-                                    <div class="bg-slate-700/50 rounded-lg p-4">
-                                        <p class="text-slate-400 text-sm mb-1">分类</p>
-                                        <p class="text-white font-semibold" x-text="selectedWorkflow?.category"></p>
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-6">
-                                    <h3 class="text-lg font-semibold text-white mb-3">标签</h3>
-                                    <div class="flex flex-wrap gap-2">
-                                        <template x-for="tag in selectedWorkflow?.tags" :key="tag">
-                                            <span class="px-3 py-1 bg-slate-700 text-slate-300 text-sm rounded" x-text="tag"></span>
+                                    <div class="ml-auto flex gap-2">
+                                        <template x-for="tag in selectedCase?.tags" :key="tag">
+                                            <span class="px-2 py-1 bg-slate-700 text-slate-300 text-xs rounded" x-text="tag"></span>
                                         </template>
                                     </div>
                                 </div>
                                 
-                                <div class="mb-6">
-                                    <h3 class="text-lg font-semibold text-white mb-3">YAML 配置</h3>
-                                    <div class="bg-slate-900 rounded-lg p-4 overflow-x-auto">
-                                        <pre class="text-sm text-slate-300 whitespace-pre-wrap" x-text="selectedWorkflow?.config"></pre>
+                                <div x-show="selectedCase?.hardwareRequirements" class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
+                                        <span class="mr-2">💻</span> 硬件要求
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <template x-for="item in selectedCase?.hardwareRequirements" :key="item.name">
+                                            <div class="bg-slate-700/50 rounded-lg p-4">
+                                                <p class="text-white font-medium" x-text="item.name"></p>
+                                                <p class="text-slate-400 text-sm" x-text="item.spec"></p>
+                                            </div>
+                                        </template>
                                     </div>
                                 </div>
                                 
-                                <button 
-                                    @click="copyConfig(selectedWorkflow); showModal = false"
-                                    class="w-full px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors"
-                                >
-                                    📋 复制配置
-                                </button>
+                                <div x-show="selectedCase?.setupSteps" class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
+                                        <span class="mr-2">📝</span> 设置步骤
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <template x-for="step in selectedCase?.setupSteps" :key="step.step">
+                                            <div class="bg-slate-700/30 rounded-lg p-4 border border-slate-700">
+                                                <div class="flex items-start gap-3">
+                                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" x-text="step.step"></div>
+                                                    <div class="flex-1">
+                                                        <h4 class="text-white font-semibold mb-1" x-text="step.title"></h4>
+                                                        <p class="text-slate-400 text-sm mb-3" x-text="step.description"></p>
+                                                        <div class="relative">
+                                                            <div class="bg-slate-900 rounded-lg p-4 overflow-x-auto">
+                                                                <pre class="text-sm text-slate-300 whitespace-pre-wrap" x-text="step.code"></pre>
+                                                            </div>
+                                                            <button 
+                                                                @click="copyCommand(step.code)"
+                                                                class="absolute top-2 right-2 px-3 py-1 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs rounded transition-colors"
+                                                            >
+                                                                📋 复制
+                                                            </button>
+                                                        </div>
+                                                        <p x-show="step.note" class="mt-2 text-amber-400 text-sm flex items-center">
+                                                            <span class="mr-1">💡</span>
+                                                            <span x-text="step.note"></span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="selectedCase?.proTips" class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
+                                        <span class="mr-2">💡</span> Pro Tips
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <template x-for="tip in selectedCase?.proTips" :key="tip.title">
+                                            <div class="bg-slate-700/50 rounded-lg p-4">
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <span class="text-xl" x-text="tip.icon"></span>
+                                                    <h4 class="text-white font-medium" x-text="tip.title"></h4>
+                                                </div>
+                                                <p class="text-slate-400 text-sm" x-text="tip.description"></p>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="selectedCase?.userTestimonials" class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
+                                        <span class="mr-2">💬</span> 用户反馈
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <template x-for="testimonial in selectedCase?.userTestimonials" :key="testimonial.name">
+                                            <div class="bg-slate-700/50 rounded-lg p-4">
+                                                <div class="flex items-center gap-3 mb-2">
+                                                    <div class="w-10 h-10 bg-slate-600 rounded-full flex items-center justify-center text-xl" x-text="testimonial.avatar"></div>
+                                                    <div>
+                                                        <div class="flex items-center gap-2">
+                                                            <span class="text-white font-medium" x-text="testimonial.name"></span>
+                                                            <svg x-show="testimonial.verified" class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                                            </svg>
+                                                        </div>
+                                                        <p class="text-slate-500 text-xs" x-text="testimonial.date"></p>
+                                                    </div>
+                                                </div>
+                                                <p class="text-slate-300 text-sm" x-text="'\"' + testimonial.quote + '\"'"></p>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="selectedCase?.exampleCommands" class="mb-6">
+                                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
+                                        <span class="mr-2">🎯</span> 示例命令
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <template x-for="cmd in selectedCase?.exampleCommands" :key="cmd">
+                                            <div class="relative bg-slate-700/50 rounded-lg p-4">
+                                                <p class="text-slate-300 text-sm" x-text="cmd"></p>
+                                                <button 
+                                                    @click="copyCommand(cmd)"
+                                                    class="absolute top-2 right-2 px-2 py-1 bg-slate-600 hover:bg-slate-500 text-slate-300 text-xs rounded transition-colors"
+                                                >
+                                                    📋
+                                                </button>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div x-show="selectedCase?.developerInfo" class="mb-6 pt-6 border-t border-slate-700">
+                                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
+                                        <span class="mr-2">👨‍💻</span> 开发者信息
+                                    </h3>
+                                    <div class="bg-slate-700/50 rounded-lg p-4">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-14 h-14 bg-slate-600 rounded-full flex items-center justify-center text-3xl" x-text="selectedCase?.developerInfo.avatar"></div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center gap-2 mb-1">
+                                                    <span class="text-white font-semibold" x-text="selectedCase?.developerInfo.name"></span>
+                                                    <svg x-show="selectedCase?.developerInfo.verified" class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </div>
+                                                <p class="text-slate-400 text-sm mb-2" x-text="'贡献: ' + selectedCase?.developerInfo.contributions + ' 个案例'"></p>
+                                                <a 
+                                                    :href="selectedCase?.developerInfo.github" 
+                                                    target="_blank" 
+                                                    class="inline-flex items-center gap-1 text-primary-400 hover:text-primary-300 text-sm transition-colors"
+                                                >
+                                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                                    </svg>
+                                                    GitHub
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div x-show="showToast" x-transition class="fixed bottom-4 right-4 z-50">
-                        <div class="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2">
+                    <div x-show="showToast" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-4" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+                        <div class="bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            <span>已复制到剪贴板！</span>
+                            <span x-text="toastMessage"></span>
                         </div>
                     </div>
                 </div>
@@ -1963,7 +2201,8 @@
                 </div>
             </div>
             
-            <div x-show="currentPage === 'community'" x-transition x-data="communityModule()">
+            <!-- 社区板块临时隐藏 - 2026-03-13 - 原因：内容未准备好 -->
+            <!-- <div x-show="currentPage === 'community'" x-transition x-data="communityModule()">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div class="mb-8">
                         <h1 class="text-3xl font-bold text-white mb-2">👥 社区</h1>
@@ -2079,7 +2318,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </main>
         
         <footer class="bg-slate-800 border-t border-slate-700 mt-auto">
@@ -2093,51 +2332,11 @@
     
     <script src="js/task-data.js"></script>
     <script src="js/workflow-data.js"></script>
+    <script src="js/showcase-data.js"></script>
     <script src="js/calculator.js"></script>
     <script src="js/tools.js"></script>
     <script src="js/tutorials.js"></script>
     <script>
-        function app() {
-            return {
-                currentPage: 'home',
-                mobileMenuOpen: false,
-                pages: [
-                    { id: 'home', name: '首页', icon: '🏠', description: '欢迎来到OpenClaw资源中心' },
-                    { id: 'task-library', name: '模板库', icon: '📚', description: '100+精选任务模板' },
-                    { id: 'cost-calculator', name: '成本计算', icon: '💰', description: '预估Token成本' },
-                    { id: 'workflows', name: '工作流', icon: '🔄', description: '100+工作流展示' },
-                    { id: 'tools', name: '工具', icon: '🛠️', description: '实用小工具箱' },
-                    { id: 'tutorials', name: '教程', icon: '📖', description: '从入门到精通' },
-                    { id: 'community', name: '社区', icon: '👥', description: '连接开发者' }
-                ],
-                
-                init() {
-                    if (typeof trackPageView === 'function') {
-                        trackPageView('home');
-                    }
-                    
-                    const hash = window.location.hash.slice(1);
-                    if (hash && this.pages.some(p => p.id === hash)) {
-                        this.currentPage = hash;
-                    }
-                    
-                    this.$watch('currentPage', (page) => {
-                        window.location.hash = page;
-                        if (typeof trackPageView === 'function') {
-                            trackPageView(page);
-                        }
-                    });
-                    
-                    window.addEventListener('hashchange', () => {
-                        const hash = window.location.hash.slice(1);
-                        if (hash && this.pages.some(p => p.id === hash)) {
-                            this.currentPage = hash;
-                        }
-                    });
-                }
-            }
-        }
-        
         function taskLibrary() {
             return {
                 searchQuery: '',
@@ -2151,6 +2350,10 @@
                 showModal: false,
                 selectedTask: null,
                 showToast: false,
+                toastMessage: '',
+                showRedirectModal: false,
+                copiedTask: null,
+                copyButtonAnimating: null,
                 
                 init() {
                     this.filterTasks();
@@ -2198,22 +2401,46 @@
                     return this.favorites.includes(taskId);
                 },
                 
+                showToastMessage(message) {
+                    this.toastMessage = message;
+                    this.showToast = true;
+                    setTimeout(() => this.showToast = false, 3000);
+                },
+                
                 copyTemplate(task) {
+                    this.copyButtonAnimating = task.id;
+                    
                     navigator.clipboard.writeText(task.copyFormat).then(() => {
-                        this.showToast = true;
-                        setTimeout(() => this.showToast = false, 2000);
+                        this.showToastMessage('✓ 已复制到剪贴板！');
+                        this.copiedTask = task;
+                        
+                        setTimeout(() => {
+                            this.showRedirectModal = true;
+                        }, 500);
                         
                         task.usageCount++;
                         
                         if (typeof trackEvent === 'function') {
                             trackEvent('template_copy', {
                                 template_id: task.id,
-                                category: task.category
+                                category: task.category,
+                                template_name: task.name
                             });
                         }
+                        
+                        setTimeout(() => {
+                            this.copyButtonAnimating = null;
+                        }, 3000);
                     }).catch(err => {
                         console.error('复制失败:', err);
+                        this.showToastMessage('复制失败，请重试');
+                        this.copyButtonAnimating = null;
                     });
+                },
+                
+                goToOpenClaw() {
+                    this.showRedirectModal = false;
+                    window.open('https://openclaw.ai', '_blank');
                 },
                 
                 showDetail(task) {
@@ -2223,110 +2450,125 @@
             }
         }
         
-        function workflowGallery() {
+        function showcaseGallery() {
             return {
                 searchQuery: '',
                 selectedCategory: '',
-                selectedTags: [],
                 showFavorites: false,
                 sortByUsage: false,
-                filteredWorkflows: [],
-                categories: typeof workflowCategories !== 'undefined' ? workflowCategories : [],
-                allTags: typeof allTags !== 'undefined' ? allTags : [],
-                workflows: typeof workflows !== 'undefined' ? workflows : [],
-                favorites: JSON.parse(localStorage.getItem('workflowFavorites') || '[]'),
+                filteredCases: [],
+                showcaseCases: typeof showcaseCases !== 'undefined' ? showcaseCases : [],
+                favorites: JSON.parse(localStorage.getItem('showcaseFavorites') || '[]'),
                 showModal: false,
-                selectedWorkflow: null,
+                selectedCase: null,
                 showToast: false,
+                toastMessage: '',
                 
-                init() {
-                    this.filterWorkflows();
+                get categories() {
+                    const cats = [...new Set(this.showcaseCases.map(c => c.category))];
+                    return cats.map((cat, idx) => ({ id: idx, name: cat }));
                 },
                 
-                filterWorkflows() {
-                    let result = [...this.workflows];
+                get allTags() {
+                    const tags = new Set();
+                    this.showcaseCases.forEach(c => c.tags.forEach(t => tags.add(t)));
+                    return [...tags];
+                },
+                
+                init() {
+                    this.filterCases();
+                },
+                
+                filterCases() {
+                    let result = [...this.showcaseCases];
                     
                     if (this.searchQuery) {
                         const query = this.searchQuery.toLowerCase();
-                        result = result.filter(workflow => 
-                            workflow.name.toLowerCase().includes(query) ||
-                            workflow.description.toLowerCase().includes(query) ||
-                            workflow.category.toLowerCase().includes(query) ||
-                            workflow.tags.some(tag => tag.toLowerCase().includes(query))
+                        result = result.filter(c => 
+                            c.title.toLowerCase().includes(query) ||
+                            c.description.toLowerCase().includes(query) ||
+                            c.category.toLowerCase().includes(query) ||
+                            c.tags.some(tag => tag.toLowerCase().includes(query))
                         );
                     }
                     
                     if (this.selectedCategory) {
-                        result = result.filter(workflow => workflow.category === this.selectedCategory);
-                    }
-                    
-                    if (this.selectedTags.length > 0) {
-                        result = result.filter(workflow => 
-                            this.selectedTags.some(tag => workflow.tags.includes(tag))
-                        );
+                        result = result.filter(c => c.category === this.selectedCategory);
                     }
                     
                     if (this.showFavorites) {
-                        result = result.filter(workflow => this.favorites.includes(workflow.id));
+                        result = result.filter(c => this.favorites.includes(c.id));
                     }
                     
                     if (this.sortByUsage) {
                         result.sort((a, b) => b.usage - a.usage);
                     }
                     
-                    this.filteredWorkflows = result;
+                    this.filteredCases = result;
                 },
                 
-                toggleTag(tag) {
-                    const index = this.selectedTags.indexOf(tag);
-                    if (index > -1) {
-                        this.selectedTags.splice(index, 1);
-                    } else {
-                        this.selectedTags.push(tag);
-                    }
-                    this.filterWorkflows();
-                },
-                
-                toggleFavorite(workflowId) {
-                    const index = this.favorites.indexOf(workflowId);
+                toggleFavorite(caseId) {
+                    const index = this.favorites.indexOf(caseId);
                     if (index > -1) {
                         this.favorites.splice(index, 1);
                     } else {
-                        this.favorites.push(workflowId);
+                        this.favorites.push(caseId);
                     }
-                    localStorage.setItem('workflowFavorites', JSON.stringify(this.favorites));
-                    this.filterWorkflows();
+                    localStorage.setItem('showcaseFavorites', JSON.stringify(this.favorites));
+                    this.filterCases();
                 },
                 
-                isFavorite(workflowId) {
-                    return this.favorites.includes(workflowId);
+                isFavorite(caseId) {
+                    return this.favorites.includes(caseId);
                 },
                 
-                copyConfig(workflow) {
-                    navigator.clipboard.writeText(workflow.config).then(() => {
-                        this.showToast = true;
-                        setTimeout(() => this.showToast = false, 2000);
-                        
-                        workflow.usage++;
+                showToastMessage(message) {
+                    this.toastMessage = message;
+                    this.showToast = true;
+                    setTimeout(() => this.showToast = false, 3000);
+                },
+                
+                copyCommand(command) {
+                    navigator.clipboard.writeText(command).then(() => {
+                        this.showToastMessage('✓ 已复制到剪贴板！');
                         
                         if (typeof trackEvent === 'function') {
-                            trackEvent('workflow_copy', {
-                                workflow_id: workflow.id,
-                                category: workflow.category
+                            trackEvent('showcase_copy', {
+                                showcase_id: this.selectedCase?.id,
+                                showcase_title: this.selectedCase?.title
                             });
                         }
                     }).catch(err => {
                         console.error('复制失败:', err);
+                        this.showToastMessage('复制失败，请重试');
                     });
                 },
                 
-                showDetail(workflow) {
-                    this.selectedWorkflow = workflow;
+                showDetail(showcaseCase) {
+                    this.selectedCase = showcaseCase;
                     this.showModal = true;
+                    
+                    if (typeof trackEvent === 'function') {
+                        trackEvent('showcase_view', {
+                            showcase_id: showcaseCase.id,
+                            showcase_title: showcaseCase.title,
+                            category: showcaseCase.category
+                        });
+                    }
+                },
+                
+                getDifficultyColor(difficulty) {
+                    switch(difficulty) {
+                        case '简单': return 'bg-emerald-600/20 text-emerald-400';
+                        case '中等': return 'bg-amber-600/20 text-amber-400';
+                        case '高级': return 'bg-red-600/20 text-red-400';
+                        default: return 'bg-slate-600/20 text-slate-400';
+                    }
                 }
             }
         }
         
+        /* 社区模块临时隐藏 - 2026-03-13 - 原因：内容未准备好
         function communityModule() {
             return {
                 topContributors: [
@@ -2351,6 +2593,7 @@
                 ]
             };
         }
+        */
     </script>
     
     <script type="application/ld+json">

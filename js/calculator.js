@@ -1,18 +1,18 @@
 const modelPricing = {
     "claude-opus-4.6": {
-        name: "Claude Opus 4.6",
+        name: "Claude Opus",
         inputPrice: 15,
         outputPrice: 75,
         quality: 5
     },
     "claude-sonnet-4.6": {
-        name: "Claude Sonnet 4.6",
+        name: "Claude Sonnet",
         inputPrice: 3,
         outputPrice: 15,
         quality: 4
     },
     "claude-haiku-4.6": {
-        name: "Claude Haiku 4.6",
+        name: "Claude Haiku",
         inputPrice: 0.25,
         outputPrice: 1.25,
         quality: 3
@@ -29,24 +29,11 @@ const modelPricing = {
         outputPrice: 0.6,
         quality: 3
     },
-    "gpt-4-turbo": {
-        name: "GPT-4 Turbo",
-        inputPrice: 10,
-        outputPrice: 30,
-        quality: 4
-    },
     "deepseek-v3": {
         name: "DeepSeek V3",
         inputPrice: 0.27,
         outputPrice: 0.55,
         quality: 3,
-        isChineseModel: true
-    },
-    "deepseek-reasoner": {
-        name: "DeepSeek Reasoner",
-        inputPrice: 2.7,
-        outputPrice: 11.1,
-        quality: 4,
         isChineseModel: true
     },
     "qwen-plus": {
@@ -56,18 +43,12 @@ const modelPricing = {
         quality: 3,
         isChineseModel: true
     },
-    "qwen-max": {
-        name: "Qwen Max",
-        inputPrice: 1.2,
-        outputPrice: 2.4,
-        quality: 4,
+    "glm-4-plus": {
+        name: "GLM-4 Plus",
+        inputPrice: 0.5,
+        outputPrice: 1,
+        quality: 3,
         isChineseModel: true
-    },
-    "llama-3-70b": {
-        name: "Llama 3 70B",
-        inputPrice: 0.9,
-        outputPrice: 0.9,
-        quality: 3
     }
 };
 
@@ -90,19 +71,31 @@ const scenarioPresets = {
         stepsPerTask: 150,
         description: "开发辅助，频繁使用"
     },
+    browser: {
+        name: "浏览器控制",
+        dailyTasks: 80,
+        stepsPerTask: 120,
+        description: "浏览器自动化操作"
+    },
     heavy: {
         name: "重度挂机",
         dailyTasks: 200,
         stepsPerTask: 300,
         description: "24小时挂机，大规模使用"
-    },
-    startup: {
-        name: "创业团队",
-        dailyTasks: 100,
-        stepsPerTask: 200,
-        description: "小团队协作使用"
     }
 };
+
+function getWarningLevel(monthlyCost) {
+    if (monthlyCost < 50) {
+        return { level: 'low', color: '#10b981', bgColor: 'bg-emerald-600/20', textColor: 'text-emerald-400', message: '成本合理' };
+    } else if (monthlyCost < 200) {
+        return { level: 'medium', color: '#f59e0b', bgColor: 'bg-amber-600/20', textColor: 'text-amber-400', message: '请注意成本' };
+    } else if (monthlyCost < 500) {
+        return { level: 'high', color: '#ef4444', bgColor: 'bg-red-600/20', textColor: 'text-red-400', message: '成本较高' };
+    } else {
+        return { level: 'critical', color: '#dc2626', bgColor: 'bg-red-700/20', textColor: 'text-red-300', message: '成本过高，建议优化' };
+    }
+}
 
 function calculateCost(modelId, dailyTasks, stepsPerTask) {
     const model = modelPricing[modelId];
@@ -117,16 +110,18 @@ function calculateCost(modelId, dailyTasks, stepsPerTask) {
     const inputCost = (totalInputTokens / 1000000) * model.inputPrice;
     const outputCost = (totalOutputTokens / 1000000) * model.outputPrice;
     const totalDailyCost = inputCost + outputCost;
+    const monthlyCost = totalDailyCost * 30;
 
     return {
         daily: totalDailyCost,
         weekly: totalDailyCost * 7,
-        monthly: totalDailyCost * 30,
+        monthly: monthlyCost,
         yearly: totalDailyCost * 365,
         inputCost,
         outputCost,
         totalInputTokens,
-        totalOutputTokens
+        totalOutputTokens,
+        warning: getWarningLevel(monthlyCost)
     };
 }
 
@@ -196,7 +191,7 @@ function generateResultCard(params, costResult) {
         ctx.roundRect(20, 20, 760, 460, 16);
         ctx.fill();
 
-        ctx.fillStyle = '#f43f5e';
+        ctx.fillStyle = '#6366f1';
         ctx.font = 'bold 28px Arial, sans-serif';
         ctx.fillText('🦞 My OpenClaw Agent Cost', 50, 70);
 
@@ -213,11 +208,11 @@ function generateResultCard(params, costResult) {
         ctx.lineTo(750, 230);
         ctx.stroke();
 
-        ctx.fillStyle = '#f43f5e';
+        ctx.fillStyle = '#6366f1';
         ctx.font = 'bold 42px Arial, sans-serif';
         ctx.fillText(`Daily Cost:  $${costResult.daily.toFixed(2)}`, 50, 300);
 
-        ctx.fillStyle = '#fb7185';
+        ctx.fillStyle = '#818cf8';
         ctx.font = 'bold 42px Arial, sans-serif';
         ctx.fillText(`Monthly Cost: $${costResult.monthly.toFixed(2)}`, 50, 360);
 
@@ -372,8 +367,8 @@ function costCalculator() {
                     datasets: [{
                         label: '每日成本 ($)',
                         data: trend.data,
-                        borderColor: '#f43f5e',
-                        backgroundColor: 'rgba(244, 63, 94, 0.15)',
+                        borderColor: '#6366f1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.15)',
                         fill: true,
                         tension: 0.4
                     }]
