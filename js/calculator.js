@@ -1,480 +1,493 @@
 const modelPricing = {
-    "claude-opus-4.6": {
-        name: "Claude Opus",
-        inputPrice: 15,
-        outputPrice: 75,
-        quality: 5
-    },
-    "claude-sonnet-4.6": {
-        name: "Claude Sonnet",
-        inputPrice: 3,
-        outputPrice: 15,
-        quality: 4
-    },
-    "claude-haiku-4.6": {
-        name: "Claude Haiku",
-        inputPrice: 0.25,
-        outputPrice: 1.25,
-        quality: 3
-    },
-    "gpt-4o": {
-        name: "GPT-4o",
-        inputPrice: 2.5,
-        outputPrice: 10,
-        quality: 4
-    },
-    "gpt-4o-mini": {
-        name: "GPT-4o Mini",
-        inputPrice: 0.15,
-        outputPrice: 0.6,
-        quality: 3
-    },
-    "deepseek-v3": {
-        name: "DeepSeek V3",
-        inputPrice: 0.27,
-        outputPrice: 0.55,
-        quality: 3,
-        isChineseModel: true
-    },
-    "qwen-plus": {
-        name: "Qwen Plus",
-        inputPrice: 0.3,
-        outputPrice: 0.6,
-        quality: 3,
-        isChineseModel: true
-    },
-    "glm-4-plus": {
-        name: "GLM-4 Plus",
-        inputPrice: 0.5,
-        outputPrice: 1,
-        quality: 3,
-        isChineseModel: true
-    }
+  "claude-opus-4.6": {
+    name: "Claude Opus 4.6",
+    inputPrice: 15,
+    outputPrice: 75,
+    quality: 5,
+    tier: "premium"
+  },
+  "claude-sonnet-4.6": {
+    name: "Claude Sonnet 4.6",
+    inputPrice: 3,
+    outputPrice: 15,
+    quality: 4,
+    tier: "balanced"
+  },
+  "claude-haiku-4.6": {
+    name: "Claude Haiku 4.6",
+    inputPrice: 0.25,
+    outputPrice: 1.25,
+    quality: 3,
+    tier: "light"
+  },
+  "gpt-4o": {
+    name: "GPT-4o",
+    inputPrice: 2.5,
+    outputPrice: 10,
+    quality: 4,
+    tier: "balanced"
+  },
+  "gpt-4o-mini": {
+    name: "GPT-4o Mini",
+    inputPrice: 0.15,
+    outputPrice: 0.6,
+    quality: 3,
+    tier: "light"
+  },
+  "deepseek-v3": {
+    name: "DeepSeek V3",
+    inputPrice: 0.27,
+    outputPrice: 0.55,
+    quality: 3,
+    tier: "light"
+  },
+  "qwen-plus": {
+    name: "Qwen Plus",
+    inputPrice: 0.3,
+    outputPrice: 0.6,
+    quality: 3,
+    tier: "light"
+  },
+  "glm-4-plus": {
+    name: "GLM-4 Plus",
+    inputPrice: 0.5,
+    outputPrice: 1,
+    quality: 3,
+    tier: "light"
+  }
 };
 
 const scenarioPresets = {
-    light: {
-        name: "轻度摸鱼",
-        dailyTasks: 10,
-        stepsPerTask: 50,
-        description: "偶尔使用，适合初学者"
-    },
-    office: {
-        name: "日常办公",
-        dailyTasks: 35,
-        stepsPerTask: 90,
-        description: "日常工作使用"
-    },
-    dev: {
-        name: "开发辅助",
-        dailyTasks: 50,
-        stepsPerTask: 150,
-        description: "开发辅助，频繁使用"
-    },
-    browser: {
-        name: "浏览器控制",
-        dailyTasks: 80,
-        stepsPerTask: 120,
-        description: "浏览器自动化操作"
-    },
-    heavy: {
-        name: "重度挂机",
-        dailyTasks: 200,
-        stepsPerTask: 300,
-        description: "24小时挂机，大规模使用"
+  starter: {
+    id: "starter",
+    answers: {
+      frequency: "1-5",
+      complexity: "simple",
+      web: "rare",
+      output: "short"
     }
+  },
+  operator: {
+    id: "operator",
+    answers: {
+      frequency: "6-20",
+      complexity: "medium",
+      web: "some",
+      output: "medium"
+    }
+  },
+  content: {
+    id: "content",
+    answers: {
+      frequency: "21-50",
+      complexity: "medium",
+      web: "some",
+      output: "long"
+    }
+  },
+  browser: {
+    id: "browser",
+    answers: {
+      frequency: "21-50",
+      complexity: "hard",
+      web: "high",
+      output: "medium"
+    }
+  },
+  scale: {
+    id: "scale",
+    answers: {
+      frequency: "50+",
+      complexity: "hard",
+      web: "high",
+      output: "long"
+    }
+  }
+};
+
+const questionnaireOptions = {
+  frequency: {
+    "1-5": { dailyTasks: 3 },
+    "6-20": { dailyTasks: 12 },
+    "21-50": { dailyTasks: 35 },
+    "50+": { dailyTasks: 80 }
+  },
+  complexity: {
+    simple: { steps: 14, score: 0 },
+    medium: { steps: 32, score: 1 },
+    hard: { steps: 70, score: 2 }
+  },
+  web: {
+    rare: { steps: 0, score: 0 },
+    some: { steps: 10, score: 0.5 },
+    high: { steps: 25, score: 1 }
+  },
+  output: {
+    short: { steps: 0, score: 0 },
+    medium: { steps: 8, score: 0.5 },
+    long: { steps: 18, score: 1 }
+  }
+};
+
+const warningLabels = {
+  zh: {
+    low: "可放心起跑",
+    watch: "需要关注",
+    high: "偏高",
+    critical: "过高"
+  },
+  en: {
+    low: "Low",
+    watch: "Watch",
+    high: "High",
+    critical: "Critical"
+  }
 };
 
 function getWarningLevel(monthlyCost) {
-    if (monthlyCost < 50) {
-        return { level: 'low', color: '#10b981', bgColor: 'bg-emerald-600/20', textColor: 'text-emerald-400', message: '成本合理' };
-    } else if (monthlyCost < 200) {
-        return { level: 'medium', color: '#f59e0b', bgColor: 'bg-amber-600/20', textColor: 'text-amber-400', message: '请注意成本' };
-    } else if (monthlyCost < 500) {
-        return { level: 'high', color: '#ef4444', bgColor: 'bg-red-600/20', textColor: 'text-red-400', message: '成本较高' };
-    } else {
-        return { level: 'critical', color: '#dc2626', bgColor: 'bg-red-700/20', textColor: 'text-red-300', message: '成本过高，建议优化' };
-    }
+  if (monthlyCost < 25) {
+    return { level: "low", label: "Low", color: "#34d399", accent: "#10b981" };
+  }
+  if (monthlyCost < 120) {
+    return { level: "watch", label: "Watch", color: "#fbbf24", accent: "#f59e0b" };
+  }
+  if (monthlyCost < 300) {
+    return { level: "high", label: "High", color: "#fb7185", accent: "#ef4444" };
+  }
+  return { level: "critical", label: "Critical", color: "#fda4af", accent: "#dc2626" };
 }
 
 function calculateCost(modelId, dailyTasks, stepsPerTask) {
-    const model = modelPricing[modelId];
-    if (!model) return null;
+  const model = modelPricing[modelId];
+  if (!model) return null;
 
-    const avgInputTokens = 1000;
-    const avgOutputTokens = 500;
+  const avgInputTokens = 1000;
+  const avgOutputTokens = 500;
+  const totalInputTokens = dailyTasks * stepsPerTask * avgInputTokens;
+  const totalOutputTokens = dailyTasks * stepsPerTask * avgOutputTokens;
+  const inputCost = (totalInputTokens / 1000000) * model.inputPrice;
+  const outputCost = (totalOutputTokens / 1000000) * model.outputPrice;
+  const daily = inputCost + outputCost;
+  const monthly = daily * 30;
 
-    const totalInputTokens = dailyTasks * stepsPerTask * avgInputTokens;
-    const totalOutputTokens = dailyTasks * stepsPerTask * avgOutputTokens;
-
-    const inputCost = (totalInputTokens / 1000000) * model.inputPrice;
-    const outputCost = (totalOutputTokens / 1000000) * model.outputPrice;
-    const totalDailyCost = inputCost + outputCost;
-    const monthlyCost = totalDailyCost * 30;
-
-    return {
-        daily: totalDailyCost,
-        weekly: totalDailyCost * 7,
-        monthly: monthlyCost,
-        yearly: totalDailyCost * 365,
-        inputCost,
-        outputCost,
-        totalInputTokens,
-        totalOutputTokens,
-        warning: getWarningLevel(monthlyCost)
-    };
+  return {
+    daily,
+    weekly: daily * 7,
+    monthly,
+    yearly: daily * 365,
+    inputCost,
+    outputCost,
+    totalInputTokens,
+    totalOutputTokens,
+    warning: getWarningLevel(monthly)
+  };
 }
 
 function compareModels(dailyTasks, stepsPerTask, selectedModelId) {
-    const results = [];
-
-    for (const [modelId, model] of Object.entries(modelPricing)) {
-        const cost = calculateCost(modelId, dailyTasks, stepsPerTask);
-        if (cost) {
-            results.push({
-                modelId,
-                model,
-                cost,
-                isSelected: modelId === selectedModelId
-            });
-        }
-    }
-
-    results.sort((a, b) => a.cost.monthly - b.cost.monthly);
-    return results;
+  return Object.entries(modelPricing)
+    .map(([modelId, model]) => ({
+      modelId,
+      model,
+      cost: calculateCost(modelId, dailyTasks, stepsPerTask),
+      isSelected: modelId === selectedModelId
+    }))
+    .filter((item) => item.cost)
+    .sort((left, right) => left.cost.monthly - right.cost.monthly);
 }
 
 function getOptimizationSuggestions(selectedModelId, dailyTasks, stepsPerTask) {
-    const suggestions = [];
-    const selectedCost = calculateCost(selectedModelId, dailyTasks, stepsPerTask);
-    if (!selectedCost) return suggestions;
+  const selected = calculateCost(selectedModelId, dailyTasks, stepsPerTask);
+  if (!selected) return [];
 
-    const selectedModel = modelPricing[selectedModelId];
+  const cheaperAlt = compareModels(dailyTasks, stepsPerTask, selectedModelId).find((item) => {
+    return item.modelId !== selectedModelId && item.model.quality >= modelPricing[selectedModelId].quality - 1;
+  });
 
-    for (const [modelId, model] of Object.entries(modelPricing)) {
-        if (modelId === selectedModelId) continue;
-
-        const cost = calculateCost(modelId, dailyTasks, stepsPerTask);
-        const savings = selectedCost.monthly - cost.monthly;
-
-        if (savings > 0 && model.quality >= selectedModel.quality - 1) {
-            suggestions.push({
-                modelId,
-                model,
-                cost,
-                savings,
-                type: savings > selectedCost.monthly * 0.3 ? 'high' : 'medium'
-            });
-        }
-    }
-
-    suggestions.sort((a, b) => b.savings - a.savings);
-    return suggestions.slice(0, 3);
-}
-
-function generateResultCard(params, costResult) {
-    return new Promise((resolve) => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = 800;
-        canvas.height = 500;
-
-        const gradient = ctx.createLinearGradient(0, 0, 800, 500);
-        gradient.addColorStop(0, '#1e293b');
-        gradient.addColorStop(1, '#0f172a');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = '#334155';
-        ctx.beginPath();
-        ctx.roundRect(20, 20, 760, 460, 16);
-        ctx.fill();
-
-        ctx.fillStyle = '#6366f1';
-        ctx.font = 'bold 28px Arial, sans-serif';
-        ctx.fillText('🦞 My OpenClaw Agent Cost', 50, 70);
-
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '20px Arial, sans-serif';
-        ctx.fillText(`Tasks per day: ${params.dailyTasks}`, 50, 120);
-        ctx.fillText(`Steps per task: ${params.stepsPerTask}`, 50, 155);
-        ctx.fillText(`Model: ${params.modelName}`, 50, 190);
-
-        ctx.strokeStyle = '#475569';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(50, 230);
-        ctx.lineTo(750, 230);
-        ctx.stroke();
-
-        ctx.fillStyle = '#6366f1';
-        ctx.font = 'bold 42px Arial, sans-serif';
-        ctx.fillText(`Daily Cost:  $${costResult.daily.toFixed(2)}`, 50, 300);
-
-        ctx.fillStyle = '#818cf8';
-        ctx.font = 'bold 42px Arial, sans-serif';
-        ctx.fillText(`Monthly Cost: $${costResult.monthly.toFixed(2)}`, 50, 360);
-
-        ctx.fillStyle = '#64748b';
-        ctx.font = '16px Arial, sans-serif';
-        ctx.fillText('Calculated with OpenClaw Cost Calculator', 50, 420);
-        ctx.fillText('openclaw-hub.vercel.app', 50, 450);
-
-        resolve(canvas);
+  const suggestions = [];
+  if (cheaperAlt) {
+    suggestions.push({
+      kind: "model",
+      text: `Switch to ${cheaperAlt.model.name} when a slight quality drop is acceptable.`,
+      textZh: `如果容忍轻微质量下降，可以改用 ${cheaperAlt.model.name}。`,
+      savings: Math.max(0, selected.monthly - cheaperAlt.cost.monthly)
     });
+  }
+
+  if (stepsPerTask > 70) {
+    suggestions.push({
+      kind: "steps",
+      text: "Split long chains into smaller runs so each run burns fewer tokens.",
+      textZh: "把长链路拆成更短的多次运行，能直接压低单次 token 消耗。",
+      savings: selected.monthly * 0.18
+    });
+  }
+
+  if (dailyTasks > 35) {
+    suggestions.push({
+      kind: "volume",
+      text: "Route repetitive jobs to a cheaper model and save premium models for the hard cases.",
+      textZh: "把重复任务下放到便宜模型，把贵模型留给难题。",
+      savings: selected.monthly * 0.22
+    });
+  }
+
+  if (suggestions.length < 2) {
+    suggestions.push({
+      kind: "output",
+      text: "Shorter outputs and tighter summaries are usually the fastest way to lower cost.",
+      textZh: "限制输出长度和中间总结，通常是最快的降本动作。",
+      savings: selected.monthly * 0.12
+    });
+  }
+
+  return suggestions.slice(0, 3);
 }
 
-function downloadCard(canvas, filename = 'my-openclaw-cost.png') {
-    const link = document.createElement('a');
-    link.download = filename;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+function mapQuestionnaireToWorkload(answers) {
+  const frequency = questionnaireOptions.frequency[answers.frequency] || questionnaireOptions.frequency["6-20"];
+  const complexity = questionnaireOptions.complexity[answers.complexity] || questionnaireOptions.complexity.medium;
+  const web = questionnaireOptions.web[answers.web] || questionnaireOptions.web.some;
+  const output = questionnaireOptions.output[answers.output] || questionnaireOptions.output.medium;
+
+  const dailyTasks = frequency.dailyTasks;
+  const stepsPerTask = complexity.steps + web.steps + output.steps;
+  const score = complexity.score
+    + web.score
+    + output.score
+    + (answers.frequency === "50+" ? 0.5 : answers.frequency === "21-50" ? 0.25 : 0);
+
+  let recommendedModel = "gpt-4o-mini";
+  if (score >= 3.5) {
+    recommendedModel = "claude-opus-4.6";
+  } else if (score >= 1.5) {
+    recommendedModel = "claude-sonnet-4.6";
+  }
+
+  return {
+    dailyTasks,
+    stepsPerTask,
+    recommendedModel,
+    score
+  };
 }
 
-function shareResult(params, costResult, canvas) {
-    const shareData = {
-        title: 'My OpenClaw Agent Cost',
-        text: `Daily Cost: $${costResult.daily.toFixed(2)}, Monthly Cost: $${costResult.monthly.toFixed(2)}. Check your cost at openclaw-hub.vercel.app!`,
-        url: window.location.href
-    };
+function buildCostNarrative(summary, lang = "en") {
+  const zh = lang === "zh";
+  const complexityLabel = zh
+    ? { simple: "简单", medium: "中等", hard: "复杂" }[summary.complexityKey]
+    : { simple: "simple", medium: "medium", hard: "complex" }[summary.complexityKey];
 
-    if (navigator.share) {
-        navigator.share(shareData).catch(console.error);
-    } else if (navigator.clipboard) {
-        navigator.clipboard.writeText(shareData.text + ' ' + shareData.url).then(() => {
-            alert('已复制分享链接到剪贴板！');
-        }).catch(() => {
-            alert('分享失败，请手动复制链接');
-        });
+  const warningMessage = zh
+    ? {
+        low: "这还处在可以放心起跑的成本区间。",
+        watch: "已经进入需要开始盯预算的区间。",
+        high: "如果不优化链路结构，月成本会继续抬高。",
+        critical: "现在就该重做路由和任务拆分，否则成本会很难看。"
+      }[summary.warning.level]
+    : {
+        low: "This is still a safe range for an early rollout.",
+        watch: "This is where budget discipline starts to matter.",
+        high: "Without workflow changes, the monthly spend will keep climbing.",
+        critical: "You should redesign routing and task structure now before cost compounds."
+      }[summary.warning.level];
+
+  if (zh) {
+    return `推荐模型是 ${summary.modelName}。你当前更像一个每天 ${summary.frequencyLabelZh}、单次任务复杂度为${complexityLabel}的 Agent。${warningMessage}`;
+  }
+
+  return `The recommended model is ${summary.modelName}. Your agent currently looks like a ${summary.frequencyLabelEn.toLowerCase()} ${complexityLabel} workflow. ${warningMessage}`;
+}
+
+function buildShareText(summary, lang = "en") {
+  if (lang === "zh") {
+    return `我测了一下 OpenClaw Agent 成本：${summary.modelName} 大约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${summary.takeawayZh} openclaw-hub.com`;
+  }
+
+  return `I estimated my OpenClaw agent cost on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${summary.takeawayEn} openclaw-hub.com`;
+}
+
+function drawRoundedRect(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+}
+
+function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+  const tokens = text.includes(" ") ? text.split(" ") : Array.from(text);
+  const joiner = text.includes(" ") ? " " : "";
+  let line = "";
+  let cursorY = y;
+
+  tokens.forEach((token) => {
+    const next = line ? `${line}${joiner}${token}` : token;
+    if (ctx.measureText(next).width > maxWidth && line) {
+      ctx.fillText(line, x, cursorY);
+      line = token;
+      cursorY += lineHeight;
     } else {
-        alert('您的浏览器不支持分享功能，请手动复制链接');
+      line = next;
     }
+  });
+
+  if (line) {
+    ctx.fillText(line, x, cursorY);
+  }
 }
 
-function saveToHistory(params, costResult) {
-    const history = getHistory();
-    const entry = {
-        id: Date.now(),
-        timestamp: new Date().toISOString(),
-        params,
-        costResult
-    };
-    history.unshift(entry);
-    localStorage.setItem('costCalculatorHistory', JSON.stringify(history.slice(0, 20)));
+function generateShareCard(summary) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = 1200;
+  canvas.height = 1200;
+
+  const bg = ctx.createLinearGradient(0, 0, 1200, 1200);
+  bg.addColorStop(0, "#020617");
+  bg.addColorStop(0.55, "#0f172a");
+  bg.addColorStop(1, "#111827");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.globalAlpha = 0.14;
+  ctx.fillStyle = summary.warning.accent;
+  ctx.beginPath();
+  ctx.arc(1050, 140, 240, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "#38bdf8";
+  ctx.beginPath();
+  ctx.arc(150, 1080, 280, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+
+  ctx.fillStyle = "rgba(255,255,255,0.04)";
+  drawRoundedRect(ctx, 50, 50, 1100, 1100, 44);
+  ctx.fill();
+  ctx.strokeStyle = "rgba(255,255,255,0.08)";
+  ctx.lineWidth = 2;
+  drawRoundedRect(ctx, 50, 50, 1100, 1100, 44);
+  ctx.stroke();
+
+  ctx.fillStyle = "#f8fafc";
+  ctx.font = "600 34px Georgia, serif";
+  ctx.fillText("OpenClaw Agent Cost", 100, 130);
+
+  ctx.fillStyle = "rgba(248,250,252,0.72)";
+  ctx.font = "500 24px Arial";
+  ctx.fillText(summary.lang === "zh" ? "一张能直接转发的成本卡片" : "A budget card built for sharing", 100, 175);
+
+  ctx.fillStyle = summary.warning.accent;
+  drawRoundedRect(ctx, 880, 92, 190, 48, 24);
+  ctx.fill();
+  ctx.fillStyle = "#020617";
+  ctx.font = "700 21px Arial";
+  ctx.fillText(summary.warningLabel, 920, 124);
+
+  ctx.fillStyle = "#f8fafc";
+  ctx.font = "700 72px Georgia, serif";
+  ctx.fillText(`$${summary.dailyCost.toFixed(2)}`, 100, 330);
+  ctx.font = "500 24px Arial";
+  ctx.fillStyle = "rgba(248,250,252,0.72)";
+  ctx.fillText(summary.lang === "zh" ? "预计每日成本" : "Estimated daily cost", 100, 372);
+
+  ctx.fillStyle = "#cbd5e1";
+  ctx.font = "700 48px Georgia, serif";
+  ctx.fillText(`$${summary.monthlyCost.toFixed(2)}`, 100, 472);
+  ctx.font = "500 22px Arial";
+  ctx.fillStyle = "rgba(203,213,225,0.78)";
+  ctx.fillText(summary.lang === "zh" ? "预计每月成本" : "Estimated monthly cost", 100, 508);
+
+  ctx.fillStyle = "rgba(255,255,255,0.06)";
+  drawRoundedRect(ctx, 100, 570, 1000, 220, 28);
+  ctx.fill();
+
+  const meta = [
+    [summary.lang === "zh" ? "推荐模型" : "Recommended model", summary.modelName],
+    [summary.lang === "zh" ? "每天使用频率" : "Daily usage", summary.frequencyLabel],
+    [summary.lang === "zh" ? "任务复杂度" : "Task complexity", summary.complexityLabel]
+  ];
+
+  meta.forEach((item, index) => {
+    const x = 140 + index * 320;
+    ctx.fillStyle = "rgba(148,163,184,0.9)";
+    ctx.font = "500 20px Arial";
+    ctx.fillText(item[0], x, 640);
+    ctx.fillStyle = "#f8fafc";
+    ctx.font = "600 34px Georgia, serif";
+    ctx.fillText(item[1], x, 700);
+  });
+
+  ctx.fillStyle = "rgba(255,255,255,0.06)";
+  drawRoundedRect(ctx, 100, 840, 1000, 180, 28);
+  ctx.fill();
+  ctx.fillStyle = "#f8fafc";
+  ctx.font = "600 34px Georgia, serif";
+  ctx.fillText(summary.lang === "zh" ? "结论" : "Takeaway", 140, 905);
+  ctx.font = "500 30px Arial";
+  wrapCanvasText(ctx, summary.takeaway, 140, 960, 920, 44);
+
+  ctx.fillStyle = "rgba(248,250,252,0.64)";
+  ctx.font = "500 22px Arial";
+  ctx.fillText("openclaw-hub.com", 140, 1080);
+
+  return canvas;
 }
 
-function getHistory() {
-    return JSON.parse(localStorage.getItem('costCalculatorHistory') || '[]');
+function downloadCanvasAsPng(canvas, filename = "openclaw-agent-cost.png") {
+  const link = document.createElement("a");
+  link.download = filename;
+  link.href = canvas.toDataURL("image/png");
+  link.click();
 }
 
-function clearHistory() {
-    localStorage.removeItem('costCalculatorHistory');
-}
+async function shareCostResult(summary, lang = "en", canvas) {
+  const shareText = buildShareText(summary, lang);
+  const shareUrl = window.location.href;
 
-function get30DayTrend(dailyCost) {
-    const labels = [];
-    const data = [];
-    const today = new Date();
-
-    for (let i = 29; i >= 0; i--) {
-        const date = new Date(today);
-        date.setDate(date.getDate() - i);
-        labels.push(`${date.getMonth() + 1}/${date.getDate()}`);
-
-        const variation = 1 + (Math.random() - 0.5) * 0.1;
-        data.push(dailyCost * variation);
-    }
-
-    return { labels, data };
-}
-
-function costCalculator() {
-    return {
-        selectedScenario: '',
-        selectedModel: 'gpt-4o',
-        dailyTasks: 35,
-        stepsPerTask: 90,
-        costResult: null,
-        modelComparisons: [],
-        suggestions: [],
-        history: [],
-        showHistory: false,
-        showToast: false,
-        toastMessage: '',
-        chart: null,
-        resultCard: null,
-
-        init() {
-            this.history = getHistory();
-            this.calculate();
-        },
-
-        selectScenario(scenarioId) {
-            if (scenarioId && scenarioPresets[scenarioId]) {
-                this.selectedScenario = scenarioId;
-                const preset = scenarioPresets[scenarioId];
-                this.dailyTasks = preset.dailyTasks;
-                this.stepsPerTask = preset.stepsPerTask;
-                this.calculate();
-            }
-        },
-
-        calculate() {
-            this.costResult = calculateCost(this.selectedModel, this.dailyTasks, this.stepsPerTask);
-
-            if (this.costResult) {
-                this.modelComparisons = compareModels(this.dailyTasks, this.stepsPerTask, this.selectedModel);
-                this.suggestions = getOptimizationSuggestions(this.selectedModel, this.dailyTasks, this.stepsPerTask);
-
-                saveToHistory({
-                    modelId: this.selectedModel,
-                    modelName: modelPricing[this.selectedModel].name,
-                    dailyTasks: this.dailyTasks,
-                    stepsPerTask: this.stepsPerTask
-                }, this.costResult);
-
-                this.history = getHistory();
-
-                if (typeof trackEvent === 'function') {
-                    trackEvent('calculate_cost', {
-                        model: this.selectedModel,
-                        scenario: this.selectedScenario || 'custom',
-                        cost: this.costResult.monthly
-                    });
-                }
-
-                this.$nextTick(() => {
-                    this.updateChart();
-                });
-            }
-        },
-
-        updateChart() {
-            const ctx = document.getElementById('costChart');
-            if (!ctx || !this.costResult) return;
-
-            const trend = get30DayTrend(this.costResult.daily);
-
-            if (this.chart) {
-                this.chart.destroy();
-            }
-
-            this.chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: trend.labels,
-                    datasets: [{
-                        label: '每日成本 ($)',
-                        data: trend.data,
-                        borderColor: '#6366f1',
-                        backgroundColor: 'rgba(99, 102, 241, 0.15)',
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#f1f5f9'
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                color: '#94a3b8'
-                            },
-                            grid: {
-                                color: '#334155'
-                            }
-                        },
-                        y: {
-                            ticks: {
-                                color: '#94a3b8'
-                            },
-                            grid: {
-                                color: '#334155'
-                            }
-                        }
-                    }
-                }
-            });
-        },
-
-        async generateCard() {
-            if (!this.costResult) return;
-
-            const params = {
-                modelName: modelPricing[this.selectedModel].name,
-                dailyTasks: this.dailyTasks,
-                stepsPerTask: this.stepsPerTask
-            };
-
-            this.resultCard = await generateResultCard(params, this.costResult);
-        },
-
-        async downloadPNG() {
-            if (!this.resultCard) {
-                await this.generateCard();
-            }
-            if (this.resultCard) {
-                downloadCard(this.resultCard);
-                this.showToastMessage('PNG 下载成功！');
-            }
-        },
-
-        async share() {
-            if (!this.costResult) return;
-
-            const params = {
-                modelName: modelPricing[this.selectedModel].name,
-                dailyTasks: this.dailyTasks,
-                stepsPerTask: this.stepsPerTask
-            };
-
-            if (!this.resultCard) {
-                await this.generateCard();
-            }
-
-            shareResult(params, this.costResult, this.resultCard);
-        },
-
-        loadFromHistory(entry) {
-            this.selectedModel = entry.params.modelId;
-            this.dailyTasks = entry.params.dailyTasks;
-            this.stepsPerTask = entry.params.stepsPerTask;
-            this.selectedScenario = '';
-            this.calculate();
-        },
-
-        clearAllHistory() {
-            if (confirm('确定要清除所有历史记录吗？')) {
-                clearHistory();
-                this.history = [];
-                this.showToastMessage('历史记录已清除！');
-            }
-        },
-
-        showToastMessage(message) {
-            this.toastMessage = message;
-            this.showToast = true;
-            setTimeout(() => {
-                this.showToast = false;
-            }, 2000);
-        },
-
-        formatDate(isoString) {
-            const date = new Date(isoString);
-            return date.toLocaleDateString('zh-CN', {
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+  if (navigator.share && canvas && navigator.canShare) {
+    try {
+      const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+      if (blob) {
+        const file = new File([blob], "openclaw-agent-cost.png", { type: "image/png" });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            title: "OpenClaw Agent Cost",
+            text: shareText,
+            files: [file]
+          });
+          return { mode: "native" };
         }
-    };
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+    return { mode: "clipboard" };
+  }
+
+  return { mode: "unsupported" };
 }
+
+window.modelPricing = modelPricing;
+window.scenarioPresets = scenarioPresets;
+window.questionnaireOptions = questionnaireOptions;
+window.warningLabels = warningLabels;
+window.getWarningLevel = getWarningLevel;
+window.calculateCost = calculateCost;
+window.compareModels = compareModels;
+window.getOptimizationSuggestions = getOptimizationSuggestions;
+window.mapQuestionnaireToWorkload = mapQuestionnaireToWorkload;
+window.buildCostNarrative = buildCostNarrative;
+window.buildShareText = buildShareText;
+window.generateShareCard = generateShareCard;
+window.downloadCanvasAsPng = downloadCanvasAsPng;
+window.shareCostResult = shareCostResult;
