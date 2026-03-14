@@ -757,7 +757,7 @@
           </div>
           <div id="task-list" class="grid gap-4"></div>
         </section>
-        <aside class="space-y-4 xl:sticky xl:top-24 xl:self-start">
+        <aside class="space-y-4">
           ${stacks.map((stack) => `<article class="rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.94),rgba(2,6,23,0.94))] p-5"><div class="flex items-center justify-between gap-3"><h2 class="text-lg font-semibold text-white">${stack.name}</h2><span class="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">${stack.audience}</span></div><p class="mt-3 text-sm leading-6 text-slate-300">${stack.outcome}</p><ul class="mt-4 space-y-2 text-sm text-slate-300">${stack.items.map((item) => `<li class="rounded-2xl bg-white/5 px-3 py-2">${item}</li>`).join("")}</ul></article>`).join("")}
         </aside>
       </div>
@@ -1105,7 +1105,9 @@
                         <h3 class="text-xl font-semibold text-white">${item.version}</h3>
                         ${index === 0 ? `<span class="rounded-full border border-red-300/30 bg-red-500/15 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-red-100">${state.currentLang === "zh" ? "Latest" : "Latest"}</span>` : ""}
                       </div>
-                      <p class="mt-2 text-sm text-slate-400">${state.currentLang === "zh" ? "当前阶段的关键进展与上线准备项。" : "Key progress and launch-readiness milestones for this stage."}</p>
+                      <p class="mt-2 text-sm text-slate-400">${index === 0
+                        ? (state.currentLang === "zh" ? "当前可公开访问版本的上线基线。" : "The launch baseline for the current public version.")
+                        : (state.currentLang === "zh" ? "这一轮迭代完成的核心更新。" : "Core updates completed in this iteration."))}</p>
                     </div>
                     <span class="rounded-full border border-white/10 bg-slate-950/70 px-3 py-1 text-xs text-slate-300">${item.date}</span>
                   </div>
