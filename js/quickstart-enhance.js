@@ -178,6 +178,141 @@
     localStorage.setItem(getModeKey(), next === "guided" ? "guided" : "fast");
   }
 
+  function getModeContent(language, mode) {
+    const table = {
+      zh: {
+        fast: {
+          commandTitle: "最快起步命令",
+          commandBody: "适合已经能接受复制命令、编辑配置和看日志的人。先跑通最小链路，再考虑要不要扩功能。",
+          noteTitle: "这一步的目标",
+          noteBody: "先确认命令、环境变量和 doctor 都正常，不要一开始就接复杂 workflow。",
+          stepsTitle: "Fast Path 的 3 步",
+          stepsBody: "这条路只追求一件事：先在本机跑通最小链路。",
+          stepCards: [
+            { title: "安装并初始化", body: "安装 CLI，立刻执行 init，确保配置文件生成正常。" },
+            { title: "跑 doctor", body: "先把 PATH、权限、环境变量和模型连通性问题排掉。" },
+            { title: "做一次最小运行", body: "只运行一次最简单任务，确认不是 401、429 或 timeout。" }
+          ],
+          successTitle: "Fast Path 成功的标准",
+          successBody: "你不需要一次把整套系统学完。只要命令能跑、日志正常、你知道当前模型是谁，这一轮就算成功。",
+          verifyTitle: "现在就检查这些",
+          verifyItems: [
+            "CLI 命令没有直接报错退出",
+            "doctor 没有报 PATH 或权限问题",
+            "日志里没有 401 / 429 / timeout",
+            "你知道下一个页面该去命令中心、模板库还是成本页"
+          ],
+          nextTitle: "跑通后下一步",
+          nextCards: [
+            { title: "要继续排错", body: "命令、日志或配置哪里不稳，就立刻去命令中心。", href: "/pages/command-center.html", cta: "打开命令中心" },
+            { title: "要立刻做事", body: "去模板库找一个现成结构，先预览再复制。", href: "/pages/task-library.html", cta: "打开模板库" },
+            { title: "要控制预算", body: "先算一遍日成本和月成本，避免刚跑通就超预算。", href: "/pages/cost-calculator.html", cta: "打开成本页" }
+          ],
+          trackerTitle: "Fast Path 检查表",
+          trackerBody: "这不是完整部署清单，而是“本机已经跑起来”的最小验证。"
+        },
+        guided: {
+          commandTitle: "跟着这组命令一步一步做",
+          commandBody: "适合第一次接触 OpenClaw。按顺序执行，不要跳步，也不要先改一堆配置。",
+          noteTitle: "这一轮你在做什么",
+          noteBody: "你现在不是在“搭完整系统”，而是在完成第一次成功启动，确认环境、密钥和最小任务都通了。",
+          stepsTitle: "Step-by-step 的 5 步",
+          stepsBody: "按这个顺序做，重点是每一步都知道自己在验证什么。",
+          stepCards: [
+            { title: "先装运行环境", body: "先确认 Node.js 18+ 正常，再安装 OpenClaw CLI。" },
+            { title: "放好 API Key", body: "把 key 放到 .env 或你明确知道的位置，不要分散在多个地方。" },
+            { title: "先做一次体检", body: "执行 doctor，把 PATH、权限和环境变量问题提前暴露。" },
+            { title: "启动最小任务", body: "先跑一次最小链路，目的只是确认服务真的能起来。" },
+            { title: "读懂第一次结果", body: "看日志、看输出、看成本，再决定下一步去哪里。" }
+          ],
+          successTitle: "第一次成功意味着什么",
+          successBody: "所谓“第一次成功”，不是功能全做完，而是你能清楚地说出：现在怎么启动、哪里看日志、哪个模型在跑、下一步去哪。",
+          verifyTitle: "第一次成功要看到这些信号",
+          verifyItems: [
+            "命令启动后不是直接报错退出",
+            "日志里没有 401 / 429 / timeout",
+            "你知道当前运行的是哪个模型",
+            "你知道下一步是去命令中心、模板库还是成本页"
+          ],
+          nextTitle: "第一次成功后去哪",
+          nextCards: [
+            { title: "还不确定哪里报错", body: "去命令中心，对照命令、配置片段和故障案例继续排。", href: "/pages/command-center.html", cta: "去命令中心" },
+            { title: "已经跑通，想先做一个任务", body: "去模板库挑一个最接近你场景的模板，先跑成一个完整例子。", href: "/pages/task-library.html", cta: "去模板库" },
+            { title: "担心一上来就花太多", body: "先去成本页估一下每天和每月会花多少钱。", href: "/pages/cost-calculator.html", cta: "去成本页" }
+          ],
+          trackerTitle: "第一次跑通追踪器",
+          trackerBody: "把第一次成功拆成 5 个动作。每一步完成后，你再决定要不要继续扩展。"
+        }
+      },
+      en: {
+        fast: {
+          commandTitle: "Fastest launch sequence",
+          commandBody: "Best for users who are comfortable copying commands, editing config, and reading logs. Get the minimum chain running before you expand.",
+          noteTitle: "What this step is for",
+          noteBody: "Prove the CLI, env vars, and doctor check are healthy first. Do not attach a larger workflow yet.",
+          stepsTitle: "Fast Path in 3 steps",
+          stepsBody: "This path only optimizes for one thing: getting one minimal chain running on your machine.",
+          stepCards: [
+            { title: "Install and initialize", body: "Install the CLI and run init immediately so the base config exists." },
+            { title: "Run doctor", body: "Clear PATH, permission, env, and model access issues before launch." },
+            { title: "Run one minimal task", body: "Start the smallest possible task and confirm it is not a 401, 429, or timeout." }
+          ],
+          successTitle: "What counts as success here",
+          successBody: "You do not need the whole system on day one. If the command runs, logs are clean, and you know the active model, this round succeeded.",
+          verifyTitle: "Check these now",
+          verifyItems: [
+            "The CLI command does not exit immediately with an error",
+            "doctor shows no PATH or permission issue",
+            "Logs show no 401 / 429 / timeout",
+            "You know whether the next page is Command Center, Task Library, or Cost Calculator"
+          ],
+          nextTitle: "After the fast path",
+          nextCards: [
+            { title: "Need to debug further", body: "If commands, logs, or config still feel unstable, go to Command Center now.", href: "/pages/command-center.html", cta: "Open Command Center" },
+            { title: "Ready to do real work", body: "Go to Task Library and start from a proven structure.", href: "/pages/task-library.html", cta: "Open Task Library" },
+            { title: "Need spend control", body: "Estimate the daily and monthly cost before you scale usage.", href: "/pages/cost-calculator.html", cta: "Open Cost Calculator" }
+          ],
+          trackerTitle: "Fast Path checklist",
+          trackerBody: "This is not a full deployment checklist. It only proves the local chain is alive."
+        },
+        guided: {
+          commandTitle: "Follow this command flow step by step",
+          commandBody: "Best for first-time users. Run these in order, do not skip steps, and do not start by editing too much config.",
+          noteTitle: "What you are actually doing",
+          noteBody: "You are not building the full system yet. You are completing the first successful start, then confirming env, key, and one minimal task.",
+          stepsTitle: "Step-by-step in 5 moves",
+          stepsBody: "Follow this order. The goal is to understand what each step is verifying.",
+          stepCards: [
+            { title: "Install the runtime", body: "Confirm Node.js 18+ works, then install the OpenClaw CLI." },
+            { title: "Place the API key", body: "Put the key in one clear location such as .env. Do not scatter it." },
+            { title: "Run doctor first", body: "Use diagnostics before launch so PATH, permissions, and env issues appear early." },
+            { title: "Start one small task", body: "Only run the smallest chain once so you can verify the service really starts." },
+            { title: "Read the first result", body: "Check logs, output, and cost before deciding where to go next." }
+          ],
+          successTitle: "What first success means",
+          successBody: "First success does not mean the whole setup is done. It means you can explain how it starts, where logs live, which model is running, and which page to open next.",
+          verifyTitle: "Signals of a real first success",
+          verifyItems: [
+            "The command starts instead of exiting immediately",
+            "Logs show no 401 / 429 / timeout",
+            "You know which model is running now",
+            "You know whether the next page is Command Center, Task Library, or Cost Calculator"
+          ],
+          nextTitle: "After the first successful run",
+          nextCards: [
+            { title: "Still unsure what failed", body: "Use Command Center to compare commands, snippets, and known failure cases.", href: "/pages/command-center.html", cta: "Go to Command Center" },
+            { title: "Ready to try one real task", body: "Use Task Library and pick the closest starting template.", href: "/pages/task-library.html", cta: "Go to Task Library" },
+            { title: "Worried about spend", body: "Open the cost page and estimate the daily and monthly budget before expanding.", href: "/pages/cost-calculator.html", cta: "Go to Cost Calculator" }
+          ],
+          trackerTitle: "First-run tracker",
+          trackerBody: "Break the first win into five concrete actions. Only expand after these are done."
+        }
+      }
+    };
+
+    return (table[language] && table[language][mode]) || table.en.fast;
+  }
+
   function renderExtras() {
     const root = document.getElementById("page-root");
     const panel = document.getElementById("quickstart-panel");
@@ -192,6 +327,7 @@
     const track = text.tracks[trackId] || text.tracks.windows;
     const trackerState = getTrackerState();
     const mode = getMode();
+    const modeContent = getModeContent(lang(), mode);
 
     wrapper.className = "grid gap-6";
     mainSection.className = "space-y-5";
@@ -231,16 +367,17 @@
     panel.innerHTML = `
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div class="max-w-2xl">
-          <div class="inline-flex rounded-full border border-red-400/20 bg-red-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-red-200">${text.fastCommandTitle}</div>
-          <p class="mt-4 text-sm leading-7 text-slate-300">${mode === "guided" ? text.paths[1].body : text.fastCommandBody}</p>
+          <div class="inline-flex rounded-full border border-red-400/20 bg-red-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-red-200">${modeContent.commandTitle}</div>
+          <p class="mt-4 text-sm leading-7 text-slate-300">${modeContent.commandBody}</p>
         </div>
         <button id="copy-quickstart-command" class="rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-400">${text.copyCommands}</button>
       </div>
       <div class="mt-5 grid gap-4">
         <pre class="overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-200">${track.command}</pre>
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
-          <div class="text-xs uppercase tracking-[0.24em] text-red-200">${trackId.toUpperCase()}</div>
-          <p class="mt-4 text-sm leading-7 text-slate-300">${track.note}</p>
+          <div class="text-xs uppercase tracking-[0.24em] text-red-200">${modeContent.noteTitle}</div>
+          <p class="mt-4 text-sm leading-7 text-slate-300">${modeContent.noteBody}</p>
+          <div class="mt-4 rounded-2xl bg-white/5 px-4 py-4 text-sm leading-7 text-slate-300">${track.note}</div>
         </div>
       </div>
     `;
@@ -265,15 +402,15 @@
     }
     steps.innerHTML = `
       <div class="max-w-3xl">
-        <h2 class="text-2xl font-semibold text-white">${text.stepsTitle}</h2>
-        <p class="mt-3 text-sm leading-7 text-slate-300">${mode === "guided" ? text.verifyItems[3] : text.stepsBody}</p>
+        <h2 class="text-2xl font-semibold text-white">${modeContent.stepsTitle}</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${modeContent.stepsBody}</p>
       </div>
       <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
-        ${text.stepCards.map((item, index) => `
+        ${modeContent.stepCards.map((item, index) => `
           <article class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
             <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-red-400/25 bg-red-500/10 text-sm font-semibold text-red-200">${index + 1}</div>
             <h3 class="mt-4 text-base font-semibold text-white">${item.title}</h3>
-            <p class="mt-3 max-w-[28ch] text-sm leading-7 text-slate-300">${mode === "guided" && index < 3 ? `${item.body} ${index === 0 ? text.tracker[0] : index === 1 ? text.tracker[1] : text.tracker[2]}` : item.body}</p>
+            <p class="mt-3 max-w-[28ch] text-sm leading-7 text-slate-300">${item.body}</p>
           </article>
         `).join("")}
       </div>
@@ -289,13 +426,13 @@
     success.innerHTML = `
       <div class="grid gap-5 lg:grid-cols-2">
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
-          <h2 class="text-xl font-semibold text-white">${text.firstSuccessTitle}</h2>
-          <p class="mt-4 text-sm leading-7 text-slate-300">${text.firstSuccessBody}</p>
+          <h2 class="text-xl font-semibold text-white">${modeContent.successTitle}</h2>
+          <p class="mt-4 text-sm leading-7 text-slate-300">${modeContent.successBody}</p>
         </div>
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
-          <h2 class="text-xl font-semibold text-white">${text.verifyTitle}</h2>
+          <h2 class="text-xl font-semibold text-white">${modeContent.verifyTitle}</h2>
           <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
-            ${text.verifyItems.map((item) => `<li class="rounded-2xl bg-white/5 px-4 py-3">${item}</li>`).join("")}
+            ${modeContent.verifyItems.map((item) => `<li class="rounded-2xl bg-white/5 px-4 py-3">${item}</li>`).join("")}
           </ul>
         </div>
       </div>
@@ -309,9 +446,9 @@
       success.insertAdjacentElement("afterend", nextMain);
     }
     nextMain.innerHTML = `
-      <h2 class="text-2xl font-semibold text-white">${text.nextTitle}</h2>
+      <h2 class="text-2xl font-semibold text-white">${modeContent.nextTitle}</h2>
       <div class="mt-5 grid gap-4 lg:grid-cols-3">
-        ${text.nextCards.map((item) => `
+        ${modeContent.nextCards.map((item) => `
           <a href="${item.href}" class="block rounded-3xl border border-white/10 bg-slate-950/70 p-5 transition hover:border-red-400/40 hover:bg-slate-950">
             <div class="font-medium text-white">${item.title}</div>
             <p class="mt-3 text-sm leading-7 text-slate-300">${item.body}</p>
@@ -327,8 +464,8 @@
       }
       checklistArticle.className = "rounded-[28px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.2),rgba(15,23,42,0.92))] p-6";
       checklistArticle.innerHTML = `
-        <h2 class="text-2xl font-semibold text-white">${text.trackerTitle}</h2>
-        <p class="mt-3 text-sm leading-7 text-slate-300">${text.trackerBody}</p>
+        <h2 class="text-2xl font-semibold text-white">${modeContent.trackerTitle}</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${modeContent.trackerBody}</p>
         <div id="quickstart-checklist" class="mt-5 space-y-3">
           ${text.tracker.map((item, index) => `
             <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-4">
