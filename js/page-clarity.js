@@ -47,9 +47,9 @@
   }
 
   function injectTaskCard() {
-    const section = document.querySelector("#page-root > div > section");
-    if (!section || section.querySelector('[data-clarity-card="task"]')) return;
-    section.insertBefore(buildCard("task"), section.firstChild);
+    const aside = document.querySelector("#page-root > div > aside");
+    if (!aside || aside.querySelector('[data-clarity-card="task"]')) return;
+    aside.insertBefore(buildCard("task"), aside.firstChild);
   }
 
   function injectCommandCard() {

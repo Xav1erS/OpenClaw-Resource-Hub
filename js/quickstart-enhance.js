@@ -263,6 +263,26 @@
       </div>
     `;
 
+    let nextMain = document.querySelector("[data-quickstart-next-main]");
+    if (!nextMain) {
+      nextMain = document.createElement("article");
+      nextMain.className = "mt-5 rounded-[28px] border border-white/10 bg-white/[0.03] p-6";
+      nextMain.setAttribute("data-quickstart-next-main", "true");
+      success.insertAdjacentElement("afterend", nextMain);
+    }
+    nextMain.innerHTML = `
+      <h2 class="text-2xl font-semibold text-white">${text.nextTitle}</h2>
+      <div class="mt-5 grid gap-4 xl:grid-cols-3">
+        ${text.nextCards.map((item) => `
+          <a href="${item.href}" class="block rounded-3xl border border-white/10 bg-slate-950/70 p-5 transition hover:border-red-400/40 hover:bg-slate-950">
+            <div class="font-medium text-white">${item.title}</div>
+            <p class="mt-3 text-sm leading-7 text-slate-300">${item.body}</p>
+            <div class="mt-3 text-xs uppercase tracking-[0.24em] text-red-200">${item.cta}</div>
+          </a>
+        `).join("")}
+      </div>
+    `;
+
     const checklistArticle = aside.querySelector("article");
     if (checklistArticle) {
       checklistArticle.className = "rounded-[28px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.18),rgba(15,23,42,0.92))] p-6";
@@ -282,19 +302,8 @@
 
     const nextArticle = aside.querySelectorAll("article")[1];
     if (nextArticle) {
-      nextArticle.className = "rounded-[28px] border border-white/10 bg-white/[0.03] p-6";
-      nextArticle.innerHTML = `
-        <h2 class="text-2xl font-semibold text-white">${text.nextTitle}</h2>
-        <div class="mt-5 space-y-3">
-          ${text.nextCards.map((item) => `
-            <a href="${item.href}" class="block rounded-3xl border border-white/10 bg-slate-950/70 p-5 transition hover:border-red-400/40 hover:bg-slate-950">
-              <div class="font-medium text-white">${item.title}</div>
-              <p class="mt-3 text-sm leading-7 text-slate-300">${item.body}</p>
-              <div class="mt-3 text-xs uppercase tracking-[0.24em] text-red-200">${item.cta}</div>
-            </a>
-          `).join("")}
-        </div>
-      `;
+      nextArticle.className = "hidden";
+      nextArticle.innerHTML = "";
     }
 
     const copyButton = document.getElementById("copy-quickstart-command");

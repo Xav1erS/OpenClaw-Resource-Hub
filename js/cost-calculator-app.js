@@ -399,41 +399,13 @@
             </div>
           </section>
 
-          <section class="mt-10 grid gap-6 xl:grid-cols-[1.08fr,0.92fr]">
+          <section class="mt-10 grid gap-6 xl:grid-cols-[0.82fr,1.18fr]">
             <div class="space-y-6">
+              ${renderModelSelector()}
               <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
                 <h2 class="text-2xl font-semibold text-white">${text.presetTitle}</h2>
                 <p class="mt-2 text-sm leading-7 text-slate-300">${text.presetBody}</p>
                 <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">${renderPresetCards()}</div>
-              </article>
-
-              ${renderModelSelector()}
-
-              <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
-                <h2 class="text-2xl font-semibold text-white">${text.questionnaireTitle}</h2>
-                <p class="mt-2 text-sm leading-7 text-slate-300">${text.questionnaireBody}</p>
-                <div class="mt-6 grid gap-4 xl:grid-cols-2">${renderQuestionBlocks()}</div>
-              </article>
-
-              <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
-                <div class="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <h2 class="text-2xl font-semibold text-white">${text.advancedTitle}</h2>
-                    <p class="mt-2 max-w-2xl text-sm leading-7 text-slate-300">${text.advancedBody}</p>
-                  </div>
-                  <button data-toggle-advanced class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${state.advancedOpen ? text.advancedToggleClose : text.advancedToggleOpen}</button>
-                </div>
-                <div class="mt-4 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.22em]">
-                  <span class="rounded-full border ${state.advancedLinked ? "border-emerald-300/30 bg-emerald-400/10 text-emerald-200" : "border-amber-300/30 bg-amber-400/10 text-amber-200"} px-3 py-2">${state.advancedLinked ? text.advancedOn : text.advancedOff}</span>
-                  <span class="text-slate-400">${text.advancedHint}</span>
-                </div>
-                ${state.advancedOpen ? `
-                  <div class="mt-6 grid gap-4 md:grid-cols-2">
-                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.dailyTasks}</div><input data-advanced="dailyTasks" type="number" min="1" value="${state.advanced.dailyTasks}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
-                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.stepsPerTask}</div><input data-advanced="stepsPerTask" type="number" min="1" value="${state.advanced.stepsPerTask}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
-                  </div>
-                  <div class="mt-4"><button data-relink class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.advancedSync}</button></div>
-                ` : ""}
               </article>
             </div>
 
@@ -462,12 +434,6 @@
                   </div>
                 `}
                 <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
-                  <div class="text-sm text-slate-400">${text.workloadTitle}</div>
-                  <div class="mt-3 flex flex-wrap gap-3 text-sm text-slate-200">${workloadChip(state.summary.frequencyLabel)}${workloadChip(state.summary.complexityLabel)}${workloadChip(usageChip)}${workloadChip(stepChip)}</div>
-                  <p class="mt-4 text-sm leading-7 text-slate-300">${text.workloadBody}</p>
-                  <p class="mt-4 text-base leading-8 text-white">${state.summary.takeaway}</p>
-                </div>
-                <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
                   <h3 class="text-2xl font-semibold text-white">${text.shareTitle}</h3>
                   <p class="mt-3 text-sm leading-7 text-slate-300">${text.shareBody}</p>
                   <div class="mt-5 grid gap-3 sm:grid-cols-2">
@@ -476,10 +442,16 @@
                     <button data-copy-share class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.copyText}</button>
                     <button data-share-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.shareNow}</button>
                   </div>
-                  <div class="mt-5 rounded-[28px] border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-4">
+                  <div class="mt-5 rounded-[28px] border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-3">
                     <div class="mb-3 flex items-center justify-between gap-3"><div class="text-sm uppercase tracking-[0.24em] text-slate-400">${text.generatedLabel}</div><div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">${state.summary.warningLabel}</div></div>
-                    <img src="${state.shareDataUrl}" alt="Share card preview" class="w-full rounded-[24px] border border-white/10 bg-slate-950 object-cover shadow-2xl shadow-slate-950/40">
+                    <img src="${state.shareDataUrl}" alt="Share card preview" class="aspect-square w-full rounded-[24px] border border-white/10 bg-slate-950 object-cover shadow-2xl shadow-slate-950/40">
                   </div>
+                </div>
+                <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
+                  <div class="text-sm text-slate-400">${text.workloadTitle}</div>
+                  <div class="mt-3 flex flex-wrap gap-3 text-sm text-slate-200">${workloadChip(state.summary.frequencyLabel)}${workloadChip(state.summary.complexityLabel)}${workloadChip(usageChip)}${workloadChip(stepChip)}</div>
+                  <p class="mt-4 text-sm leading-7 text-slate-300">${text.workloadBody}</p>
+                  <p class="mt-4 text-base leading-8 text-white">${state.summary.takeaway}</p>
                 </div>
               </article>
             </aside>
@@ -487,9 +459,40 @@
 
           <section class="mt-6 grid gap-6 xl:grid-cols-[1.08fr,0.92fr]">
             <div class="space-y-6">
-              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.suggestionsTitle}</h2><ul class="mt-5 space-y-3">${renderSuggestionList()}</ul></article>
-              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.comparisonTitle}</h2><p class="mt-2 text-sm leading-7 text-slate-300">${text.comparisonBody}</p><div class="mt-5 grid gap-4 md:grid-cols-2">${renderComparisonCards()}</div></article>
+              <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
+                <h2 class="text-2xl font-semibold text-white">${text.questionnaireTitle}</h2>
+                <p class="mt-2 text-sm leading-7 text-slate-300">${text.questionnaireBody}</p>
+                <div class="mt-6 grid gap-4 xl:grid-cols-2">${renderQuestionBlocks()}</div>
+              </article>
+
+              <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
+                <div class="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <h2 class="text-2xl font-semibold text-white">${text.advancedTitle}</h2>
+                    <p class="mt-2 max-w-2xl text-sm leading-7 text-slate-300">${text.advancedBody}</p>
+                  </div>
+                  <button data-toggle-advanced class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${state.advancedOpen ? text.advancedToggleClose : text.advancedToggleOpen}</button>
+                </div>
+                <div class="mt-4 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.22em]">
+                  <span class="rounded-full border ${state.advancedLinked ? "border-emerald-300/30 bg-emerald-400/10 text-emerald-200" : "border-amber-300/30 bg-amber-400/10 text-amber-200"} px-3 py-2">${state.advancedLinked ? text.advancedOn : text.advancedOff}</span>
+                  <span class="text-slate-400">${text.advancedHint}</span>
+                </div>
+                ${state.advancedOpen ? `
+                  <div class="mt-6 grid gap-4 md:grid-cols-2">
+                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.dailyTasks}</div><input data-advanced="dailyTasks" type="number" min="1" value="${state.advanced.dailyTasks}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
+                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.stepsPerTask}</div><input data-advanced="stepsPerTask" type="number" min="1" value="${state.advanced.stepsPerTask}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
+                  </div>
+                  <div class="mt-4"><button data-relink class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.advancedSync}</button></div>
+                ` : ""}
+              </article>
             </div>
+            <div class="space-y-6">
+              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.suggestionsTitle}</h2><ul class="mt-5 space-y-3">${renderSuggestionList()}</ul></article>
+            </div>
+          </section>
+
+          <section class="mt-6">
+            <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.comparisonTitle}</h2><p class="mt-2 text-sm leading-7 text-slate-300">${text.comparisonBody}</p><div class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">${renderComparisonCards()}</div></article>
           </section>
 
           <footer class="mt-10 border-t border-white/10 pt-6 text-sm text-slate-400">${text.footer}</footer>
