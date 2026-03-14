@@ -65,7 +65,9 @@
       asideLabel: "实时结果",
       resultTitle: "推荐与成本",
       resultLead: "结果面板固定在右侧，选择后不用回到顶部找结果。",
+      currentModel: "当前模型",
       recommendedModel: "推荐模型",
+      recommendationHint: "问卷给出的默认推荐",
       dailyCost: "日成本",
       monthlyCost: "月成本",
       warning: "成本等级",
@@ -141,7 +143,9 @@
       asideLabel: "Live result",
       resultTitle: "Recommendation and cost",
       resultLead: "The result panel stays in view while you answer questions.",
+      currentModel: "Current model",
       recommendedModel: "Recommended model",
+      recommendationHint: "Default recommendation from the questionnaire",
       dailyCost: "Daily cost",
       monthlyCost: "Monthly cost",
       warning: "Cost level",
@@ -220,12 +224,18 @@
     const effectiveModel = state.modelLinked ? mapped.recommendedModel : state.selectedModelId;
     const result = window.calculateCost(effectiveModel, Number(effective.dailyTasks), Number(effective.stepsPerTask));
     const model = window.modelPricing[effectiveModel];
+    const recommendedModel = window.modelPricing[mapped.recommendedModel];
     const summary = {
       lang: state.lang,
       modelId: effectiveModel,
       modelName: model.name,
       providerId: model.provider,
       providerName: getProviderName(model.provider),
+      recommendedModelId: mapped.recommendedModel,
+      recommendedModelName: recommendedModel.name,
+      recommendedProviderId: recommendedModel.provider,
+      recommendedProviderName: getProviderName(recommendedModel.provider),
+      usingRecommendedModel: effectiveModel === mapped.recommendedModel,
       dailyTasks: Number(effective.dailyTasks),
       stepsPerTask: Number(effective.stepsPerTask),
       dailyCost: result.daily,
@@ -268,6 +278,10 @@
             <span class="rounded-full border ${state.modelLinked ? "border-emerald-300/30 bg-emerald-400/10 text-emerald-200" : "border-amber-300/30 bg-amber-400/10 text-amber-200"} px-3 py-2">${state.modelLinked ? text.modelLinkedOn : text.modelLinkedOff}</span>
             ${state.modelLinked ? "" : `<button data-relink-model class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] text-slate-200 transition hover:border-sky-300/30 hover:text-white">${text.modelRelink}</button>`}
           </div>
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2 text-xs text-slate-300">
+          <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2">${getProviderName(state.selectedProvider)}</span>
+          <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2">${window.modelPricing[state.selectedModelId].name}</span>
         </div>
         <div class="mt-6 grid gap-4 md:grid-cols-2">
           <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
@@ -332,7 +346,10 @@
     return state.summary.comparisons.slice(0, 4).map((item) => `
       <article class="rounded-3xl border ${item.isSelected ? "border-orange-300/40 bg-orange-500/10" : "border-white/10 bg-white/[0.03]"} p-4">
         <div class="flex items-center justify-between gap-3">
-          <div class="text-base font-medium text-white">${item.model.name}</div>
+          <div>
+            <div class="text-base font-medium text-white">${item.model.name}</div>
+            <div class="mt-1 text-sm text-slate-400">${getProviderName(item.model.provider)}</div>
+          </div>
           <div class="text-xs uppercase tracking-[0.2em] text-slate-400">Q${item.model.quality}</div>
         </div>
         <div class="mt-4 text-3xl font-semibold text-white">${money(item.cost.monthly)}</div>
@@ -428,11 +445,22 @@
                   <p class="mt-3 text-sm leading-7 text-slate-300">${text.resultLead}</p>
                 </div>
                 <div class="grid gap-4 sm:grid-cols-2">
-                  <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.recommendedModel}</div><div class="mt-3 text-2xl font-semibold text-white">${state.summary.modelName}</div></div>
+                  <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
+                    <div class="text-sm text-slate-400">${text.currentModel}</div>
+                    <div class="mt-3 text-2xl font-semibold text-white">${state.summary.modelName}</div>
+                    <div class="mt-2 text-sm text-slate-400">${state.summary.providerName}</div>
+                  </div>
                   <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.warning}</div><div class="mt-3 text-2xl font-semibold" style="color:${state.summary.warning.accent}">${state.summary.warningLabel}</div></div>
                   <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.dailyCost}</div><div class="mt-3 text-3xl font-semibold text-white">${money(state.summary.dailyCost)}</div></div>
                   <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.monthlyCost}</div><div class="mt-3 text-3xl font-semibold text-white">${money(state.summary.monthlyCost)}</div></div>
                 </div>
+                ${state.summary.usingRecommendedModel ? "" : `
+                  <div class="rounded-3xl border border-sky-300/20 bg-sky-400/10 p-5">
+                    <div class="text-sm text-slate-300">${text.recommendedModel}</div>
+                    <div class="mt-3 text-xl font-semibold text-white">${state.summary.recommendedModelName}</div>
+                    <div class="mt-2 text-sm text-slate-300">${state.summary.recommendedProviderName} · ${text.recommendationHint}</div>
+                  </div>
+                `}
                 <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
                   <div class="text-sm text-slate-400">${text.workloadTitle}</div>
                   <div class="mt-3 flex flex-wrap gap-3 text-sm text-slate-200">${workloadChip(state.summary.frequencyLabel)}${workloadChip(state.summary.complexityLabel)}${workloadChip(usageChip)}${workloadChip(stepChip)}</div>
