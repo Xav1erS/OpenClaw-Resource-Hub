@@ -165,6 +165,19 @@
     localStorage.setItem(getTrackerKey(), JSON.stringify(next));
   }
 
+  function getModeKey() {
+    return `openclaw-quickstart-mode-${lang()}`;
+  }
+
+  function getMode() {
+    const stored = localStorage.getItem(getModeKey());
+    return stored === "guided" ? "guided" : "fast";
+  }
+
+  function setMode(next) {
+    localStorage.setItem(getModeKey(), next === "guided" ? "guided" : "fast");
+  }
+
   function renderExtras() {
     const root = document.getElementById("page-root");
     const panel = document.getElementById("quickstart-panel");
@@ -178,6 +191,7 @@
     const trackId = currentTrack();
     const track = text.tracks[trackId] || text.tracks.windows;
     const trackerState = getTrackerState();
+    const mode = getMode();
 
     wrapper.className = "grid gap-6";
     mainSection.className = "space-y-5";
@@ -195,13 +209,17 @@
         <p class="mt-3 text-sm leading-7 text-slate-200">${text.chooseBody}</p>
       </div>
       <div class="mt-5 grid gap-4 xl:grid-cols-2">
-        ${text.paths.map((item, index) => `
-          <article class="rounded-3xl border ${index === 0 ? "border-red-400/30 bg-red-500/10" : "border-white/10 bg-white/[0.03]"} p-5">
-            <div class="inline-flex rounded-full border ${index === 0 ? "border-red-300/30 bg-red-400/15 text-red-100" : "border-white/10 bg-white/5 text-slate-300"} px-3 py-1 text-xs uppercase tracking-[0.22em]">${item.badge}</div>
+        ${text.paths.map((item, index) => {
+          const key = index === 0 ? "fast" : "guided";
+          const active = mode === key;
+          return `
+          <button type="button" data-start-mode="${key}" class="rounded-3xl border p-5 text-left transition ${active ? "border-red-400/40 bg-red-500/12 shadow-lg shadow-red-950/20" : "border-white/10 bg-white/[0.03] hover:border-red-400/25 hover:bg-white/[0.05]"}">
+            <div class="inline-flex rounded-full border ${active ? "border-red-300/30 bg-red-400/15 text-red-100" : "border-white/10 bg-white/5 text-slate-300"} px-3 py-1 text-xs uppercase tracking-[0.22em]">${item.badge}</div>
             <h3 class="mt-4 text-lg font-semibold text-white">${item.title}</h3>
             <p class="mt-3 text-sm leading-7 text-slate-300">${item.body}</p>
-          </article>
-        `).join("")}
+          </button>
+        `;
+        }).join("")}
       </div>
     `;
 
@@ -214,7 +232,7 @@
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div class="max-w-2xl">
           <div class="inline-flex rounded-full border border-red-400/20 bg-red-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-red-200">${text.fastCommandTitle}</div>
-          <p class="mt-4 text-sm leading-7 text-slate-300">${text.fastCommandBody}</p>
+          <p class="mt-4 text-sm leading-7 text-slate-300">${mode === "guided" ? text.paths[1].body : text.fastCommandBody}</p>
         </div>
         <button id="copy-quickstart-command" class="rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-400">${text.copyCommands}</button>
       </div>
@@ -248,14 +266,14 @@
     steps.innerHTML = `
       <div class="max-w-3xl">
         <h2 class="text-2xl font-semibold text-white">${text.stepsTitle}</h2>
-        <p class="mt-3 text-sm leading-7 text-slate-300">${text.stepsBody}</p>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${mode === "guided" ? text.verifyItems[3] : text.stepsBody}</p>
       </div>
       <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
         ${text.stepCards.map((item, index) => `
           <article class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
             <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-red-400/25 bg-red-500/10 text-sm font-semibold text-red-200">${index + 1}</div>
             <h3 class="mt-4 text-base font-semibold text-white">${item.title}</h3>
-            <p class="mt-3 max-w-[28ch] text-sm leading-7 text-slate-300">${item.body}</p>
+            <p class="mt-3 max-w-[28ch] text-sm leading-7 text-slate-300">${mode === "guided" && index < 3 ? `${item.body} ${index === 0 ? text.tracker[0] : index === 1 ? text.tracker[1] : text.tracker[2]}` : item.body}</p>
           </article>
         `).join("")}
       </div>
@@ -332,7 +350,7 @@
             copyButton.textContent = text.copyCommands;
           }, 1200);
         } catch (_error) {}
-      }, { once: true });
+      });
     }
 
     const checklistRoot = document.getElementById("quickstart-checklist");
@@ -355,6 +373,28 @@
   let observer = null;
 
   function start() {
+    const root = document.getElementById("page-root");
+    if (root && !root.dataset.quickstartInteractiveBound) {
+      root.dataset.quickstartInteractiveBound = "true";
+      root.addEventListener("click", (event) => {
+        const modeButton = event.target.closest("[data-start-mode]");
+        if (modeButton) {
+          setMode(modeButton.dataset.startMode);
+          renderExtras();
+          return;
+        }
+
+        const trackButton = event.target.closest("[data-track]");
+        if (trackButton) {
+          document.querySelectorAll("[data-track]").forEach((button) => {
+            const active = button === trackButton;
+            button.className = `quickstart-tab rounded-full border px-4 py-2 text-sm transition ${active ? "border-red-400/40 bg-red-500 text-white" : "border-white/10 text-slate-200 hover:border-red-400/40"}`;
+          });
+          renderExtras();
+        }
+      });
+    }
+
     observer = new MutationObserver(() => {
       observer.disconnect();
       renderExtras();
