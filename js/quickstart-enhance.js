@@ -205,15 +205,8 @@
       </div>
     `;
 
-    let launchRow = document.querySelector("[data-quickstart-launch-row]");
-    if (!launchRow) {
-      launchRow = document.createElement("div");
-      launchRow.className = "grid gap-5 xl:grid-cols-[1.08fr,0.92fr] xl:items-start";
-      launchRow.setAttribute("data-quickstart-launch-row", "true");
-      choose.insertAdjacentElement("afterend", launchRow);
-    }
-    if (panel.parentElement !== launchRow) {
-      launchRow.appendChild(panel);
+    if (panel.parentElement !== panelSection) {
+      panelSection.insertBefore(panel, choose.nextSibling);
     }
 
     panel.className = "rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-6 shadow-2xl shadow-slate-950/20";
@@ -225,7 +218,7 @@
         </div>
         <button id="copy-quickstart-command" class="rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-400">${text.copyCommands}</button>
       </div>
-      <div class="mt-5 grid gap-4 2xl:grid-cols-[1.1fr,0.9fr]">
+      <div class="mt-5 grid gap-4">
         <pre class="overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-200">${track.command}</pre>
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
           <div class="text-xs uppercase tracking-[0.24em] text-red-200">${trackId.toUpperCase()}</div>
@@ -240,24 +233,6 @@
       if (checklistArticle) {
         checklistArticle.setAttribute("data-quickstart-tracker-card", "true");
       }
-    }
-    if (checklistArticle) {
-      if (checklistArticle.parentElement !== launchRow) {
-        launchRow.appendChild(checklistArticle);
-      }
-      checklistArticle.className = "rounded-[28px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.2),rgba(15,23,42,0.92))] p-6 xl:sticky xl:top-24";
-      checklistArticle.innerHTML = `
-        <h2 class="text-2xl font-semibold text-white">${text.trackerTitle}</h2>
-        <p class="mt-3 text-sm leading-7 text-slate-300">${text.trackerBody}</p>
-        <div id="quickstart-checklist" class="mt-5 space-y-3">
-          ${text.tracker.map((item, index) => `
-            <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-4">
-              <input data-step-check="${index}" type="checkbox" class="mt-1 h-4 w-4 accent-red-400" ${trackerState[index] ? "checked" : ""}>
-              <span class="text-sm leading-7 text-slate-200">${item}</span>
-            </label>
-          `).join("")}
-        </div>
-      `;
     }
 
     aside.className = "hidden";
@@ -294,7 +269,7 @@
       steps.insertAdjacentElement("afterend", success);
     }
     success.innerHTML = `
-      <div class="grid gap-5 xl:grid-cols-2">
+      <div class="grid gap-5 lg:grid-cols-2">
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
           <h2 class="text-xl font-semibold text-white">${text.firstSuccessTitle}</h2>
           <p class="mt-4 text-sm leading-7 text-slate-300">${text.firstSuccessBody}</p>
@@ -317,7 +292,7 @@
     }
     nextMain.innerHTML = `
       <h2 class="text-2xl font-semibold text-white">${text.nextTitle}</h2>
-      <div class="mt-5 grid gap-4 xl:grid-cols-3">
+      <div class="mt-5 grid gap-4 lg:grid-cols-3">
         ${text.nextCards.map((item) => `
           <a href="${item.href}" class="block rounded-3xl border border-white/10 bg-slate-950/70 p-5 transition hover:border-red-400/40 hover:bg-slate-950">
             <div class="font-medium text-white">${item.title}</div>
@@ -327,6 +302,25 @@
         `).join("")}
       </div>
     `;
+
+    if (checklistArticle) {
+      if (checklistArticle.parentElement !== panelSection) {
+        panelSection.insertBefore(checklistArticle, nextMain.nextSibling);
+      }
+      checklistArticle.className = "rounded-[28px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.2),rgba(15,23,42,0.92))] p-6";
+      checklistArticle.innerHTML = `
+        <h2 class="text-2xl font-semibold text-white">${text.trackerTitle}</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${text.trackerBody}</p>
+        <div id="quickstart-checklist" class="mt-5 space-y-3">
+          ${text.tracker.map((item, index) => `
+            <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-4">
+              <input data-step-check="${index}" type="checkbox" class="mt-1 h-4 w-4 accent-red-400" ${trackerState[index] ? "checked" : ""}>
+              <span class="text-sm leading-7 text-slate-200">${item}</span>
+            </label>
+          `).join("")}
+        </div>
+      `;
+    }
 
     const copyButton = document.getElementById("copy-quickstart-command");
     if (copyButton) {
