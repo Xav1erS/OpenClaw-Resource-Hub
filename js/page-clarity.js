@@ -34,12 +34,12 @@
     const text = copy[kind][lang()];
     const tint = kind === "task" ? "orange" : "sky";
     const wrapper = document.createElement("article");
-    wrapper.className = `mb-4 rounded-3xl border border-${tint}-400/20 bg-${tint}-500/10 p-5`;
+    wrapper.className = `mb-4 rounded-3xl border border-${tint}-400/20 bg-${tint}-500/10 p-4`;
     wrapper.setAttribute("data-clarity-card", kind);
     wrapper.innerHTML = `
-      <h2 class="text-lg font-semibold text-white">${text.title}</h2>
-      <p class="mt-3 text-sm leading-6 text-slate-200">${text.body}</p>
-      <div class="mt-4 flex flex-wrap gap-2 text-xs text-white/90">
+      <h2 class="text-base font-semibold text-white">${text.title}</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-200">${text.body}</p>
+      <div class="mt-3 flex flex-wrap gap-2 text-xs text-white/90">
         ${text.pills.map((item) => `<span class="rounded-full border border-white/10 bg-slate-950/40 px-3 py-2">${item}</span>`).join("")}
       </div>
     `;
@@ -53,11 +53,9 @@
   }
 
   function injectCommandCard() {
-    const root = document.getElementById("page-root");
-    if (!root || root.querySelector('[data-clarity-card="command"]')) return;
-    const container = root.firstElementChild;
-    if (!container) return;
-    container.insertBefore(buildCard("command"), container.firstChild);
+    const section = document.querySelector("#page-root > div > section");
+    if (!section || section.querySelector('[data-clarity-card="command"]')) return;
+    section.insertBefore(buildCard("command"), section.firstChild);
   }
 
   function run() {

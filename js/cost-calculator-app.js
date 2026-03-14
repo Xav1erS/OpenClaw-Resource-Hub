@@ -301,22 +301,24 @@
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.18),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(56,189,248,0.16),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#111827_100%)]">
         <div class="pointer-events-none fixed inset-0 opacity-40" style="background-image:linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px); background-size: 30px 30px;"></div>
         <header class="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-          <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-            <a href="/index.html" class="flex min-w-0 items-center gap-3">
-              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-orange-400/30 bg-orange-500/10 text-sm font-semibold tracking-[0.18em] text-orange-200">OC</span>
-              <div class="min-w-0">
-                <div class="truncate text-sm uppercase tracking-[0.28em] text-slate-400">${text.brandTop}</div>
-                <div class="truncate text-lg font-semibold text-white">${text.brandBottom}</div>
+          <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between gap-4">
+              <a href="/index.html" class="flex min-w-0 items-center gap-3">
+                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-orange-400/30 bg-orange-500/10 text-sm font-semibold tracking-[0.18em] text-orange-200">OC</span>
+                <div class="min-w-0">
+                  <div class="truncate text-sm uppercase tracking-[0.28em] text-slate-400">${text.brandTop}</div>
+                  <div class="truncate text-lg font-semibold text-white">${text.brandBottom}</div>
+                </div>
+              </a>
+              <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs">
+                <button data-lang="zh" class="rounded-full px-3 py-1 transition ${state.lang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langZh}</button>
+                <button data-lang="en" class="rounded-full px-3 py-1 transition ${state.lang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langEn}</button>
               </div>
-            </a>
-            <nav class="hidden items-center gap-5 text-sm text-slate-300 xl:flex">
-              ${text.nav.map((item) => `<a href="${item.href}" class="transition hover:text-white">${item.name}</a>`).join("")}
-              <span class="text-white">${text.navCurrent}</span>
-            </nav>
-            <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs">
-              <button data-lang="zh" class="rounded-full px-3 py-1 transition ${state.lang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langZh}</button>
-              <button data-lang="en" class="rounded-full px-3 py-1 transition ${state.lang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langEn}</button>
             </div>
+            <nav class="mt-3 flex gap-2 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              ${text.nav.map((item) => `<a href="${item.href}" class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-slate-300 transition hover:border-orange-300/30 hover:text-white">${item.name}</a>`).join("")}
+              <span class="shrink-0 rounded-full bg-orange-500 px-3 py-2 text-slate-950">${text.navCurrent}</span>
+            </nav>
           </div>
         </header>
 
@@ -328,7 +330,7 @@
               <p class="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">${text.subtitle}</p>
               <p class="mt-5 max-w-3xl text-sm leading-7 text-slate-400">${text.helper}</p>
             </div>
-            <div class="grid gap-3 sm:grid-cols-3">
+            <div class="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
               ${text.stats.map((item) => `
                 <article class="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
                   <div class="text-sm text-slate-400">${item.label}</div>
@@ -373,9 +375,6 @@
                   <div class="mt-4"><button data-relink class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:text-white">${text.advancedSync}</button></div>
                 ` : ""}
               </article>
-
-              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.suggestionsTitle}</h2><ul class="mt-5 space-y-3">${renderSuggestionList()}</ul></article>
-              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.comparisonTitle}</h2><p class="mt-2 text-sm leading-7 text-slate-300">${text.comparisonBody}</p><div class="mt-5 grid gap-4 md:grid-cols-2">${renderComparisonCards()}</div></article>
             </div>
 
             <aside class="xl:sticky xl:top-24">
@@ -413,6 +412,13 @@
                 </div>
               </article>
             </aside>
+          </section>
+
+          <section class="mt-6 grid gap-6 xl:grid-cols-[1.08fr,0.92fr]">
+            <div class="space-y-6">
+              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.suggestionsTitle}</h2><ul class="mt-5 space-y-3">${renderSuggestionList()}</ul></article>
+              <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.comparisonTitle}</h2><p class="mt-2 text-sm leading-7 text-slate-300">${text.comparisonBody}</p><div class="mt-5 grid gap-4 md:grid-cols-2">${renderComparisonCards()}</div></article>
+            </div>
           </section>
 
           <footer class="mt-10 border-t border-white/10 pt-6 text-sm text-slate-400">${text.footer}</footer>

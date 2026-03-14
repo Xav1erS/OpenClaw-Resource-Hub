@@ -686,41 +686,41 @@
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.18),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(34,197,94,0.12),_transparent_28%),linear-gradient(180deg,_#020617_0%,_#0f172a_50%,_#111827_100%)] text-slate-100">
         <div class="pointer-events-none fixed inset-0 opacity-50" style="background-image:linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px); background-size: 32px 32px;"></div>
         <header class="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-          <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-            <a href="/index.html" class="flex items-center gap-3">
-              <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-orange-400/30 bg-orange-500/15 text-sm font-semibold tracking-[0.18em] text-orange-300">OC</span>
-              <span>
-                <span class="block text-sm uppercase tracking-[0.28em] text-slate-400">OpenClaw</span>
-                <span class="block text-lg font-semibold text-white">${ui.shell.brand}</span>
-              </span>
-            </a>
-            <div class="flex flex-wrap items-center gap-3">
-              <nav class="flex flex-wrap items-center gap-2 text-sm">
-                ${navItems.map((item) => `<a href="${item.href}" class="rounded-full px-3 py-2 transition ${item.id === pageId ? "bg-orange-500 text-slate-950" : "text-slate-300 hover:bg-white/5 hover:text-white"}">${t(ui.nav[item.id])}</a>`).join("")}
-              </nav>
+          <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between gap-4">
+              <a href="/index.html" class="flex min-w-0 items-center gap-3">
+                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-orange-400/30 bg-orange-500/15 text-sm font-semibold tracking-[0.18em] text-orange-300">OC</span>
+                <span class="min-w-0">
+                  <span class="block truncate text-sm uppercase tracking-[0.28em] text-slate-400">OpenClaw</span>
+                  <span class="block truncate text-lg font-semibold text-white">${ui.shell.brand}</span>
+                </span>
+              </a>
               <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs">
                 <button data-lang="zh" class="rounded-full px-3 py-1 transition ${state.currentLang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">${ui.shell.langZh}</button>
                 <button data-lang="en" class="rounded-full px-3 py-1 transition ${state.currentLang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">${ui.shell.langEn}</button>
               </div>
             </div>
+            <nav class="mt-3 flex gap-2 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              ${navItems.map((item) => `<a href="${item.href}" class="shrink-0 rounded-full px-3 py-2 transition ${item.id === pageId ? "bg-orange-500 text-slate-950" : "border border-white/10 bg-white/5 text-slate-300 hover:border-orange-400/40 hover:text-white"}">${t(ui.nav[item.id])}</a>`).join("")}
+            </nav>
           </div>
         </header>
-        <main class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <section class="grid gap-8 lg:grid-cols-[1.5fr,0.9fr] lg:items-end">
+        <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <section class="grid gap-6 xl:grid-cols-[1.35fr,0.85fr] xl:items-end">
             <div>
               <p class="mb-4 text-xs uppercase tracking-[0.36em] text-orange-300">${t(meta.eyebrow)}</p>
-              <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">${t(meta.title)}</h1>
-              <p class="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">${t(meta.subtitle)}</p>
-              <div class="mt-6 flex flex-wrap gap-3 text-sm">
+              <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-[3.25rem] leading-tight break-words">${t(meta.title)}</h1>
+              <p class="mt-3 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">${t(meta.subtitle)}</p>
+              <div class="mt-5 flex flex-wrap gap-3 text-sm">
                 <a href="/pages/quickstart.html" class="rounded-full bg-orange-500 px-4 py-2 font-medium text-slate-950 transition hover:bg-orange-400">${t(ui.shell.quickAction)}</a>
                 <a href="/pages/command-center.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:border-orange-400/40 hover:text-white">${t(ui.shell.commandAction)}</a>
               </div>
             </div>
-            <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-              ${safeArray(stats).map((item) => `<article class="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-sm text-slate-400">${t(item.label)}</div><div class="mt-2 text-2xl font-semibold text-white">${t(item.value)}</div></article>`).join("")}
+            <div class="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
+              ${safeArray(stats).map((item) => `<article class="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-sm text-slate-400">${t(item.label)}</div><div class="mt-2 text-[clamp(1.4rem,2.4vw,2.2rem)] font-semibold leading-tight text-white break-words">${t(item.value)}</div></article>`).join("")}
             </div>
           </section>
-          <section class="mt-8 rounded-[28px] border border-white/10 bg-slate-950/50 p-3 shadow-2xl shadow-slate-950/20 sm:p-5">
+          <section class="mt-7 rounded-[28px] border border-white/10 bg-slate-950/50 p-3 shadow-2xl shadow-slate-950/20 sm:p-5">
             <div id="page-root"></div>
           </section>
         </main>
@@ -743,7 +743,7 @@
 
     const stacks = resourceText.stacks[state.currentLang];
     document.getElementById("page-root").innerHTML = `
-      <div class="grid gap-6 lg:grid-cols-[1.55fr,0.85fr]">
+      <div class="grid gap-6 xl:grid-cols-[1.45fr,0.9fr]">
         <section>
           <div class="mb-4 grid gap-3 sm:grid-cols-[1fr,220px]">
             <input id="task-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400" placeholder="${t(pageText.taskLibrary.searchPlaceholder)}">
@@ -754,7 +754,7 @@
           </div>
           <div id="task-list" class="grid gap-4"></div>
         </section>
-        <aside class="space-y-4">
+        <aside class="space-y-4 xl:sticky xl:top-24 xl:self-start">
           ${stacks.map((stack) => `<article class="rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.94),rgba(2,6,23,0.94))] p-5"><div class="flex items-center justify-between gap-3"><h2 class="text-lg font-semibold text-white">${stack.name}</h2><span class="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">${stack.audience}</span></div><p class="mt-3 text-sm leading-6 text-slate-300">${stack.outcome}</p><ul class="mt-4 space-y-2 text-sm text-slate-300">${stack.items.map((item) => `<li class="rounded-2xl bg-white/5 px-3 py-2">${item}</li>`).join("")}</ul></article>`).join("")}
         </aside>
       </div>
@@ -821,12 +821,12 @@
       { label: pageText.tutorial.stats.actions, value: pageText.tutorial.actionValue }
     ]);
     document.getElementById("page-root").innerHTML = `
-      <div class="grid gap-6 lg:grid-cols-[1.1fr,1fr]">
+      <div class="grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
         <section>
           <div class="mb-4"><select id="tutorial-category" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400"><option value="">${t(pageText.tutorial.allCategories)}</option>${categories.map((item) => `<option value="${item.name}">${localizeTutorialCategory(item)}</option>`).join("")}</select></div>
           <div id="tutorial-list" class="grid gap-4"></div>
         </section>
-        <aside class="space-y-4">
+        <aside class="space-y-4 xl:sticky xl:top-24 xl:self-start">
           <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 id="tutorial-title" class="text-xl font-semibold text-white">${t(pageText.tutorial.selectArticle)}</h2><div id="tutorial-meta" class="mt-2 text-sm text-slate-400"></div><pre id="tutorial-preview" class="mt-4 max-h-[420px] overflow-auto whitespace-pre-wrap rounded-2xl border border-white/10 bg-slate-950/90 p-4 text-sm leading-6 text-slate-300"></pre></article>
           <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.tutorial.troubleshooting)}</h2><div class="mt-4 space-y-3">${troubleshooting[state.currentLang].map((item) => `<details class="rounded-2xl border border-white/10 bg-slate-950/60 p-4"><summary class="cursor-pointer text-sm font-medium text-white">${item.title}</summary><p class="mt-3 text-sm leading-6 text-slate-300">${item.diagnosis}</p></details>`).join("")}</div></article>
         </aside>
@@ -1003,13 +1003,13 @@
       { label: pageText.quickstart.stats.checks, value: resourceText.checklist[state.currentLang].length },
       { label: pageText.quickstart.stats.goal, value: pageText.quickstart.goalValue }
     ]);
-    document.getElementById("page-root").innerHTML = `<div class="grid gap-6 lg:grid-cols-[1.2fr,0.9fr]"><section class="space-y-4"><div class="flex flex-wrap gap-3">${tracks.map((track) => `<button data-track="${track.id}" class="quickstart-tab rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-400/40">${track.name}</button>`).join("")}</div><article id="quickstart-panel" class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"></article><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.stacksTitle)}</h2><div class="mt-4 grid gap-3 md:grid-cols-3">${resourceText.stacks[state.currentLang].map((stack) => `<div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><div class="font-medium text-white">${stack.name}</div><div class="mt-2 text-sm text-slate-300">${stack.outcome}</div></div>`).join("")}</div></article></section><aside class="space-y-4"><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.checklistTitle)}</h2><div id="quickstart-checklist" class="mt-4 space-y-3"></div></article><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.nextTitle)}</h2><ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">${pageText.quickstart.nextList[state.currentLang].map((item) => `<li>${item}</li>`).join("")}</ul></article></aside></div>`;
+    document.getElementById("page-root").innerHTML = `<div class="grid gap-6 xl:grid-cols-[1.15fr,0.85fr]"><section class="space-y-4"><div class="flex flex-wrap gap-3">${tracks.map((track) => `<button data-track="${track.id}" class="quickstart-tab rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-400/40">${track.name}</button>`).join("")}</div><article id="quickstart-panel" class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"></article><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.stacksTitle)}</h2><div class="mt-4 grid gap-3 md:grid-cols-3">${resourceText.stacks[state.currentLang].map((stack) => `<div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><div class="font-medium text-white">${stack.name}</div><div class="mt-2 text-sm text-slate-300">${stack.outcome}</div></div>`).join("")}</div></article></section><aside class="space-y-4 xl:sticky xl:top-24 xl:self-start"><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.checklistTitle)}</h2><div id="quickstart-checklist" class="mt-4 space-y-3"></div></article><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.nextTitle)}</h2><ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">${pageText.quickstart.nextList[state.currentLang].map((item) => `<li>${item}</li>`).join("")}</ul></article></aside></div>`;
     const panel = document.getElementById("quickstart-panel");
     const checklistRoot = document.getElementById("quickstart-checklist");
     function renderTrack() {
       const current = tracks.find((item) => item.id === state.quickStartTrack) || tracks[0];
       const localized = resourceText.quickStartTracks[current.id] || resourceText.quickStartTracks.windows;
-      panel.innerHTML = `<div class="flex flex-wrap items-start justify-between gap-4"><div><span class="rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-orange-200">${t(localized.badge)}</span><h2 class="mt-3 text-2xl font-semibold text-white">${current.name}</h2></div><button id="copy-quickstart-command" class="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-slate-950">${t(pageText.quickstart.copyCommand)}</button></div><pre class="mt-4 whitespace-pre-wrap rounded-2xl border border-white/10 bg-slate-950/90 p-4 text-sm leading-6 text-slate-300">${current.command}</pre><ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">${localized.notes[state.currentLang].map((item) => `<li class="rounded-2xl bg-white/5 px-3 py-3">${item}</li>`).join("")}</ul>`;
+      panel.innerHTML = `<div class="flex flex-wrap items-start justify-between gap-4"><div><span class="rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-orange-200">${t(localized.badge)}</span><h2 class="mt-3 text-2xl font-semibold text-white">${current.name}</h2></div><button id="copy-quickstart-command" class="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-slate-950">${t(pageText.quickstart.copyCommand)}</button></div><div class="mt-4 grid gap-4 2xl:grid-cols-[1.1fr,0.9fr]"><pre class="whitespace-pre-wrap rounded-2xl border border-white/10 bg-slate-950/90 p-4 text-sm leading-6 text-slate-300">${current.command}</pre><ul class="space-y-3 text-sm leading-6 text-slate-300">${localized.notes[state.currentLang].map((item) => `<li class="rounded-2xl bg-white/5 px-3 py-3">${item}</li>`).join("")}</ul></div>`;
       document.querySelectorAll(".quickstart-tab").forEach((button) => {
         button.className = `quickstart-tab rounded-full border px-4 py-2 text-sm transition ${button.dataset.track === current.id ? "border-orange-400/40 bg-orange-500 text-slate-950" : "border-white/10 text-slate-200 hover:border-orange-400/40"}`;
       });
@@ -1048,7 +1048,7 @@
       { label: pageText.command.stats.issues, value: issues.length },
       { label: pageText.command.stats.actions, value: pageText.command.actionValue }
     ]);
-    document.getElementById("page-root").innerHTML = `<div class="space-y-6"><input id="command-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400" placeholder="${t(pageText.command.searchPlaceholder)}"><div id="command-sections" class="grid gap-4 lg:grid-cols-2"></div><div id="issue-sections" class="grid gap-4 lg:grid-cols-2"></div></div>`;
+    document.getElementById("page-root").innerHTML = `<div class="space-y-4"><div class="rounded-3xl border border-white/10 bg-white/[0.03] p-4"><input id="command-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400" placeholder="${t(pageText.command.searchPlaceholder)}"></div><div class="grid gap-4 xl:grid-cols-[1.02fr,0.98fr]"><section id="command-sections" class="grid gap-4"></section><aside id="issue-sections" class="grid gap-4 xl:sticky xl:top-24 xl:self-start"></aside></div></div>`;
     const input = document.getElementById("command-search");
     const commandRoot = document.getElementById("command-sections");
     const issueRoot = document.getElementById("issue-sections");
