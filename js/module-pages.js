@@ -538,7 +538,7 @@
     if (existing) existing.remove();
     const toast = document.createElement("div");
     toast.id = "page-toast";
-    toast.className = "fixed bottom-6 right-6 z-50 rounded-2xl border border-orange-400/40 bg-slate-900/95 px-4 py-3 text-sm text-slate-100 shadow-2xl shadow-orange-950/30";
+    toast.className = "fixed bottom-6 right-6 z-50 rounded-2xl border border-red-400/40 bg-slate-900/95 px-4 py-3 text-sm text-slate-100 shadow-2xl shadow-red-950/30";
     toast.textContent = message;
     document.body.appendChild(toast);
     setTimeout(() => {
@@ -691,18 +691,18 @@
         })
       : "";
     document.body.innerHTML = `
-      <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.18),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(34,197,94,0.12),_transparent_28%),linear-gradient(180deg,_#020617_0%,_#0f172a_50%,_#111827_100%)] text-slate-100">
+      <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(239,68,68,0.16),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(127,29,29,0.16),_transparent_28%),linear-gradient(180deg,_#020617_0%,_#0f172a_50%,_#111827_100%)] text-slate-100">
         <div class="pointer-events-none fixed inset-0 opacity-50" style="background-image:linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px); background-size: 32px 32px;"></div>
         ${headerMarkup}
         <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <section class="grid gap-6 xl:grid-cols-[1.35fr,0.85fr] xl:items-end">
             <div>
-              <p class="mb-4 text-xs uppercase tracking-[0.36em] text-orange-300">${t(meta.eyebrow)}</p>
+              <p class="mb-4 text-xs uppercase tracking-[0.36em] text-red-200">${t(meta.eyebrow)}</p>
               <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-[3.25rem] leading-tight break-words">${t(meta.title)}</h1>
               <p class="mt-3 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">${t(meta.subtitle)}</p>
               <div class="mt-5 flex flex-wrap gap-3 text-sm">
-                <a href="/pages/quickstart.html" class="rounded-full bg-orange-500 px-4 py-2 font-medium text-slate-950 transition hover:bg-orange-400">${t(ui.shell.quickAction)}</a>
-                <a href="/pages/command-center.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:border-orange-400/40 hover:text-white">${t(ui.shell.commandAction)}</a>
+                <a href="/pages/quickstart.html" class="rounded-full bg-red-500 px-4 py-2 font-medium text-white transition hover:bg-red-400">${t(ui.shell.quickAction)}</a>
+                <a href="/pages/command-center.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:border-red-400/40 hover:text-white">${t(ui.shell.commandAction)}</a>
               </div>
             </div>
             <div class="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
@@ -739,8 +739,8 @@
       <div class="grid gap-6 xl:grid-cols-[1.45fr,0.9fr]">
         <section>
           <div class="mb-4 grid gap-3 sm:grid-cols-[1fr,220px]">
-            <input id="task-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400" placeholder="${t(pageText.taskLibrary.searchPlaceholder)}">
-            <select id="task-category" class="rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400">
+            <input id="task-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400" placeholder="${t(pageText.taskLibrary.searchPlaceholder)}">
+            <select id="task-category" class="rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400">
               <option value="">${t(pageText.taskLibrary.allCategories)}</option>
               ${categories.map((item) => `<option value="${item.name}">${localizeTaskCategory(item.name)}</option>`).join("")}
             </select>

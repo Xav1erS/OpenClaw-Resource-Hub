@@ -45,8 +45,60 @@
     `;
   }
 
+  function normalizeThemeClasses(root) {
+    if (!root || !root.querySelectorAll) return;
+
+    const replacements = [
+      ["orange-500", "red-500"],
+      ["orange-400", "red-400"],
+      ["orange-300", "red-200"],
+      ["orange-200", "red-200"],
+      ["orange-950", "red-950"],
+      ["text-slate-950", "text-white"]
+    ];
+
+    root.querySelectorAll("*").forEach((node) => {
+      if (!(node instanceof HTMLElement)) return;
+      const value = node.getAttribute("class");
+      if (!value || !value.includes("orange-")) return;
+
+      let next = value;
+      replacements.forEach(([from, to]) => {
+        next = next.split(from).join(to);
+      });
+
+      if (next !== value) {
+        node.setAttribute("class", next);
+      }
+    });
+  }
+
+  function startThemeObserver() {
+    const apply = () => normalizeThemeClasses(document.body);
+    let queued = false;
+    const schedule = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        apply();
+      });
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", schedule, { once: true });
+    } else {
+      schedule();
+    }
+
+    const observer = new MutationObserver(() => schedule());
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
+
   window.openClawSiteShell = {
     navItems,
     renderHeader
   };
+
+  startThemeObserver();
 })();

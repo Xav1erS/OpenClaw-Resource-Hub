@@ -276,7 +276,7 @@
           </div>
           <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.22em]">
             <span class="rounded-full border ${state.modelLinked ? "border-emerald-300/30 bg-emerald-400/10 text-emerald-200" : "border-amber-300/30 bg-amber-400/10 text-amber-200"} px-3 py-2">${state.modelLinked ? text.modelLinkedOn : text.modelLinkedOff}</span>
-            ${state.modelLinked ? "" : `<button data-relink-model class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] text-slate-200 transition hover:border-sky-300/30 hover:text-white">${text.modelRelink}</button>`}
+            ${state.modelLinked ? "" : `<button data-relink-model class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.modelRelink}</button>`}
           </div>
         </div>
         <div class="mt-5 flex flex-wrap gap-2 text-xs text-slate-300">
@@ -307,7 +307,7 @@
       const preset = text.presets[presetId];
       const active = state.activePreset === presetId;
       return `
-        <button data-preset="${presetId}" class="rounded-[28px] border p-4 text-left transition ${active ? "border-orange-300/40 bg-orange-500/15" : "border-white/10 bg-white/[0.03] hover:border-orange-300/30 hover:bg-white/[0.05]"}">
+        <button data-preset="${presetId}" class="rounded-[28px] border p-4 text-left transition ${active ? "border-red-300/40 bg-red-500/15" : "border-white/10 bg-white/[0.03] hover:border-red-300/30 hover:bg-white/[0.05]"}">
           <div class="text-sm font-medium text-white">${preset.label}</div>
           <div class="mt-2 text-sm leading-6 text-slate-300">${preset.desc}</div>
         </button>
@@ -323,7 +323,7 @@
         <h3 class="mt-3 text-xl font-semibold text-white">${question.title}</h3>
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           ${Object.entries(question.options).map(([optionKey, label]) => `
-            <button data-question="${key}" data-value="${optionKey}" class="rounded-2xl border px-4 py-4 text-left transition ${state.answers[key] === optionKey ? "border-sky-300/30 bg-sky-400/10 text-white" : "border-white/10 bg-white/[0.03] text-slate-200 hover:border-sky-300/25 hover:bg-white/[0.05]"}">
+            <button data-question="${key}" data-value="${optionKey}" class="rounded-2xl border px-4 py-4 text-left transition ${state.answers[key] === optionKey ? "border-red-300/30 bg-red-400/10 text-white" : "border-white/10 bg-white/[0.03] text-slate-200 hover:border-red-300/25 hover:bg-white/[0.05]"}">
               <span class="block text-base font-medium">${label}</span>
             </button>
           `).join("")}
@@ -344,7 +344,7 @@
 
   function renderComparisonCards() {
     return state.summary.comparisons.slice(0, 4).map((item) => `
-      <article class="rounded-3xl border ${item.isSelected ? "border-orange-300/40 bg-orange-500/10" : "border-white/10 bg-white/[0.03]"} p-4">
+      <article class="rounded-3xl border ${item.isSelected ? "border-red-300/40 bg-red-500/10" : "border-white/10 bg-white/[0.03]"} p-4">
         <div class="flex items-center justify-between gap-3">
           <div>
             <div class="text-base font-medium text-white">${item.model.name}</div>
@@ -377,14 +377,14 @@
     document.title = `${text.title} | OpenClaw Resource Hub`;
     document.body.className = "min-h-screen bg-slate-950 text-slate-100";
     document.body.innerHTML = `
-      <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.18),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(56,189,248,0.16),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#111827_100%)]">
+      <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(239,68,68,0.18),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(127,29,29,0.18),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#111827_100%)]">
         <div class="pointer-events-none fixed inset-0 opacity-40" style="background-image:linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px); background-size: 30px 30px;"></div>
         ${headerMarkup}
 
         <main class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <section class="grid gap-8 lg:grid-cols-[1.1fr,0.9fr] lg:items-end">
             <div>
-              <p class="mb-4 text-xs uppercase tracking-[0.38em] text-orange-200">${text.pageTag}</p>
+              <p class="mb-4 text-xs uppercase tracking-[0.38em] text-red-200">${text.pageTag}</p>
               <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">${text.title}</h1>
               <p class="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">${text.subtitle}</p>
               <p class="mt-5 max-w-3xl text-sm leading-7 text-slate-400">${text.helper}</p>
@@ -421,7 +421,7 @@
                     <h2 class="text-2xl font-semibold text-white">${text.advancedTitle}</h2>
                     <p class="mt-2 max-w-2xl text-sm leading-7 text-slate-300">${text.advancedBody}</p>
                   </div>
-                  <button data-toggle-advanced class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${state.advancedOpen ? text.advancedToggleClose : text.advancedToggleOpen}</button>
+                  <button data-toggle-advanced class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${state.advancedOpen ? text.advancedToggleClose : text.advancedToggleOpen}</button>
                 </div>
                 <div class="mt-4 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.22em]">
                   <span class="rounded-full border ${state.advancedLinked ? "border-emerald-300/30 bg-emerald-400/10 text-emerald-200" : "border-amber-300/30 bg-amber-400/10 text-amber-200"} px-3 py-2">${state.advancedLinked ? text.advancedOn : text.advancedOff}</span>
@@ -432,14 +432,14 @@
                     <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.dailyTasks}</div><input data-advanced="dailyTasks" type="number" min="1" value="${state.advanced.dailyTasks}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
                     <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.stepsPerTask}</div><input data-advanced="stepsPerTask" type="number" min="1" value="${state.advanced.stepsPerTask}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
                   </div>
-                  <div class="mt-4"><button data-relink class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-sky-300/30 hover:text-white">${text.advancedSync}</button></div>
+                  <div class="mt-4"><button data-relink class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.advancedSync}</button></div>
                 ` : ""}
               </article>
             </div>
 
             <aside class="xl:sticky xl:top-24">
               <article class="space-y-6 rounded-[32px] border border-white/10 bg-white/[0.05] p-6 shadow-2xl shadow-slate-950/30">
-                <div class="text-xs uppercase tracking-[0.24em] text-orange-200">${text.asideLabel}</div>
+                <div class="text-xs uppercase tracking-[0.24em] text-red-200">${text.asideLabel}</div>
                 <div>
                   <h2 class="text-3xl font-semibold text-white">${text.resultTitle}</h2>
                   <p class="mt-3 text-sm leading-7 text-slate-300">${text.resultLead}</p>
@@ -455,7 +455,7 @@
                   <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5"><div class="text-sm text-slate-400">${text.monthlyCost}</div><div class="mt-3 text-3xl font-semibold text-white">${money(state.summary.monthlyCost)}</div></div>
                 </div>
                 ${state.summary.usingRecommendedModel ? "" : `
-                  <div class="rounded-3xl border border-sky-300/20 bg-sky-400/10 p-5">
+                  <div class="rounded-3xl border border-red-300/20 bg-red-400/10 p-5">
                     <div class="text-sm text-slate-300">${text.recommendedModel}</div>
                     <div class="mt-3 text-xl font-semibold text-white">${state.summary.recommendedModelName}</div>
                     <div class="mt-2 text-sm text-slate-300">${state.summary.recommendedProviderName} · ${text.recommendationHint}</div>
@@ -471,10 +471,10 @@
                   <h3 class="text-2xl font-semibold text-white">${text.shareTitle}</h3>
                   <p class="mt-3 text-sm leading-7 text-slate-300">${text.shareBody}</p>
                   <div class="mt-5 grid gap-3 sm:grid-cols-2">
-                    <button data-generate-card class="rounded-full bg-orange-500 px-5 py-3 text-sm font-medium text-slate-950 transition hover:bg-orange-400">${text.generateCard}</button>
-                    <button data-download-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.downloadCard}</button>
-                    <button data-copy-share class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.copyText}</button>
-                    <button data-share-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-orange-300/30 hover:text-white">${text.shareNow}</button>
+                    <button data-generate-card class="rounded-full bg-red-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-red-400">${text.generateCard}</button>
+                    <button data-download-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.downloadCard}</button>
+                    <button data-copy-share class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.copyText}</button>
+                    <button data-share-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.shareNow}</button>
                   </div>
                   <div class="mt-5 rounded-[28px] border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-4">
                     <div class="mb-3 flex items-center justify-between gap-3"><div class="text-sm uppercase tracking-[0.24em] text-slate-400">${text.generatedLabel}</div><div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">${state.summary.warningLabel}</div></div>

@@ -131,7 +131,7 @@
     ctx.beginPath();
     ctx.arc(1010, 140, 230, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = "#38bdf8";
+    ctx.fillStyle = "#7f1d1d";
     ctx.beginPath();
     ctx.arc(120, 1080, 250, 0, Math.PI * 2);
     ctx.fill();
