@@ -349,12 +349,12 @@
         roadmap: { zh: "路线图", en: "Roadmap" },
         status: { zh: "状态", en: "Status" }
       },
-      statusValue: { zh: "MVP 迭代中", en: "MVP Beta" },
+      statusValue: { zh: "上线基线已就绪", en: "Launch Baseline Ready" },
       nextTitle: { zh: "接下来补什么", en: "What Comes Next" },
       ideaTitle: { zh: "适合下一轮做的事", en: "Best Next Iteration" },
       ideaBody: {
-        zh: "如果继续参考 openclaw-hub.com，最有价值的后续不是再堆页面数量，而是把命令、排错、模板详情和教程详情做得更可检索、更可复用。",
-        en: "The best next step is not more pages. It is deeper command docs, troubleshooting, template details, and tutorial detail pages."
+        zh: "下一轮最有价值的事情不是继续加页面，而是把命令、排错、模板详情和教程详情做得更深、更可检索，并接上真实使用数据。",
+        en: "The best next step is not more pages. It is deeper command docs, troubleshooting, richer template and tutorial detail pages, plus real usage data."
       }
     }
   };
@@ -484,11 +484,13 @@
 
   const releaseNotes = {
     zh: [
+      { version: "Launch Baseline", date: "2026-03-15", highlights: ["补齐首页与核心内页的 SEO 元信息、canonical、OG 与 Twitter 卡片。", "新增 robots.txt、sitemap.xml、404 页面与站点静态校验脚本。", "接入可后续填写 GA4 ID 的埋点基线，并清理发布时的未完成感文案。"] },
       { version: "MVP Sprint 3", date: "2026-03-14", highlights: ["独立页从占位状态改为真实模块页。", "新增 Quick Start、Command Center、Release Notes 三个静态功能页。", "补齐中英文切换并重做独立页渲染层。"] },
       { version: "MVP Sprint 2", date: "2026-03-13", highlights: ["成本计算器接入多模型对比和优化建议。", "补齐模块页基础导航和复制交互。"] },
       { version: "MVP Sprint 1", date: "2026-03-11", highlights: ["项目从单首页结构切出 6 个模块入口。", "建立首批任务模板、工作流和教程种子数据。"] }
     ],
     en: [
+      { version: "Launch Baseline", date: "2026-03-15", highlights: ["Added canonical, OG, Twitter, and shared SEO metadata across the homepage and core pages.", "Added robots.txt, sitemap.xml, a 404 page, and a static site verification script.", "Prepared analytics wiring for a future GA4 ID and cleaned up unfinished-looking launch copy."] },
       { version: "MVP Sprint 3", date: "2026-03-14", highlights: ["Standalone pages are now real module pages, not placeholders.", "Added Quick Start, Command Center, and Release Notes pages.", "Rebuilt the bilingual page renderer and cleaned the content layer."] },
       { version: "MVP Sprint 2", date: "2026-03-13", highlights: ["Cost calculator now compares models and shows optimization hints.", "Filled in module page navigation and copy interactions."] },
       { version: "MVP Sprint 1", date: "2026-03-11", highlights: ["Split the project from a single homepage into six module entry points.", "Created seed data for templates, workflows, and tutorials."] }
@@ -496,8 +498,8 @@
   };
 
   const roadmapItems = {
-    zh: ["给首页和独立页统一真实 SEO 元信息与 OG 图片。", "把模板、教程、工作流扩充为可筛选的生产数据集。", "补教程详情页和收藏/历史记录。", "接真实 GA4、部署后的 404 与社交分享验证。"],
-    en: ["Unify homepage and standalone pages with proper SEO metadata and OG assets.", "Expand templates, tutorials, and workflows into real production datasets.", "Add tutorial detail pages plus favorites/history.", "Wire real GA4 and validate deployed 404 and social sharing."]
+    zh: ["把模板、教程、工作流扩充为更完整、可筛选的生产数据集。", "补教程详情页，以及收藏 / 历史记录等回访能力。", "接入真实 GA4 Measurement ID，开始看页面流量和点击行为。", "做一轮发布后人工验收，确认默认 Vercel 域名下的分享、404 和跳转表现。"],
+    en: ["Expand templates, tutorials, and workflows into a richer production-grade dataset.", "Add tutorial detail pages plus favorites and history for return visits.", "Plug in a real GA4 Measurement ID so page traffic and clicks are measurable.", "Run a post-deploy manual QA pass for sharing cards, 404 behavior, and redirects on the default Vercel domain."]
   };
 
   const communityChannels = {
@@ -1079,7 +1081,70 @@
       { label: pageText.release.stats.roadmap, value: roadmap.length },
       { label: pageText.release.stats.status, value: pageText.release.statusValue }
     ]);
-    document.getElementById("page-root").innerHTML = `<div class="grid gap-6 lg:grid-cols-[1.15fr,0.85fr]"><section class="space-y-4">${notes.map((item) => `<article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><div class="flex flex-wrap items-center justify-between gap-3"><h2 class="text-xl font-semibold text-white">${item.version}</h2><span class="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">${item.date}</span></div><ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">${item.highlights.map((highlight) => `<li class="rounded-2xl bg-slate-950/70 px-3 py-3">${highlight}</li>`).join("")}</ul></article>`).join("")}</section><aside class="space-y-4"><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.release.nextTitle)}</h2><ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">${roadmap.map((item) => `<li class="rounded-2xl bg-slate-950/70 px-3 py-3">${item}</li>`).join("")}</ul></article><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.release.ideaTitle)}</h2><p class="mt-3 text-sm leading-6 text-slate-300">${t(pageText.release.ideaBody)}</p></article></aside></div>`;
+    document.getElementById("page-root").innerHTML = `
+      <div class="grid gap-6 xl:grid-cols-[1.18fr,0.82fr]">
+        <section class="relative rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.92),rgba(2,6,23,0.88))] p-5 shadow-2xl shadow-slate-950/20 sm:p-6">
+          <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p class="text-xs uppercase tracking-[0.32em] text-red-200/80">${state.currentLang === "zh" ? "Timeline" : "Timeline"}</p>
+              <h2 class="mt-3 text-2xl font-semibold text-white">${state.currentLang === "zh" ? "版本时间线" : "Release Timeline"}</h2>
+            </div>
+            <div class="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-emerald-200">
+              ${t(pageText.release.stats.status)} · ${t(pageText.release.statusValue)}
+            </div>
+          </div>
+          <div class="relative pl-0 lg:pl-8">
+            <div class="pointer-events-none absolute bottom-0 left-3 top-2 hidden w-px bg-[linear-gradient(180deg,rgba(248,113,113,0.6),rgba(148,163,184,0.05))] lg:block"></div>
+            <div class="space-y-4">
+              ${notes.map((item, index) => `
+                <article class="relative overflow-hidden rounded-[28px] border ${index === 0 ? "border-red-400/30 bg-[linear-gradient(135deg,rgba(127,29,29,0.28),rgba(15,23,42,0.9))]" : "border-white/10 bg-white/[0.03]"} p-5 lg:ml-8">
+                  <div class="absolute left-[-2.55rem] top-8 hidden h-4 w-4 rounded-full border border-red-300/50 bg-red-400 shadow-[0_0_0_6px_rgba(248,113,113,0.12)] lg:block"></div>
+                  <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div class="min-w-0">
+                      <div class="flex flex-wrap items-center gap-3">
+                        <h3 class="text-xl font-semibold text-white">${item.version}</h3>
+                        ${index === 0 ? `<span class="rounded-full border border-red-300/30 bg-red-500/15 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-red-100">${state.currentLang === "zh" ? "Latest" : "Latest"}</span>` : ""}
+                      </div>
+                      <p class="mt-2 text-sm text-slate-400">${state.currentLang === "zh" ? "当前阶段的关键进展与上线准备项。" : "Key progress and launch-readiness milestones for this stage."}</p>
+                    </div>
+                    <span class="rounded-full border border-white/10 bg-slate-950/70 px-3 py-1 text-xs text-slate-300">${item.date}</span>
+                  </div>
+                  <div class="mt-5 grid gap-3">
+                    ${item.highlights.map((highlight, highlightIndex) => `
+                      <div class="rounded-2xl border ${index === 0 && highlightIndex === 0 ? "border-red-400/20 bg-red-500/10" : "border-white/10 bg-slate-950/70"} px-4 py-3 text-sm leading-6 text-slate-200">
+                        ${highlight}
+                      </div>
+                    `).join("")}
+                  </div>
+                </article>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+        <aside class="space-y-4 xl:sticky xl:top-24 xl:self-start">
+          <article class="overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(15,23,42,0.88))] p-5">
+            <div class="flex items-center justify-between gap-3">
+              <h2 class="text-lg font-semibold text-white">${t(pageText.release.nextTitle)}</h2>
+              <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">${roadmap.length}</span>
+            </div>
+            <div class="mt-4 space-y-3">
+              ${roadmap.map((item, index) => `
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                  <div class="flex items-start gap-3">
+                    <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/5 text-xs font-medium text-slate-300">${index + 1}</span>
+                    <p class="text-sm leading-6 text-slate-300">${item}</p>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </article>
+          <article class="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.92),rgba(2,6,23,0.88))] p-5">
+            <h2 class="text-lg font-semibold text-white">${t(pageText.release.ideaTitle)}</h2>
+            <p class="mt-3 text-sm leading-7 text-slate-300">${t(pageText.release.ideaBody)}</p>
+          </article>
+        </aside>
+      </div>
+    `;
   }
 
   window.modulePages = {
