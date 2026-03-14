@@ -682,29 +682,18 @@
   function pageShell(pageId, stats) {
     const meta = ui.pageMeta[pageId];
     document.title = `${t(meta.title)} | ${ui.shell.brand}`;
+    const headerMarkup = window.openClawSiteShell
+      ? window.openClawSiteShell.renderHeader({
+          currentPage: pageId,
+          lang: state.currentLang,
+          brandTop: "OpenClaw",
+          brandBottom: ui.shell.brand
+        })
+      : "";
     document.body.innerHTML = `
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.18),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(34,197,94,0.12),_transparent_28%),linear-gradient(180deg,_#020617_0%,_#0f172a_50%,_#111827_100%)] text-slate-100">
         <div class="pointer-events-none fixed inset-0 opacity-50" style="background-image:linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px); background-size: 32px 32px;"></div>
-        <header class="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-          <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between gap-4">
-              <a href="/index.html" class="flex min-w-0 items-center gap-3">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-orange-400/30 bg-orange-500/15 text-sm font-semibold tracking-[0.18em] text-orange-300">OC</span>
-                <span class="min-w-0">
-                  <span class="block truncate text-sm uppercase tracking-[0.28em] text-slate-400">OpenClaw</span>
-                  <span class="block truncate text-lg font-semibold text-white">${ui.shell.brand}</span>
-                </span>
-              </a>
-              <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs">
-                <button data-lang="zh" class="rounded-full px-3 py-1 transition ${state.currentLang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">${ui.shell.langZh}</button>
-                <button data-lang="en" class="rounded-full px-3 py-1 transition ${state.currentLang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">${ui.shell.langEn}</button>
-              </div>
-            </div>
-            <nav class="mt-3 flex gap-2 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              ${navItems.map((item) => `<a href="${item.href}" class="shrink-0 rounded-full px-3 py-2 transition ${item.id === pageId ? "bg-orange-500 text-slate-950" : "border border-white/10 bg-white/5 text-slate-300 hover:border-orange-400/40 hover:text-white"}">${t(ui.nav[item.id])}</a>`).join("")}
-            </nav>
-          </div>
-        </header>
+        ${headerMarkup}
         <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <section class="grid gap-6 xl:grid-cols-[1.35fr,0.85fr] xl:items-end">
             <div>

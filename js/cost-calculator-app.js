@@ -3,9 +3,12 @@
     lang: localStorage.getItem("openclaw-module-lang") === "en" ? "en" : "zh",
     activePreset: "operator",
     answers: { frequency: "6-20", complexity: "medium", web: "some", output: "medium" },
+    modelLinked: true,
+    selectedProvider: "anthropic",
+    selectedModelId: "claude-sonnet-4.6",
     advancedOpen: false,
     advancedLinked: true,
-    advanced: { model: "claude-sonnet-4.6", dailyTasks: 12, stepsPerTask: 50 },
+    advanced: { dailyTasks: 12, stepsPerTask: 50 },
     summary: null,
     shareCanvas: null,
     shareDataUrl: "",
@@ -18,14 +21,6 @@
       title: "成本计算器",
       subtitle: "左侧做选择，右侧立即给出推荐、成本和分享卡片。",
       helper: "默认模式先用人话问卷估算，只有真正需要精调时才展开高级模式。",
-      nav: [
-        { name: "快速开始", href: "/pages/quickstart.html" },
-        { name: "命令中心", href: "/pages/command-center.html" },
-        { name: "模板库", href: "/pages/task-library.html" },
-        { name: "教程", href: "/pages/tutorials.html" },
-        { name: "更新日志", href: "/pages/release-notes.html" }
-      ],
-      navCurrent: "成本计算器",
       brandTop: "OPENCLAW",
       brandBottom: "Resource Hub",
       langZh: "中文",
@@ -37,6 +32,13 @@
       ],
       presetTitle: "快速预设",
       presetBody: "想先看大概区间，就从预设开始。",
+      modelChoiceTitle: "模型选择",
+      modelChoiceBody: "先选模型厂商，再选具体模型。默认会跟随问卷推荐，你也可以手动覆盖。",
+      providerLabel: "模型厂商",
+      modelLabel: "具体模型",
+      modelLinkedOn: "当前跟随问卷推荐",
+      modelLinkedOff: "当前使用手动模型",
+      modelRelink: "恢复推荐模型",
       questionnaireTitle: "你的使用更像哪一种？",
       questionnaireBody: "这 4 个问题会驱动推荐模型、内部工作量和分享文案。",
       presets: {
@@ -53,13 +55,13 @@
         output: { key: "输出长度", title: "输出通常有多长？", options: { short: "简短结论", medium: "中等篇幅", long: "长输出" } }
       },
       advancedTitle: "高级模式",
-      advancedBody: "你可以手动覆盖推荐模型、每日运行次数和单次步数。修改后右侧结果会立刻刷新。",
+      advancedBody: "你可以手动覆盖每日运行次数和单次步数。修改后右侧结果会立刻刷新。",
       advancedOn: "当前跟随问卷",
       advancedOff: "当前为手动覆盖",
       advancedToggleOpen: "展开高级模式",
       advancedToggleClose: "收起高级模式",
       advancedSync: "重新跟随问卷",
-      advancedFields: { model: "推荐模型", dailyTasks: "每日运行次数", stepsPerTask: "单次链路步数" },
+      advancedFields: { dailyTasks: "每日运行次数", stepsPerTask: "单次链路步数" },
       asideLabel: "实时结果",
       resultTitle: "推荐与成本",
       resultLead: "结果面板固定在右侧，选择后不用回到顶部找结果。",
@@ -95,14 +97,6 @@
       title: "Cost Calculator",
       subtitle: "Pick on the left and review the live recommendation, cost, and share card on the right.",
       helper: "The default flow starts with human-readable questions. Open advanced mode only when you want exact workload control.",
-      nav: [
-        { name: "Quick Start", href: "/pages/quickstart.html" },
-        { name: "Command Center", href: "/pages/command-center.html" },
-        { name: "Task Library", href: "/pages/task-library.html" },
-        { name: "Tutorials", href: "/pages/tutorials.html" },
-        { name: "Release Notes", href: "/pages/release-notes.html" }
-      ],
-      navCurrent: "Cost Calculator",
       brandTop: "OPENCLAW",
       brandBottom: "Resource Hub",
       langZh: "中文",
@@ -114,6 +108,13 @@
       ],
       presetTitle: "Quick Presets",
       presetBody: "If you only need a fast range, start from a preset.",
+      modelChoiceTitle: "Model Selection",
+      modelChoiceBody: "Choose the provider first, then the exact model. By default this follows the questionnaire recommendation.",
+      providerLabel: "Provider",
+      modelLabel: "Model",
+      modelLinkedOn: "Currently using the recommended model",
+      modelLinkedOff: "Currently using a manual model",
+      modelRelink: "Use recommended model",
       questionnaireTitle: "What does your usage look like?",
       questionnaireBody: "These four answers drive the recommended model, internal workload, and share copy.",
       presets: {
@@ -130,13 +131,13 @@
         output: { key: "Output length", title: "How long is the output?", options: { short: "Short answer", medium: "Medium length", long: "Long output" } }
       },
       advancedTitle: "Advanced Mode",
-      advancedBody: "Override the suggested model, runs per day, and steps per run. The live panel updates immediately from your manual values.",
+      advancedBody: "Override runs per day and steps per run. The live panel updates immediately from your manual values.",
       advancedOn: "Currently linked to questionnaire",
       advancedOff: "Currently using manual override",
       advancedToggleOpen: "Open advanced mode",
       advancedToggleClose: "Close advanced mode",
       advancedSync: "Relink to questionnaire",
-      advancedFields: { model: "Suggested model", dailyTasks: "Runs per day", stepsPerTask: "Steps per run" },
+      advancedFields: { dailyTasks: "Runs per day", stepsPerTask: "Steps per run" },
       asideLabel: "Live result",
       resultTitle: "Recommendation and cost",
       resultLead: "The result panel stays in view while you answer questions.",
@@ -177,9 +178,24 @@
   function warningLabel(level, lang = state.lang) { return window.warningLabels[lang][level]; }
   function workloadChip(label) { return `<span class="rounded-full border border-white/10 bg-white/5 px-3 py-2">${label}</span>`; }
 
-  function syncAdvancedFromAnswers() {
+  function getProviderName(providerId, lang = state.lang) {
+    const provider = window.modelProviders && window.modelProviders[providerId];
+    if (!provider) return providerId;
+    return provider[lang] || provider.en || providerId;
+  }
+
+  function getProviderList() {
+    return Object.keys(window.modelProviders || {}).filter((providerId) => {
+      return Array.isArray(window.getModelsByProvider && window.getModelsByProvider(providerId))
+        ? window.getModelsByProvider(providerId).length > 0
+        : false;
+    });
+  }
+
+  function syncSelectionsFromAnswers() {
     const mapped = window.mapQuestionnaireToWorkload(state.answers);
-    state.advanced.model = mapped.recommendedModel;
+    state.selectedModelId = mapped.recommendedModel;
+    state.selectedProvider = window.modelPricing[mapped.recommendedModel].provider;
     state.advanced.dailyTasks = mapped.dailyTasks;
     state.advanced.stepsPerTask = mapped.stepsPerTask;
   }
@@ -189,8 +205,9 @@
     if (!preset) return;
     state.activePreset = presetId;
     state.answers = { ...preset.answers };
+    state.modelLinked = true;
     state.advancedLinked = true;
-    syncAdvancedFromAnswers();
+    syncSelectionsFromAnswers();
     track("cost_preset_selected", { preset: presetId });
     renderApp();
   }
@@ -198,22 +215,25 @@
   function getSummary() {
     const mapped = window.mapQuestionnaireToWorkload(state.answers);
     const effective = state.advancedLinked
-      ? { model: mapped.recommendedModel, dailyTasks: mapped.dailyTasks, stepsPerTask: mapped.stepsPerTask }
+      ? { dailyTasks: mapped.dailyTasks, stepsPerTask: mapped.stepsPerTask }
       : { ...state.advanced };
-    const result = window.calculateCost(effective.model, Number(effective.dailyTasks), Number(effective.stepsPerTask));
-    const model = window.modelPricing[effective.model];
+    const effectiveModel = state.modelLinked ? mapped.recommendedModel : state.selectedModelId;
+    const result = window.calculateCost(effectiveModel, Number(effective.dailyTasks), Number(effective.stepsPerTask));
+    const model = window.modelPricing[effectiveModel];
     const summary = {
       lang: state.lang,
-      modelId: effective.model,
+      modelId: effectiveModel,
       modelName: model.name,
+      providerId: model.provider,
+      providerName: getProviderName(model.provider),
       dailyTasks: Number(effective.dailyTasks),
       stepsPerTask: Number(effective.stepsPerTask),
       dailyCost: result.daily,
       monthlyCost: result.monthly,
       warning: result.warning,
       warningLabel: warningLabel(result.warning.level),
-      suggestions: window.getOptimizationSuggestions(effective.model, Number(effective.dailyTasks), Number(effective.stepsPerTask)),
-      comparisons: window.compareModels(Number(effective.dailyTasks), Number(effective.stepsPerTask), effective.model),
+      suggestions: window.getOptimizationSuggestions(effectiveModel, Number(effective.dailyTasks), Number(effective.stepsPerTask)),
+      comparisons: window.compareModels(Number(effective.dailyTasks), Number(effective.stepsPerTask), effectiveModel),
       frequencyKey: state.answers.frequency,
       complexityKey: state.answers.complexity,
       frequencyLabel: questionOptionLabel("frequency", state.answers.frequency),
@@ -231,6 +251,40 @@
     state.summary = getSummary();
     state.shareCanvas = window.generateShareCard(state.summary);
     state.shareDataUrl = state.shareCanvas.toDataURL("image/png");
+  }
+
+  function renderModelSelector() {
+    const text = t();
+    const providers = getProviderList();
+    const modelEntries = window.getModelsByProvider(state.selectedProvider);
+    return `
+      <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-semibold text-white">${text.modelChoiceTitle}</h2>
+            <p class="mt-2 max-w-2xl text-sm leading-7 text-slate-300">${text.modelChoiceBody}</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.22em]">
+            <span class="rounded-full border ${state.modelLinked ? "border-emerald-300/30 bg-emerald-400/10 text-emerald-200" : "border-amber-300/30 bg-amber-400/10 text-amber-200"} px-3 py-2">${state.modelLinked ? text.modelLinkedOn : text.modelLinkedOff}</span>
+            ${state.modelLinked ? "" : `<button data-relink-model class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] text-slate-200 transition hover:border-sky-300/30 hover:text-white">${text.modelRelink}</button>`}
+          </div>
+        </div>
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <div class="text-sm text-slate-400">${text.providerLabel}</div>
+            <select data-model-provider class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none">
+              ${providers.map((providerId) => `<option value="${providerId}" ${providerId === state.selectedProvider ? "selected" : ""}>${getProviderName(providerId)}</option>`).join("")}
+            </select>
+          </label>
+          <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <div class="text-sm text-slate-400">${text.modelLabel}</div>
+            <select data-model-id class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none">
+              ${modelEntries.map(([modelId, model]) => `<option value="${modelId}" ${modelId === state.selectedModelId ? "selected" : ""}>${model.name}</option>`).join("")}
+            </select>
+          </label>
+        </div>
+      </article>
+    `;
   }
 
   function renderPresetCards() {
@@ -293,6 +347,14 @@
     const text = t();
     const usageChip = `${state.summary.dailyTasks} ${text.usagePerDay}`;
     const stepChip = `${state.summary.stepsPerTask} ${text.stepsPerRun}`;
+    const headerMarkup = window.openClawSiteShell
+      ? window.openClawSiteShell.renderHeader({
+          currentPage: "cost-calculator",
+          lang: state.lang,
+          brandTop: text.brandTop,
+          brandBottom: text.brandBottom
+        })
+      : "";
 
     document.documentElement.lang = state.lang === "zh" ? "zh-CN" : "en";
     document.title = `${text.title} | OpenClaw Resource Hub`;
@@ -300,27 +362,7 @@
     document.body.innerHTML = `
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.18),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(56,189,248,0.16),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#111827_100%)]">
         <div class="pointer-events-none fixed inset-0 opacity-40" style="background-image:linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px); background-size: 30px 30px;"></div>
-        <header class="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-          <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between gap-4">
-              <a href="/index.html" class="flex min-w-0 items-center gap-3">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-orange-400/30 bg-orange-500/10 text-sm font-semibold tracking-[0.18em] text-orange-200">OC</span>
-                <div class="min-w-0">
-                  <div class="truncate text-sm uppercase tracking-[0.28em] text-slate-400">${text.brandTop}</div>
-                  <div class="truncate text-lg font-semibold text-white">${text.brandBottom}</div>
-                </div>
-              </a>
-              <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs">
-                <button data-lang="zh" class="rounded-full px-3 py-1 transition ${state.lang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langZh}</button>
-                <button data-lang="en" class="rounded-full px-3 py-1 transition ${state.lang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langEn}</button>
-              </div>
-            </div>
-            <nav class="mt-3 flex gap-2 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              ${text.nav.map((item) => `<a href="${item.href}" class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-slate-300 transition hover:border-orange-300/30 hover:text-white">${item.name}</a>`).join("")}
-              <span class="shrink-0 rounded-full bg-orange-500 px-3 py-2 text-slate-950">${text.navCurrent}</span>
-            </nav>
-          </div>
-        </header>
+        ${headerMarkup}
 
         <main class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <section class="grid gap-8 lg:grid-cols-[1.1fr,0.9fr] lg:items-end">
@@ -348,6 +390,8 @@
                 <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">${renderPresetCards()}</div>
               </article>
 
+              ${renderModelSelector()}
+
               <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
                 <h2 class="text-2xl font-semibold text-white">${text.questionnaireTitle}</h2>
                 <p class="mt-2 text-sm leading-7 text-slate-300">${text.questionnaireBody}</p>
@@ -367,8 +411,7 @@
                   <span class="text-slate-400">${text.advancedHint}</span>
                 </div>
                 ${state.advancedOpen ? `
-                  <div class="mt-6 grid gap-4 md:grid-cols-3">
-                    <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.model}</div><select data-advanced="model" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none">${Object.entries(window.modelPricing).map(([modelId, model]) => `<option value="${modelId}" ${state.advanced.model === modelId ? "selected" : ""}>${model.name}</option>`).join("")}</select></label>
+                  <div class="mt-6 grid gap-4 md:grid-cols-2">
                     <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.dailyTasks}</div><input data-advanced="dailyTasks" type="number" min="1" value="${state.advanced.dailyTasks}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
                     <label class="rounded-2xl border border-white/10 bg-white/[0.03] p-4"><div class="text-sm text-slate-400">${text.advancedFields.stepsPerTask}</div><input data-advanced="stepsPerTask" type="number" min="1" value="${state.advanced.stepsPerTask}" class="mt-3 w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100 outline-none"></label>
                   </div>
@@ -458,10 +501,43 @@
       button.addEventListener("click", () => {
         state.answers[button.dataset.question] = button.dataset.value;
         track("cost_question_answered", { question: button.dataset.question, answer: button.dataset.value });
-        if (state.advancedLinked) syncAdvancedFromAnswers();
+        if (state.modelLinked || state.advancedLinked) syncSelectionsFromAnswers();
         renderApp();
       });
     });
+
+    const providerSelect = document.querySelector("[data-model-provider]");
+    if (providerSelect) {
+      providerSelect.addEventListener("change", () => {
+        const models = window.getModelsByProvider(providerSelect.value);
+        state.selectedProvider = providerSelect.value;
+        state.selectedModelId = models[0] ? models[0][0] : state.selectedModelId;
+        state.modelLinked = false;
+        track("cost_model_provider_changed", { provider: state.selectedProvider });
+        renderApp();
+      });
+    }
+
+    const modelSelect = document.querySelector("[data-model-id]");
+    if (modelSelect) {
+      modelSelect.addEventListener("change", () => {
+        state.selectedModelId = modelSelect.value;
+        state.selectedProvider = window.modelPricing[state.selectedModelId].provider;
+        state.modelLinked = false;
+        track("cost_model_changed", { model: state.selectedModelId, provider: state.selectedProvider });
+        renderApp();
+      });
+    }
+
+    const relinkModel = document.querySelector("[data-relink-model]");
+    if (relinkModel) {
+      relinkModel.addEventListener("click", () => {
+        state.modelLinked = true;
+        syncSelectionsFromAnswers();
+        track("cost_model_relinked");
+        renderApp();
+      });
+    }
 
     const advancedToggle = document.querySelector("[data-toggle-advanced]");
     if (advancedToggle) {
@@ -475,7 +551,7 @@
     document.querySelectorAll("[data-advanced]").forEach((field) => {
       field.addEventListener("input", () => {
         const key = field.dataset.advanced;
-        state.advanced[key] = key === "model" ? field.value : Math.max(1, Number(field.value || 1));
+        state.advanced[key] = Math.max(1, Number(field.value || 1));
         state.advancedLinked = false;
         track("cost_advanced_edited", { field: key });
         renderApp();
@@ -486,7 +562,7 @@
     if (relink) {
       relink.addEventListener("click", () => {
         state.advancedLinked = true;
-        syncAdvancedFromAnswers();
+        syncSelectionsFromAnswers();
         track("cost_advanced_relinked");
         renderApp();
       });
@@ -540,6 +616,6 @@
     }
   }
 
-  syncAdvancedFromAnswers();
+  syncSelectionsFromAnswers();
   renderApp();
 })();

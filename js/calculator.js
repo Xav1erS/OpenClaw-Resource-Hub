@@ -1,6 +1,7 @@
 const modelPricing = {
   "claude-opus-4.6": {
     name: "Claude Opus 4.6",
+    provider: "anthropic",
     inputPrice: 15,
     outputPrice: 75,
     quality: 5,
@@ -8,6 +9,7 @@ const modelPricing = {
   },
   "claude-sonnet-4.6": {
     name: "Claude Sonnet 4.6",
+    provider: "anthropic",
     inputPrice: 3,
     outputPrice: 15,
     quality: 4,
@@ -15,6 +17,7 @@ const modelPricing = {
   },
   "claude-haiku-4.6": {
     name: "Claude Haiku 4.6",
+    provider: "anthropic",
     inputPrice: 0.25,
     outputPrice: 1.25,
     quality: 3,
@@ -22,6 +25,7 @@ const modelPricing = {
   },
   "gpt-4o": {
     name: "GPT-4o",
+    provider: "openai",
     inputPrice: 2.5,
     outputPrice: 10,
     quality: 4,
@@ -29,6 +33,7 @@ const modelPricing = {
   },
   "gpt-4o-mini": {
     name: "GPT-4o Mini",
+    provider: "openai",
     inputPrice: 0.15,
     outputPrice: 0.6,
     quality: 3,
@@ -36,24 +41,106 @@ const modelPricing = {
   },
   "deepseek-v3": {
     name: "DeepSeek V3",
+    provider: "deepseek",
     inputPrice: 0.27,
     outputPrice: 0.55,
     quality: 3,
     tier: "light"
   },
+  "qwen-max": {
+    name: "Qwen Max",
+    provider: "qwen",
+    inputPrice: 1.6,
+    outputPrice: 6.4,
+    quality: 4,
+    tier: "balanced"
+  },
   "qwen-plus": {
     name: "Qwen Plus",
+    provider: "qwen",
     inputPrice: 0.3,
     outputPrice: 0.6,
     quality: 3,
     tier: "light"
   },
+  "kimi-k2": {
+    name: "Kimi K2",
+    provider: "kimi",
+    inputPrice: 0.6,
+    outputPrice: 2.4,
+    quality: 4,
+    tier: "balanced"
+  },
+  "kimi-k2-turbo": {
+    name: "Kimi K2 Turbo",
+    provider: "kimi",
+    inputPrice: 0.3,
+    outputPrice: 1.2,
+    quality: 3,
+    tier: "light"
+  },
+  "glm-4.5": {
+    name: "GLM-4.5",
+    provider: "glm",
+    inputPrice: 0.8,
+    outputPrice: 3.2,
+    quality: 4,
+    tier: "balanced"
+  },
   "glm-4-plus": {
     name: "GLM-4 Plus",
+    provider: "glm",
     inputPrice: 0.5,
     outputPrice: 1,
     quality: 3,
     tier: "light"
+  },
+  "minimax-m2": {
+    name: "MiniMax M2",
+    provider: "minimax",
+    inputPrice: 0.29,
+    outputPrice: 1.16,
+    quality: 3,
+    tier: "light"
+  },
+  "minimax-m2-pro": {
+    name: "MiniMax M2 Pro",
+    provider: "minimax",
+    inputPrice: 0.6,
+    outputPrice: 2.4,
+    quality: 4,
+    tier: "balanced"
+  }
+};
+
+const modelProviders = {
+  anthropic: {
+    zh: "Anthropic",
+    en: "Anthropic"
+  },
+  openai: {
+    zh: "OpenAI",
+    en: "OpenAI"
+  },
+  deepseek: {
+    zh: "DeepSeek",
+    en: "DeepSeek"
+  },
+  qwen: {
+    zh: "Qwen",
+    en: "Qwen"
+  },
+  kimi: {
+    zh: "Kimi",
+    en: "Kimi"
+  },
+  glm: {
+    zh: "GLM",
+    en: "GLM"
+  },
+  minimax: {
+    zh: "MiniMax",
+    en: "MiniMax"
   }
 };
 
@@ -193,6 +280,17 @@ function compareModels(dailyTasks, stepsPerTask, selectedModelId) {
     }))
     .filter((item) => item.cost)
     .sort((left, right) => left.cost.monthly - right.cost.monthly);
+}
+
+function getModelsByProvider(providerId) {
+  return Object.entries(modelPricing)
+    .filter(([, model]) => model.provider === providerId)
+    .sort((left, right) => {
+      if (right[1].quality !== left[1].quality) {
+        return right[1].quality - left[1].quality;
+      }
+      return left[1].inputPrice - right[1].inputPrice;
+    });
 }
 
 function getOptimizationSuggestions(selectedModelId, dailyTasks, stepsPerTask) {
@@ -478,12 +576,14 @@ async function shareCostResult(summary, lang = "en", canvas) {
 }
 
 window.modelPricing = modelPricing;
+window.modelProviders = modelProviders;
 window.scenarioPresets = scenarioPresets;
 window.questionnaireOptions = questionnaireOptions;
 window.warningLabels = warningLabels;
 window.getWarningLevel = getWarningLevel;
 window.calculateCost = calculateCost;
 window.compareModels = compareModels;
+window.getModelsByProvider = getModelsByProvider;
 window.getOptimizationSuggestions = getOptimizationSuggestions;
 window.mapQuestionnaireToWorkload = mapQuestionnaireToWorkload;
 window.buildCostNarrative = buildCostNarrative;
