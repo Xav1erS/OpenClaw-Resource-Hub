@@ -215,7 +215,7 @@
         categories: { zh: "分类", en: "Categories" },
         actions: { zh: "动作", en: "Actions" }
       },
-      actionValue: { zh: "搜索 / 复制 / 组合", en: "Search / Copy / Combine" },
+      actionValue: { zh: "搜索 / 复制 / 组合", en: "Search / Preview" },
       searchPlaceholder: { zh: "搜索模板名称、用途或分类", en: "Search by template name, use case, or category" },
       allCategories: { zh: "全部分类", en: "All categories" },
       estimatedTimeFallback: { zh: "待补充", en: "TBD" },
@@ -255,7 +255,7 @@
         categories: { zh: "分类", en: "Categories" },
         actions: { zh: "动作", en: "Actions" }
       },
-      actionValue: { zh: "筛选 / 阅读 / 排错", en: "Filter / Read / Debug" },
+      actionValue: { zh: "筛选 / 阅读 / 排错", en: "Filter / Read" },
       allCategories: { zh: "全部分类", en: "All categories" },
       selectArticle: { zh: "选择一篇教程", en: "Choose a Tutorial" },
       troubleshooting: { zh: "快速排错答案", en: "Troubleshooting Quick Answers" },
@@ -340,7 +340,7 @@
         issues: { zh: "故障场景", en: "Failure Cases" },
         actions: { zh: "动作", en: "Actions" }
       },
-      actionValue: { zh: "搜索 / 复制 / 排错", en: "Search / Copy / Debug" },
+      actionValue: { zh: "搜索 / 复制 / 排错", en: "Search / Debug" },
       searchPlaceholder: { zh: "搜索命令、配置或故障关键词", en: "Search commands, config snippets, or issues" }
     },
     release: {
@@ -349,7 +349,7 @@
         roadmap: { zh: "路线图", en: "Roadmap" },
         status: { zh: "状态", en: "Status" }
       },
-      statusValue: { zh: "MVP 迭代中", en: "MVP In Progress" },
+      statusValue: { zh: "MVP 迭代中", en: "MVP Beta" },
       nextTitle: { zh: "接下来补什么", en: "What Comes Next" },
       ideaTitle: { zh: "适合下一轮做的事", en: "Best Next Iteration" },
       ideaBody: {
@@ -717,7 +717,11 @@
               </div>
             </div>
             <div class="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
-              ${safeArray(stats).map((item) => `<article class="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-sm text-slate-400">${t(item.label)}</div><div class="mt-2 text-[clamp(1.4rem,2.4vw,2.2rem)] font-semibold leading-tight text-white break-words">${t(item.value)}</div></article>`).join("")}
+              ${safeArray(stats).map((item) => {
+                const valueText = t(item.value);
+                const compact = String(valueText).length > 14;
+                return `<article class="min-w-0 rounded-3xl border border-white/10 bg-white/5 p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-sm text-slate-400">${t(item.label)}</div><div class="mt-2 ${compact ? "text-[clamp(1.1rem,1.7vw,1.7rem)] max-w-[8ch]" : "text-[clamp(1.4rem,2.4vw,2.2rem)]"} font-semibold leading-tight text-white break-words">${valueText}</div></article>`;
+              }).join("")}
             </div>
           </section>
           <section class="mt-7 rounded-[28px] border border-white/10 bg-slate-950/50 p-3 shadow-2xl shadow-slate-950/20 sm:p-5">
