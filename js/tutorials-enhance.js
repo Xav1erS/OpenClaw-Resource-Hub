@@ -36,20 +36,20 @@
         <div class="mt-4 flex flex-wrap gap-2 text-xs text-white/90">
           ${pack.pills.map((item) => `<span class="rounded-full border border-white/10 bg-slate-950/40 px-3 py-2">${item}</span>`).join("")}
         </div>
+        <div class="mt-5 rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+          <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-100">${pack.asideTitle}</h3>
+          <p class="mt-3 text-sm leading-6 text-slate-200">${pack.asideBody}</p>
+        </div>
       `;
       mainSection.insertBefore(card, mainSection.firstChild);
     }
 
     const aside = root.querySelector(":scope > div > aside");
-    if (aside && !aside.querySelector("[data-reading-advice]")) {
-      const card = document.createElement("article");
-      card.className = "rounded-3xl border border-white/10 bg-white/[0.03] p-5";
-      card.setAttribute("data-reading-advice", "true");
-      card.innerHTML = `
-        <h2 class="text-lg font-semibold text-white">${pack.asideTitle}</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-300">${pack.asideBody}</p>
-      `;
-      aside.insertBefore(card, aside.firstChild);
+    if (aside) {
+      const card = aside.querySelector("[data-reading-advice]");
+      if (card) {
+        card.remove();
+      }
     }
   }
 

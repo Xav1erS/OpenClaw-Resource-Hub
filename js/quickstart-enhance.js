@@ -275,12 +275,12 @@
         <h2 class="text-2xl font-semibold text-white">${text.stepsTitle}</h2>
         <p class="mt-3 text-sm leading-7 text-slate-300">${text.stepsBody}</p>
       </div>
-      <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
+      <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
         ${text.stepCards.map((item, index) => `
           <article class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
             <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-red-400/25 bg-red-500/10 text-sm font-semibold text-red-200">${index + 1}</div>
             <h3 class="mt-4 text-base font-semibold text-white">${item.title}</h3>
-            <p class="mt-3 text-sm leading-7 text-slate-300">${item.body}</p>
+            <p class="mt-3 max-w-[28ch] text-sm leading-7 text-slate-300">${item.body}</p>
           </article>
         `).join("")}
       </div>
@@ -294,7 +294,7 @@
       steps.insertAdjacentElement("afterend", success);
     }
     success.innerHTML = `
-      <div class="grid gap-5 xl:grid-cols-[0.92fr,1.08fr]">
+      <div class="grid gap-5 xl:grid-cols-2">
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
           <h2 class="text-xl font-semibold text-white">${text.firstSuccessTitle}</h2>
           <p class="mt-4 text-sm leading-7 text-slate-300">${text.firstSuccessBody}</p>
