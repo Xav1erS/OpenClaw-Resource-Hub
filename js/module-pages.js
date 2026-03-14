@@ -1082,7 +1082,7 @@
       { label: pageText.release.stats.status, value: pageText.release.statusValue }
     ]);
     document.getElementById("page-root").innerHTML = `
-      <div class="grid gap-6 xl:grid-cols-[1.18fr,0.82fr]">
+      <div class="grid gap-6 xl:grid-cols-[minmax(0,1.28fr)_minmax(320px,0.72fr)] xl:items-start">
         <section class="relative rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.92),rgba(2,6,23,0.88))] p-5 shadow-2xl shadow-slate-950/20 sm:p-6">
           <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
