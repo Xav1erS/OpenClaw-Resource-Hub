@@ -814,14 +814,14 @@
       { label: pageText.tutorial.stats.actions, value: pageText.tutorial.actionValue }
     ]);
     document.getElementById("page-root").innerHTML = `
-      <div class="grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
-        <section>
-          <div class="mb-4"><select id="tutorial-category" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400"><option value="">${t(pageText.tutorial.allCategories)}</option>${categories.map((item) => `<option value="${item.name}">${localizeTutorialCategory(item)}</option>`).join("")}</select></div>
+      <div class="grid gap-6 xl:grid-cols-[0.82fr,1.18fr]">
+        <section class="space-y-4">
+          <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-4"><select id="tutorial-category" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400"><option value="">${t(pageText.tutorial.allCategories)}</option>${categories.map((item) => `<option value="${item.name}">${localizeTutorialCategory(item)}</option>`).join("")}</select></div>
           <div id="tutorial-list" class="grid gap-4"></div>
         </section>
         <aside class="space-y-4 xl:sticky xl:top-24 xl:self-start">
-          <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 id="tutorial-title" class="text-xl font-semibold text-white">${t(pageText.tutorial.selectArticle)}</h2><div id="tutorial-meta" class="mt-2 text-sm text-slate-400"></div><pre id="tutorial-preview" class="mt-4 max-h-[420px] overflow-auto whitespace-pre-wrap rounded-2xl border border-white/10 bg-slate-950/90 p-4 text-sm leading-6 text-slate-300"></pre></article>
-          <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.tutorial.troubleshooting)}</h2><div class="mt-4 space-y-3">${troubleshooting[state.currentLang].map((item) => `<details class="rounded-2xl border border-white/10 bg-slate-950/60 p-4"><summary class="cursor-pointer text-sm font-medium text-white">${item.title}</summary><p class="mt-3 text-sm leading-6 text-slate-300">${item.diagnosis}</p></details>`).join("")}</div></article>
+          <article class="rounded-[28px] border border-white/10 bg-white/[0.03] p-6 shadow-2xl shadow-slate-950/20"><h2 id="tutorial-title" class="text-2xl font-semibold text-white">${t(pageText.tutorial.selectArticle)}</h2><div id="tutorial-meta" class="mt-3 text-sm text-slate-400"></div><pre id="tutorial-preview" class="mt-5 min-h-[360px] max-h-[520px] overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-300"></pre></article>
+          <article class="rounded-[28px] border border-white/10 bg-white/[0.03] p-6"><h2 class="text-lg font-semibold text-white">${t(pageText.tutorial.troubleshooting)}</h2><div class="mt-4 space-y-3">${troubleshooting[state.currentLang].map((item) => `<details class="rounded-2xl border border-white/10 bg-slate-950/60 p-4"><summary class="cursor-pointer text-sm font-medium text-white">${item.title}</summary><p class="mt-3 text-sm leading-6 text-slate-300">${item.diagnosis}</p></details>`).join("")}</div></article>
         </aside>
       </div>
     `;

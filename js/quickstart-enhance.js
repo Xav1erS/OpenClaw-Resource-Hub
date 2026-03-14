@@ -168,14 +168,19 @@
   function renderExtras() {
     const root = document.getElementById("page-root");
     const panel = document.getElementById("quickstart-panel");
+    const wrapper = root ? root.querySelector(":scope > div") : null;
     const aside = root ? root.querySelector(":scope > div > aside") : null;
+    const mainSection = root ? root.querySelector(":scope > div > section") : null;
     const panelSection = panel ? panel.parentElement : null;
-    if (!root || !panel || !aside || !panelSection) return;
+    if (!root || !panel || !aside || !mainSection || !panelSection) return;
 
     const text = getText();
     const trackId = currentTrack();
     const track = text.tracks[trackId] || text.tracks.windows;
     const trackerState = getTrackerState();
+
+    wrapper.className = "grid gap-6";
+    mainSection.className = "space-y-5";
 
     let choose = document.querySelector("[data-quickstart-choose]");
     if (!choose) {
@@ -200,6 +205,17 @@
       </div>
     `;
 
+    let launchRow = document.querySelector("[data-quickstart-launch-row]");
+    if (!launchRow) {
+      launchRow = document.createElement("div");
+      launchRow.className = "grid gap-5 xl:grid-cols-[1.08fr,0.92fr] xl:items-start";
+      launchRow.setAttribute("data-quickstart-launch-row", "true");
+      choose.insertAdjacentElement("afterend", launchRow);
+    }
+    if (panel.parentElement !== launchRow) {
+      launchRow.appendChild(panel);
+    }
+
     panel.className = "rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-6 shadow-2xl shadow-slate-950/20";
     panel.innerHTML = `
       <div class="flex flex-wrap items-start justify-between gap-4">
@@ -218,6 +234,35 @@
       </div>
     `;
 
+    let checklistArticle = document.querySelector("[data-quickstart-tracker-card]");
+    if (!checklistArticle) {
+      checklistArticle = aside.querySelector("article");
+      if (checklistArticle) {
+        checklistArticle.setAttribute("data-quickstart-tracker-card", "true");
+      }
+    }
+    if (checklistArticle) {
+      if (checklistArticle.parentElement !== launchRow) {
+        launchRow.appendChild(checklistArticle);
+      }
+      checklistArticle.className = "rounded-[28px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.2),rgba(15,23,42,0.92))] p-6 xl:sticky xl:top-24";
+      checklistArticle.innerHTML = `
+        <h2 class="text-2xl font-semibold text-white">${text.trackerTitle}</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${text.trackerBody}</p>
+        <div id="quickstart-checklist" class="mt-5 space-y-3">
+          ${text.tracker.map((item, index) => `
+            <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-4">
+              <input data-step-check="${index}" type="checkbox" class="mt-1 h-4 w-4 accent-red-400" ${trackerState[index] ? "checked" : ""}>
+              <span class="text-sm leading-7 text-slate-200">${item}</span>
+            </label>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    aside.className = "hidden";
+    aside.innerHTML = "";
+
     let steps = document.querySelector("[data-quickstart-steps]");
     if (!steps) {
       steps = document.createElement("article");
@@ -230,7 +275,7 @@
         <h2 class="text-2xl font-semibold text-white">${text.stepsTitle}</h2>
         <p class="mt-3 text-sm leading-7 text-slate-300">${text.stepsBody}</p>
       </div>
-      <div class="mt-6 grid gap-4 xl:grid-cols-5">
+      <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
         ${text.stepCards.map((item, index) => `
           <article class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
             <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-red-400/25 bg-red-500/10 text-sm font-semibold text-red-200">${index + 1}</div>
@@ -282,29 +327,6 @@
         `).join("")}
       </div>
     `;
-
-    const checklistArticle = aside.querySelector("article");
-    if (checklistArticle) {
-      checklistArticle.className = "rounded-[28px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.18),rgba(15,23,42,0.92))] p-6";
-      checklistArticle.innerHTML = `
-        <h2 class="text-2xl font-semibold text-white">${text.trackerTitle}</h2>
-        <p class="mt-3 text-sm leading-7 text-slate-300">${text.trackerBody}</p>
-        <div id="quickstart-checklist" class="mt-5 space-y-3">
-          ${text.tracker.map((item, index) => `
-            <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-4">
-              <input data-step-check="${index}" type="checkbox" class="mt-1 h-4 w-4 accent-red-400" ${trackerState[index] ? "checked" : ""}>
-              <span class="text-sm leading-7 text-slate-200">${item}</span>
-            </label>
-          `).join("")}
-        </div>
-      `;
-    }
-
-    const nextArticle = aside.querySelectorAll("article")[1];
-    if (nextArticle) {
-      nextArticle.className = "hidden";
-      nextArticle.innerHTML = "";
-    }
 
     const copyButton = document.getElementById("copy-quickstart-command");
     if (copyButton) {
