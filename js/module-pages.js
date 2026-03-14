@@ -1076,21 +1076,31 @@
     setPage("release-notes", renderReleaseNotesPage);
     const notes = releaseNotes[state.currentLang];
     const roadmap = roadmapItems[state.currentLang];
+    const timelineLabel = state.currentLang === "zh" ? "鐗堟湰鏃堕棿绾? : "Release Timeline";
+    const latestBadge = "Latest";
+    const latestSummary = state.currentLang === "zh"
+      ? "褰撳墠鍙叕寮€璁块棶鐗堟湰鐨勪笂绾垮熀绾裤€?
+      : "The launch baseline for the current public version.";
+    const sprintSummary = state.currentLang === "zh"
+      ? "杩欎竴杞凯浠ｅ畬鎴愮殑鏍稿績鏇存柊銆?
+      : "Core updates completed in this iteration.";
+
     pageShell("release-notes", [
       { label: pageText.release.stats.rounds, value: notes.length },
       { label: pageText.release.stats.roadmap, value: roadmap.length },
       { label: pageText.release.stats.status, value: pageText.release.statusValue }
     ]);
+
     document.getElementById("page-root").innerHTML = `
       <div class="grid gap-6 xl:grid-cols-[minmax(0,1.28fr)_minmax(320px,0.72fr)] xl:items-start">
         <section class="relative rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.92),rgba(2,6,23,0.88))] p-5 shadow-2xl shadow-slate-950/20 sm:p-6">
           <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p class="text-xs uppercase tracking-[0.32em] text-red-200/80">${state.currentLang === "zh" ? "Timeline" : "Timeline"}</p>
-              <h2 class="mt-3 text-2xl font-semibold text-white">${state.currentLang === "zh" ? "版本时间线" : "Release Timeline"}</h2>
+              <p class="text-xs uppercase tracking-[0.32em] text-red-200/80">Timeline</p>
+              <h2 class="mt-3 text-2xl font-semibold text-white">${timelineLabel}</h2>
             </div>
             <div class="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-emerald-200">
-              ${t(pageText.release.stats.status)} · ${t(pageText.release.statusValue)}
+              ${t(pageText.release.stats.status)} 路 ${t(pageText.release.statusValue)}
             </div>
           </div>
           <div class="relative pl-0 lg:pl-8">
@@ -1103,11 +1113,9 @@
                     <div class="min-w-0">
                       <div class="flex flex-wrap items-center gap-3">
                         <h3 class="text-xl font-semibold text-white">${item.version}</h3>
-                        ${index === 0 ? `<span class="rounded-full border border-red-300/30 bg-red-500/15 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-red-100">${state.currentLang === "zh" ? "Latest" : "Latest"}</span>` : ""}
+                        ${index === 0 ? `<span class="rounded-full border border-red-300/30 bg-red-500/15 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-red-100">${latestBadge}</span>` : ""}
                       </div>
-                      <p class="mt-2 text-sm text-slate-400">${index === 0
-                        ? (state.currentLang === "zh" ? "当前可公开访问版本的上线基线。" : "The launch baseline for the current public version.")
-                        : (state.currentLang === "zh" ? "这一轮迭代完成的核心更新。" : "Core updates completed in this iteration."))}</p>
+                      <p class="mt-2 text-sm text-slate-400">${index === 0 ? latestSummary : sprintSummary}</p>
                     </div>
                     <span class="rounded-full border border-white/10 bg-slate-950/70 px-3 py-1 text-xs text-slate-300">${item.date}</span>
                   </div>
@@ -1123,7 +1131,7 @@
             </div>
           </div>
         </section>
-        <aside class="space-y-4 xl:sticky xl:top-24 xl:self-start">
+        <aside class="space-y-4">
           <article class="overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(15,23,42,0.88))] p-5">
             <div class="flex items-center justify-between gap-3">
               <h2 class="text-lg font-semibold text-white">${t(pageText.release.nextTitle)}</h2>
@@ -1148,7 +1156,6 @@
       </div>
     `;
   }
-
   window.modulePages = {
     renderTaskLibraryPage,
     renderWorkflowPage,
