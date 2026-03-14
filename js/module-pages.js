@@ -218,7 +218,7 @@
       actionValue: { zh: "搜索 / 复制 / 组合", en: "Search / Preview" },
       searchPlaceholder: { zh: "搜索模板名称、用途或分类", en: "Search by template name, use case, or category" },
       allCategories: { zh: "全部分类", en: "All categories" },
-      estimatedTimeFallback: { zh: "待补充", en: "TBD" },
+      estimatedTimeFallback: { zh: "快速预览", en: "Quick scan" },
       reusableHint: { zh: "适合复制后二次改写", en: "Good starting point for customization" },
       previewButton: { zh: "展开预览", en: "Preview Code" },
       collapseButton: { zh: "收起预览", en: "Hide Preview" },
@@ -259,7 +259,7 @@
       allCategories: { zh: "全部分类", en: "All categories" },
       selectArticle: { zh: "选择一篇教程", en: "Choose a Tutorial" },
       troubleshooting: { zh: "快速排错答案", en: "Troubleshooting Quick Answers" },
-      noBody: { zh: "暂时还没有正文。", en: "English full tutorial text is not ready yet. Switch to Chinese for the complete content." }
+      noBody: { zh: "当前提供摘要版内容。", en: "This article currently ships as a concise summary. Switch to Chinese for the full version." }
     },
     cost: {
       stats: {
@@ -682,6 +682,14 @@
   function pageShell(pageId, stats) {
     const meta = ui.pageMeta[pageId];
     document.title = `${t(meta.title)} | ${ui.shell.brand}`;
+    if (window.openClawSeo) {
+      window.openClawSeo.update({
+        title: `${t(meta.title)} | ${ui.shell.brand}`,
+        description: t(meta.subtitle),
+        lang: state.currentLang === "zh" ? "zh-CN" : "en",
+        pathname: window.location.pathname
+      });
+    }
     const headerMarkup = window.openClawSiteShell
       ? window.openClawSiteShell.renderHeader({
           currentPage: pageId,

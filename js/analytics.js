@@ -1,7 +1,28 @@
 (function () {
   const debug = ["127.0.0.1", "localhost"].includes(window.location.hostname);
+  const measurementMeta = document.querySelector('meta[name="openclaw-ga-id"]');
+  const measurementId = window.OPENCLAW_GA_MEASUREMENT_ID || (measurementMeta && measurementMeta.content) || "";
   window.dataLayer = window.dataLayer || [];
   window.__openclawAnalytics = window.__openclawAnalytics || [];
+
+  function installGtag() {
+    if (!measurementId || typeof window.gtag === "function") return;
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+    document.head.appendChild(script);
+
+    window.gtag = function gtag() {
+      window.dataLayer.push(arguments);
+    };
+
+    window.gtag("js", new Date());
+    window.gtag("config", measurementId, {
+      send_page_view: false,
+      debug_mode: debug
+    });
+  }
 
   function basePayload(extra) {
     return {
@@ -33,6 +54,7 @@
   }
 
   window.trackEvent = trackEvent;
+  installGtag();
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", trackPageView, { once: true });

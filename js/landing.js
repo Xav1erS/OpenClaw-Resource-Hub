@@ -104,6 +104,14 @@
     const text = copy[state.lang];
     document.documentElement.lang = state.lang === "zh" ? "zh-CN" : "en";
     document.title = text.pageTitle;
+    if (window.openClawSeo) {
+      window.openClawSeo.update({
+        title: text.pageTitle,
+        description: text.subtitle,
+        lang: document.documentElement.lang,
+        pathname: "/index.html"
+      });
+    }
 
     document.getElementById("landing-root").innerHTML = `
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(239,68,68,0.18),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(153,27,27,0.18),_transparent_32%),linear-gradient(180deg,_#020617_0%,_#0f172a_45%,_#111827_100%)] text-slate-100">

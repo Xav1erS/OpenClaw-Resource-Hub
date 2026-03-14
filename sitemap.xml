@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://openclaw-resource-hub.vercel.app/index.html</loc>
+  </url>
+  <url>
+    <loc>https://openclaw-resource-hub.vercel.app/pages/quickstart.html</loc>
+  </url>
+  <url>
+    <loc>https://openclaw-resource-hub.vercel.app/pages/command-center.html</loc>
+  </url>
+  <url>
+    <loc>https://openclaw-resource-hub.vercel.app/pages/task-library.html</loc>
+  </url>
+  <url>
+    <loc>https://openclaw-resource-hub.vercel.app/pages/cost-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://openclaw-resource-hub.vercel.app/pages/tutorials.html</loc>
+  </url>
+  <url>
+    <loc>https://openclaw-resource-hub.vercel.app/pages/release-notes.html</loc>
+  </url>
+</urlset>
