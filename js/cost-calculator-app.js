@@ -3,7 +3,6 @@
     lang: localStorage.getItem("openclaw-module-lang") === "en" ? "en" : "zh",
     activePreset: "operator",
     answers: { frequency: "6-20", complexity: "medium", web: "some", output: "medium" },
-    modelLinked: true,
     selectedProvider: "anthropic",
     selectedModelId: "claude-sonnet-4.6",
     advancedOpen: false,
@@ -198,8 +197,6 @@
 
   function syncSelectionsFromAnswers() {
     const mapped = window.mapQuestionnaireToWorkload(state.answers);
-    state.selectedModelId = mapped.recommendedModel;
-    state.selectedProvider = window.modelPricing[mapped.recommendedModel].provider;
     state.advanced.dailyTasks = mapped.dailyTasks;
     state.advanced.stepsPerTask = mapped.stepsPerTask;
   }
@@ -209,7 +206,6 @@
     if (!preset) return;
     state.activePreset = presetId;
     state.answers = { ...preset.answers };
-    state.modelLinked = true;
     state.advancedLinked = true;
     syncSelectionsFromAnswers();
     track("cost_preset_selected", { preset: presetId });
@@ -221,7 +217,7 @@
     const effective = state.advancedLinked
       ? { dailyTasks: mapped.dailyTasks, stepsPerTask: mapped.stepsPerTask }
       : { ...state.advanced };
-    const effectiveModel = state.modelLinked ? mapped.recommendedModel : state.selectedModelId;
+    const effectiveModel = state.selectedModelId;
     const result = window.calculateCost(effectiveModel, Number(effective.dailyTasks), Number(effective.stepsPerTask));
     const model = window.modelPricing[effectiveModel];
     const recommendedModel = window.modelPricing[mapped.recommendedModel];
@@ -269,18 +265,12 @@
     const modelEntries = window.getModelsByProvider(state.selectedProvider);
     return `
       <article class="rounded-[32px] border border-white/10 bg-slate-950/55 p-6">
-        <div class="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h2 class="text-2xl font-semibold text-white">${text.modelChoiceTitle}</h2>
-            <p class="mt-2 max-w-2xl text-sm leading-7 text-slate-300">${text.modelChoiceBody}</p>
-          </div>
-          <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.22em]">
-            <span class="rounded-full border ${state.modelLinked ? "border-emerald-300/30 bg-emerald-400/10 text-emerald-200" : "border-amber-300/30 bg-amber-400/10 text-amber-200"} px-3 py-2">${state.modelLinked ? text.modelLinkedOn : text.modelLinkedOff}</span>
-            ${state.modelLinked ? "" : `<button data-relink-model class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.modelRelink}</button>`}
-          </div>
+        <div>
+          <h2 class="text-2xl font-semibold text-white">${text.modelChoiceTitle}</h2>
+          <p class="mt-2 max-w-2xl text-sm leading-7 text-slate-300">${text.modelChoiceBody}</p>
         </div>
         <div class="mt-5 flex flex-wrap gap-2 text-xs text-slate-300">
-          <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2">${getProviderName(state.selectedProvider)}</span>
+          <span class="rounded-full border border-red-300/20 bg-red-400/10 px-3 py-2 text-red-100">${getProviderName(state.selectedProvider)}</span>
           <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2">${window.modelPricing[state.selectedModelId].name}</span>
         </div>
         <div class="mt-6 grid gap-4 md:grid-cols-2">
