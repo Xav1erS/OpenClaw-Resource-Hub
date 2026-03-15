@@ -3,42 +3,43 @@
     zh: {
       sectionTitle: "官方 Cheatsheet 补充区",
       copy: "复制",
+      troubleshooting: "打开故障排除",
       packs: [
         {
           title: "Workspace Anatomy",
-          description: "官方 cheatsheet 里最容易被忽略的一块。你需要知道 workspace 里哪些文件会在每次会话或启动时被真正读取。",
+          description: "这些是 workspace 里真正会影响代理行为的文件。先弄清楚它们分别负责什么，再调命令才不会跑偏。",
           commands: [
             { label: "AGENTS.md", code: "Agent 的规则、工作方式和约束。" },
             { label: "SOUL.md", code: "Agent 的人格、语气和偏好。" },
-            { label: "USER.md", code: "用户偏好、长期上下文和行为习惯。" },
+            { label: "USER.md", code: "用户偏好、长期上下文和工作习惯。" },
             { label: "IDENTITY.md", code: "Agent 名称、主题、头像和身份信息。" },
-            { label: "MEMORY.md", code: "长期记忆摘要，适合沉淀稳定事实。" },
-            { label: "memory/YYYY-MM-DD.md", code: "每天的短期记忆和会话记录。" },
-            { label: "HEARTBEAT.md", code: "周期性检查、主动任务和提醒逻辑。" },
-            { label: "BOOT.md", code: "网关启动时经由 hooks 执行的启动说明。" },
+            { label: "MEMORY.md", code: "长期记忆摘要，沉淀稳定事实。" },
+            { label: "memory/YYYY-MM-DD.md", code: "每日会话和短期记忆。" },
+            { label: "HEARTBEAT.md", code: "周期检查、主动任务和提醒逻辑。" },
+            { label: "BOOT.md", code: "gateway 启动时通过 hooks 执行的启动说明。" },
             { label: ".openclaw/", code: "项目级配置、状态和本地运行数据。" }
           ]
         },
         {
           title: "Memory & Models",
-          description: "把检索记忆、重建索引、切模型和检查模型授权的命令放在一起，方便第一次排查为什么模型没按预期工作。",
+          description: "把记忆检索、索引重建、模型切换和授权探针放在一起，方便第一轮排查时快速定位。",
           commands: [
             { label: "搜索记忆", code: "openclaw memory search --query \"deployment notes\"" },
-            { label: "检查记忆状态", code: "openclaw memory status" },
+            { label: "记忆状态", code: "openclaw memory status" },
             { label: "强制重建索引", code: "openclaw memory index --force" },
             { label: "列出模型", code: "openclaw models list --provider anthropic" },
             { label: "切换默认模型", code: "openclaw models set claude-3-5-sonnet" },
-            { label: "检查模型探针", code: "openclaw models status --probe" },
-            { label: "设置 provider token", code: "openclaw models auth setup-token --provider anthropic" }
+            { label: "模型探针", code: "openclaw models status --probe" },
+            { label: "配置 provider token", code: "openclaw models auth setup-token --provider anthropic" }
           ]
         },
         {
           title: "Channel Management",
-          description: "官方 cheatsheet 把频道管理作为核心入口之一。第一次上线时，频道健康往往比模型配置更容易出问题。",
+          description: "频道管理往往比模型配置更容易先出问题。把登录、探针和添加频道的命令放在同一组里更容易排查。",
           commands: [
             { label: "添加或更新频道", code: "openclaw channels add" },
             { label: "列出频道", code: "openclaw channels list" },
-            { label: "频道健康探针", code: "openclaw channels status --probe" },
+            { label: "频道探针", code: "openclaw channels status --probe" },
             { label: "登录 WhatsApp", code: "openclaw channels login --channel whatsapp" },
             { label: "添加 Telegram", code: "openclaw channels add --channel telegram --token <token>" },
             { label: "添加 Discord", code: "openclaw channels add --channel discord --token <token>" },
@@ -47,7 +48,7 @@
         },
         {
           title: "Hooks & Skills",
-          description: "当你想把 workspace 启动逻辑、技能扩展和社区能力接进来时，先记住这几个命令。",
+          description: "当你要把 boot 逻辑、skills 和社区扩展接进来时，这组命令是最常用的入口。",
           commands: [
             { label: "列出 hooks", code: "openclaw hooks list" },
             { label: "启用 hook", code: "openclaw hooks enable boot-md" },
@@ -59,12 +60,12 @@
         },
         {
           title: "Slash Commands",
-          description: "这些是官方 cheatsheet 里的聊天内快捷命令，适合做上下文切换、压缩对话和中断当前动作。",
+          description: "这些是对话中的快速命令，用于上下文切换、压缩会话和停止当前动作。",
           commands: [
             { label: "列出上下文", code: "/context list" },
             { label: "切换上下文", code: "/context <id>" },
             { label: "压缩上下文", code: "/compact" },
-            { label: "新开会话", code: "/new" },
+            { label: "新建会话", code: "/new" },
             { label: "停止当前动作", code: "/stop" },
             { label: "开启 TTS", code: "/tts on" },
             { label: "关闭 TTS", code: "/tts off" }
@@ -72,12 +73,12 @@
         },
         {
           title: "Automation & Research",
-          description: "官方 cheatsheet 还给了自动化、浏览器和 heartbeat 的快速入口。这些命令适合部署后做持续运行。",
+          description: "浏览器自动化、cron、sessions 和 heartbeat 的快入口都在这里，适合部署后做持续运行。",
           commands: [
             { label: "浏览器状态", code: "openclaw browser status" },
             { label: "启动浏览器", code: "openclaw browser start" },
             { label: "浏览器快照", code: "openclaw browser snapshot" },
-            { label: "查看 cron", code: "openclaw cron list" },
+            { label: "列出 cron", code: "openclaw cron list" },
             { label: "新增 cron", code: "openclaw cron add" },
             { label: "查看 cron 运行记录", code: "openclaw cron runs" },
             { label: "查看 agents", code: "openclaw agents list" },
@@ -92,10 +93,11 @@
     en: {
       sectionTitle: "Official Cheatsheet Additions",
       copy: "Copy",
+      troubleshooting: "Open Troubleshooting",
       packs: [
         {
           title: "Workspace Anatomy",
-          description: "One of the most important parts of the official cheatsheet. These are the files the assistant or gateway actually reads during sessions and boot.",
+          description: "These are the files that actually shape assistant behavior inside a workspace. Understand them first, then tune commands.",
           commands: [
             { label: "AGENTS.md", code: "Rules, workflow instructions, and hard constraints for the agent." },
             { label: "SOUL.md", code: "Persona, voice, and behavioral style." },
@@ -110,7 +112,7 @@
         },
         {
           title: "Memory & Models",
-          description: "Keep memory search, indexing, model switching, and auth probes together so the first pass of debugging stays simple.",
+          description: "Keep memory search, indexing, model switching, and auth probes together so the first debugging pass stays simple.",
           commands: [
             { label: "search memory", code: "openclaw memory search --query \"deployment notes\"" },
             { label: "memory status", code: "openclaw memory status" },
@@ -123,7 +125,7 @@
         },
         {
           title: "Channel Management",
-          description: "The official cheatsheet treats channels as a first-class operating surface. In practice, channel health often breaks before model config does.",
+          description: "Channel health often breaks before model config does. Keep login, probe, and add-channel commands in one place.",
           commands: [
             { label: "add or update channel", code: "openclaw channels add" },
             { label: "list channels", code: "openclaw channels list" },
@@ -136,7 +138,7 @@
         },
         {
           title: "Hooks & Skills",
-          description: "Use these when you want boot logic, skill extensions, and community capabilities to become part of the workspace.",
+          description: "Use these when boot logic, workspace skills, and community extensions need to become part of the operating surface.",
           commands: [
             { label: "list hooks", code: "openclaw hooks list" },
             { label: "enable hook", code: "openclaw hooks enable boot-md" },
@@ -148,7 +150,7 @@
         },
         {
           title: "Slash Commands",
-          description: "These are the in-chat quick commands from the official cheatsheet for context switching, compacting conversations, and stopping work.",
+          description: "These in-chat commands handle context switching, compacting conversations, and stopping current work.",
           commands: [
             { label: "list contexts", code: "/context list" },
             { label: "switch context", code: "/context <id>" },
@@ -161,7 +163,7 @@
         },
         {
           title: "Automation & Research",
-          description: "The official cheatsheet also includes quick entry points for browser automation, cron jobs, sessions, and heartbeat control.",
+          description: "Browser automation, cron, sessions, and heartbeat controls live here for long-running operator workflows.",
           commands: [
             { label: "browser status", code: "openclaw browser status" },
             { label: "start browser", code: "openclaw browser start" },
@@ -206,36 +208,36 @@
         .includes(q)
     );
 
+    const snippetShellClass = "rounded-[22px] bg-[linear-gradient(180deg,rgba(6,10,20,0.88),rgba(15,23,42,0.56))] px-4 py-3 shadow-[0_14px_34px_rgba(2,6,23,0.16),inset_0_1px_0_rgba(255,255,255,0.02)]";
+    const snippetCodeClass = "inline-flex max-w-full whitespace-pre-wrap break-words rounded-[14px] bg-rose-300/[0.08] px-3 py-2 font-mono text-[13px] leading-6 text-rose-200 shadow-[inset_0_0_0_1px_rgba(254,205,211,0.08)]";
+
     extraRoot.innerHTML = `
       <div class="xl:col-span-2 flex items-center justify-between gap-3">
         <h2 class="text-xl font-semibold text-white">${text.sectionTitle}</h2>
-        <a href="/pages/troubleshooting.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${currentLang() === "zh" ? "打开故障排除" : "Open Troubleshooting"}</a>
+        <a href="/pages/troubleshooting.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${text.troubleshooting}</a>
       </div>
-      ${packs
-        .map(
-          (pack) => `
-        <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+      ${packs.map((pack) => `
+        <article class="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.02))] p-5 shadow-[0_20px_60px_rgba(2,6,23,0.22)]">
           <h3 class="text-lg font-semibold text-white">${pack.title}</h3>
           <p class="mt-2 text-sm leading-6 text-slate-300">${pack.description}</p>
           <div class="mt-4 space-y-3">
-            ${pack.commands
-              .map(
-                (cmd) => `
-              <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
-                <div class="flex items-center justify-between gap-3">
-                  <div class="font-medium text-white">${cmd.label}</div>
-                  <button data-extra-copy="${encodeURIComponent(cmd.code)}" class="rounded-full bg-white/5 px-3 py-1 text-xs text-slate-200 transition hover:bg-white/10">${text.copy}</button>
+            ${pack.commands.map((cmd) => `
+              <div class="${snippetShellClass}">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="min-w-0 flex-1">
+                    <div class="text-[11px] uppercase tracking-[0.22em] text-slate-500">${cmd.label}</div>
+                    <div class="mt-2 flex items-start gap-2">
+                      <span class="mt-0.5 text-rose-300/80">&gt;</span>
+                      <code class="${snippetCodeClass}">${cmd.code}</code>
+                    </div>
+                  </div>
+                  <button data-extra-copy="${encodeURIComponent(cmd.code)}" class="rounded-full bg-slate-900/78 px-3 py-1 text-xs text-slate-300 transition hover:bg-slate-800/92 hover:text-white">${text.copy}</button>
                 </div>
-                <pre class="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">${cmd.code}</pre>
               </div>
-            `
-              )
-              .join("")}
+            `).join("")}
           </div>
         </article>
-      `
-        )
-        .join("")}
+      `).join("")}
     `;
   }
 

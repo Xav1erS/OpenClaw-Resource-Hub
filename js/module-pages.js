@@ -93,9 +93,9 @@
       },
       "command-center": {
         eyebrow: { zh: "官方速查", en: "Official Cheatsheet" },
-        title: { zh: "命令中心 / Cheatsheet", en: "Command Center / Cheatsheet" },
+        title: { zh: "命令中心 / 速查表", en: "Command Center / Cheatsheet" },
         subtitle: {
-          zh: "把官方 cheatsheet 的主干命令、运行状态、频道管理、模型探针和 workspace 参考集中到一个可搜索页面。",
+          zh: "把官方速查表里的主干命令、运行状态、频道管理、模型探针和 workspace 参考集中到一个可搜索页面。",
           en: "A searchable mirror of the official cheatsheet for runtime commands, channels, model probes, and workspace references."
         }
       },
@@ -346,12 +346,12 @@
     },
     command: {
       stats: {
-        groups: { zh: "速查分组", en: "Cheatsheet Blocks" },
-        focus: { zh: "覆盖层", en: "Coverage" },
-        actions: { zh: "入口", en: "Entry Points" }
+        groups: { zh: "命令分组", en: "Command Blocks" },
+        focus: { zh: "覆盖范围", en: "Coverage" },
+        actions: { zh: "核心动作", en: "Primary Actions" }
       },
-      focusValue: { zh: "Gateway / Models / Channels", en: "Gateway / Models / Channels" },
-      actionValue: { zh: "搜索 / 复制 / 跳转", en: "Search / Copy / Navigate" },
+      focusValue: { zh: "运行 / 模型 / 频道", en: "Runtime / Models / Channels" },
+      actionValue: { zh: "搜索 / 复制 / 跳转", en: "Search / Copy / Route" },
       searchPlaceholder: { zh: "搜索 gateway、channels、memory、slash commands、workspace", en: "Search gateway, channels, memory, slash commands, or workspace" }
     },
     troubleshooting: {
@@ -489,7 +489,7 @@
   const commandSections = {
     zh: [
       { title: "CLI 启动", description: "最常用的本地初始化和排错命令。", commands: [{ label: "初始化项目", code: "openclaw init" }, { label: "启动服务", code: "openclaw start" }, { label: "环境体检", code: "openclaw doctor" }, { label: "查看版本", code: "openclaw --version" }] },
-      { title: "Gateway 与运行状态", description: "对齐官方 cheatsheet 的第一层运行控制。先确认 gateway 活着，再判断频道和模型是否正常。", commands: [{ label: "启动 gateway", code: "openclaw gateway start" }, { label: "查看 gateway 状态", code: "openclaw gateway status" }, { label: "重启 gateway", code: "openclaw gateway restart" }, { label: "查看 agent 会话", code: "openclaw sessions list" }] },
+      { title: "Gateway 与运行状态", description: "对齐官方速查表的第一层运行控制。先确认 gateway 活着，再判断频道和模型是否正常。", commands: [{ label: "启动 gateway", code: "openclaw gateway start" }, { label: "查看 gateway 状态", code: "openclaw gateway status" }, { label: "重启 gateway", code: "openclaw gateway restart" }, { label: "查看 agent 会话", code: "openclaw sessions list" }] },
       { title: "模型与授权", description: "当模型探针失败或 provider 权限有问题时，先从这里排。", commands: [{ label: "列出模型", code: "openclaw models list --provider anthropic" }, { label: "模型状态探针", code: "openclaw models status --probe" }, { label: "切换默认模型", code: "openclaw models set claude-3-5-sonnet" }, { label: "设置 provider token", code: "openclaw models auth setup-token --provider anthropic" }] },
       { title: "配置片段", description: "当前阶段最值得保留的 YAML 片段。", commands: [{ label: "轻量模型", code: "model: claude-haiku-4.6\nmax_steps: 24" }, { label: "心跳配置", code: "heartbeat:\n  enabled: true\n  interval: 60" }, { label: "日志输出", code: "logging:\n  level: info\n  file: openclaw.log" }] },
       { title: "上线前检查", description: "避免最常见的首发事故。", commands: [{ label: "检查端口", code: "netstat -ano | findstr 8080" }, { label: "检查环境变量", code: "echo %OPENCLAW_API_KEY%" }, { label: "检查日志", code: "type openclaw.log" }] }
@@ -508,7 +508,7 @@
       { title: "API Key 无效或未加载", symptoms: "启动时报 401 / 模型调用立即失败", diagnosis: "优先检查配置文件是否把换行、引号或空格一起带进去了。", fix: ["重新复制 API Key，避免尾部空格。", "把 Key 放进环境变量，再在配置里读取。", "先用最小配置做一次单步请求验证。"] },
       { title: "请求频率过高", symptoms: "429 rate limit / 批量任务间歇性失败", diagnosis: "通常不是 OpenClaw 本身故障，而是并发或重试策略过猛。", fix: ["把批处理改成队列执行。", "降低 max_steps 或减少同时运行的 Agent 数量。", "高峰时段切到轻量模型。"] },
       { title: "日志里出现 timeout", symptoms: "步骤卡住 / 浏览器工具返回慢", diagnosis: "常见于网页抓取链路过长，或者模型输出太大。", fix: ["先缩短输入上下文。", "把一个长任务拆成两到三段。", "必要时限制每步输出格式。"] },
-      { title: "频道不回消息", symptoms: "DM 无回复 / 群聊沉默", diagnosis: "先不要猜是 prompt 或模型问题。官方 cheatsheet 的第一步是做频道探针。", fix: ["运行 openclaw channels status --probe。", "确认 bot token 和频道登录还有效。", "先在私聊验证，再回到群聊检查权限。"] },
+      { title: "频道不回消息", symptoms: "DM 无回复 / 群聊沉默", diagnosis: "先不要猜是 prompt 或模型问题。官方速查表的第一步是做频道探针。", fix: ["运行 openclaw channels status --probe。", "确认 bot token 和频道登录还有效。", "先在私聊验证，再回到群聊检查权限。"] },
       { title: "Memory 结果不准", symptoms: "记忆搜索不到 / 返回旧内容", diagnosis: "多半是索引陈旧或 memory provider 状态异常。", fix: ["运行 openclaw memory status。", "检查当前索引和 provider 是否健康。", "必要时执行 openclaw memory index --force。"] }
     ],
     en: [
@@ -728,7 +728,9 @@
   const pillClass = "rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300";
   const buttonPrimaryClass = "rounded-full bg-red-500 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-400";
   const buttonSecondaryClass = "rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white";
-  const buttonSecondaryCompactClass = "rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200 transition hover:bg-white/10";
+  const buttonSecondaryCompactClass = "rounded-full bg-slate-900/78 px-3 py-1 text-xs text-slate-300 transition hover:bg-slate-800/92 hover:text-white";
+  const commandSnippetShellClass = "rounded-[22px] bg-[linear-gradient(180deg,rgba(6,10,20,0.88),rgba(15,23,42,0.56))] px-4 py-3 shadow-[0_14px_34px_rgba(2,6,23,0.16),inset_0_1px_0_rgba(255,255,255,0.02)]";
+  const commandSnippetCodeClass = "inline-flex max-w-full whitespace-pre-wrap break-words rounded-[14px] bg-rose-300/[0.08] px-3 py-2 font-mono text-[13px] leading-6 text-rose-200 shadow-[inset_0_0_0_1px_rgba(254,205,211,0.08)]";
 
   function getTypeScale() {
     const isZh = state.currentLang === "zh";
@@ -755,6 +757,14 @@
         ? "text-sm leading-6"
         : "text-[13px] leading-[1.55]"
     };
+  }
+
+  function renderHeroStatCard(item, index) {
+    const valueText = t(item.value);
+    const compact = String(valueText).length > 12;
+    const numeric = /^[0-9]+$/.test(String(valueText).trim());
+    const articleSpan = index === 2 ? "xl:col-span-2" : "";
+    return `<article class="${articleSpan} relative min-w-0 overflow-hidden rounded-[28px] bg-[radial-gradient(circle_at_top_left,rgba(248,113,113,0.08),transparent_38%),linear-gradient(180deg,rgba(15,23,42,0.92),rgba(15,23,42,0.7))] p-4 shadow-[0_18px_50px_rgba(2,6,23,0.2),inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur"><div class="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-red-200/15 to-transparent"></div><div class="flex h-full flex-col justify-between"><div class="flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-slate-400"><span class="h-1.5 w-1.5 rounded-full bg-red-300/55"></span><span>${t(item.label)}</span></div><div class="mt-6 ${numeric ? "text-[clamp(2.15rem,4vw,3rem)]" : compact ? "text-[clamp(1.28rem,1.8vw,1.86rem)] max-w-[12ch]" : "text-[clamp(1.5rem,2vw,2.1rem)]"} font-semibold leading-[1.02] text-white break-words">${valueText}</div></div></article>`;
   }
 
   function pageShell(pageId, stats) {
@@ -792,13 +802,8 @@
                 <a href="/pages/command-center.html" class="${buttonSecondaryClass}">${t(ui.shell.commandAction)}</a>
               </div>
             </div>
-            <div class="grid auto-rows-fr gap-3 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
-              ${safeArray(stats).map((item) => {
-                const valueText = t(item.value);
-                const compact = String(valueText).length > 12;
-                const numeric = /^[0-9]+$/.test(String(valueText).trim());
-                return `<article class="min-w-0 rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.025))] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-xs uppercase tracking-[0.2em] text-slate-400">${t(item.label)}</div><div class="mt-3 ${numeric ? "text-[clamp(2.1rem,4vw,3rem)]" : compact ? "text-[clamp(1.25rem,1.8vw,1.85rem)] max-w-[9ch]" : "text-[clamp(1.5rem,2.1vw,2.2rem)]"} font-semibold leading-[1.02] text-white break-words">${valueText}</div></article>`;
-              }).join("")}
+            <div class="grid auto-rows-fr gap-3 sm:grid-cols-3 xl:grid-cols-2">
+              ${safeArray(stats).map((item, index) => renderHeroStatCard(item, index)).join("")}
             </div>
           </section>
           <section class="relative mt-7 overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.82),rgba(2,6,23,0.72))] shadow-[0_28px_90px_rgba(2,6,23,0.28)]">
@@ -1137,7 +1142,7 @@
     function draw() {
       const q = input.value.trim().toLowerCase();
       const cmdList = sections.filter((section) => `${section.title} ${section.description} ${section.commands.map((item) => `${item.label} ${item.code}`).join(" ")}`.toLowerCase().includes(q));
-      commandRoot.innerHTML = cmdList.map((section) => `<article class="${cardSurfaceClass}"><h2 class="text-lg font-semibold text-white">${section.title}</h2><p class="mt-2 text-sm leading-6 text-slate-300">${section.description}</p><div class="mt-4 space-y-3">${section.commands.map((item) => `<div class="${insetPanelClass} p-4"><div class="flex items-center justify-between gap-3"><div class="font-medium text-white">${item.label}</div><button data-copy-code="${encodeURIComponent(item.code)}" class="${buttonSecondaryCompactClass}">${t(ui.common.copy)}</button></div><pre class="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">${item.code}</pre></div>`).join("")}</div></article>`).join("");
+      commandRoot.innerHTML = cmdList.map((section) => `<article class="${cardSurfaceClass}"><h2 class="text-lg font-semibold text-white">${section.title}</h2><p class="mt-2 text-sm leading-6 text-slate-300">${section.description}</p><div class="mt-4 space-y-3">${section.commands.map((item) => `<div class="${commandSnippetShellClass}"><div class="flex items-start justify-between gap-3"><div class="min-w-0 flex-1"><div class="text-[11px] uppercase tracking-[0.22em] text-slate-500">${item.label}</div><div class="mt-2 flex items-start gap-2"><span class="mt-0.5 text-rose-300/80">&gt;</span><code class="${commandSnippetCodeClass}">${item.code}</code></div></div><button data-copy-code="${encodeURIComponent(item.code)}" class="${buttonSecondaryCompactClass}">${t(ui.common.copy)}</button></div></div>`).join("")}</div></article>`).join("");
     }
     document.getElementById("page-root").addEventListener("click", (event) => {
       const button = event.target.closest("[data-copy-code]");

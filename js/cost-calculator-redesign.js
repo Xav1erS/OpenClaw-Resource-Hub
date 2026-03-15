@@ -374,6 +374,18 @@
 
     const text = t();
     const scrollY = preserveScroll ? window.scrollY : null;
+    const isZh = state.lang === "zh";
+    const heroTitleClass = isZh
+      ? "text-[clamp(2.6rem,5vw,4.4rem)] tracking-tight leading-[0.95]"
+      : "text-[clamp(2.35rem,4.5vw,4rem)] tracking-[-0.035em] leading-[0.96]";
+    const heroBodyClass = isZh
+      ? "text-base leading-7 sm:text-[1.05rem]"
+      : "text-[15px] leading-7 sm:text-[1rem]";
+    const helperClass = isZh
+      ? "text-sm leading-7"
+      : "text-[13.5px] leading-[1.68]";
+    const quickAction = state.lang === "zh" ? "先看快速开始" : "Open Quick Start";
+    const commandAction = state.lang === "zh" ? "打开命令中心" : "Open Command Center";
     const workloadChips = [
       text.questions.frequency.options[state.answers.frequency],
       text.questions.complexity.options[state.answers.complexity],
@@ -388,19 +400,26 @@
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(239,68,68,0.14),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(127,29,29,0.18),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#111827_100%)]">
         <div class="pointer-events-none fixed inset-0 opacity-40" style="background-image:linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px); background-size: 30px 30px;"></div>
         ${renderHeader()}
-        <main class="relative mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-          <section class="grid gap-8 lg:grid-cols-[1.05fr,0.95fr] lg:items-end">
-            <div>
+        <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <section class="grid gap-5 xl:grid-cols-[minmax(0,1.24fr)_minmax(320px,0.76fr)] xl:items-stretch">
+            <div class="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.55),rgba(15,23,42,0.18))] p-6 shadow-[0_24px_80px_rgba(2,6,23,0.28)] sm:p-7">
               <p class="mb-4 text-xs uppercase tracking-[0.38em] text-red-200">${text.pageTag}</p>
-              <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">${text.title}</h1>
-              <p class="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">${text.subtitle}</p>
-              <p class="mt-5 max-w-3xl text-sm leading-7 text-slate-400">${text.helper}</p>
+              <h1 class="max-w-4xl ${heroTitleClass} font-semibold text-white">${text.title}</h1>
+              <p class="mt-4 max-w-3xl ${heroBodyClass} text-slate-300">${text.subtitle}</p>
+              <p class="mt-4 max-w-3xl ${helperClass} text-slate-400">${text.helper}</p>
+              <div class="mt-6 flex flex-wrap gap-3 text-sm">
+                <a href="/pages/quickstart.html" class="rounded-full bg-red-500 px-4 py-2.5 font-medium text-white transition hover:bg-red-400">${quickAction}</a>
+                <a href="/pages/command-center.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-slate-200 transition hover:border-red-400/40 hover:text-white">${commandAction}</a>
+              </div>
             </div>
-            <div class="grid gap-3 sm:grid-cols-3">
-              ${text.stats.map((item) => `<article class="rounded-3xl border border-white/10 bg-white/[0.04] p-5"><div class="text-sm text-slate-400">${item.label}</div><div class="mt-2 text-2xl font-semibold leading-tight text-white">${item.value}</div></article>`).join("")}
+            <div class="grid auto-rows-fr gap-3 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
+              ${text.stats.map((item) => {
+                const compact = String(item.value).length > 12;
+                return `<article class="min-w-0 rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.025))] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-xs uppercase tracking-[0.2em] text-slate-400">${item.label}</div><div class="mt-3 ${compact ? "text-[clamp(1.25rem,1.8vw,1.85rem)] max-w-[9ch]" : "text-[clamp(1.5rem,2.1vw,2.2rem)]"} font-semibold leading-[1.02] text-white break-words">${item.value}</div></article>`;
+              }).join("")}
             </div>
           </section>
-          <section class="mt-10 space-y-6">
+          <section class="mt-7 space-y-6">
             <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-slate-950/20">
               <div class="max-w-3xl">
                 <div class="text-xs uppercase tracking-[0.24em] text-red-200">${text.setupTag}</div>
