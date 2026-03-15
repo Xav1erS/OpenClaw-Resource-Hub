@@ -2,136 +2,383 @@
   const copy = {
     zh: {
       chooseTitle: "先选一种启动方式",
-      chooseBody: "官方 Quick Start 的优点是分步明确。我们的价值不该只是重复官方，而是让第一次接触 OpenClaw 的人也知道自己正在做什么、下一步该去哪里。",
+      chooseBody:
+        "官方 Quick Start 的主线很清楚：安装 OpenClaw、补上 API Key、连接一个聊天渠道、启动 gateway，然后发出第一条消息。这里保留同样的流程，并把每一步为什么要做写得更细。",
       paths: [
         {
-          title: "我会用终端，想最快跑通",
-          body: "适合已经能接受复制命令、编辑配置、看日志的人。先做最小运行，再决定要不要扩链路。",
+          title: "我熟悉终端，想先跑通",
+          body: "适合已经能接受复制命令、看日志和调整环境变量的人。目标是先把官方推荐链路一次跑通。",
           badge: "Fast Path"
         },
         {
-          title: "我第一次接触，希望按步骤来",
-          body: "适合小白。你只需要先完成 5 个动作：安装、填 key、做体检、跑一次、看结果。",
+          title: "我是第一次接触，想按步骤来",
+          body: "完全按官方 Quick Start 走：打开终端、安装、拿 API Key、onboard、建 Telegram 机器人、启动 gateway、发第一条消息。",
           badge: "Step-by-step"
         }
       ],
-      trackerTitle: "第一次跑通追踪器",
-      trackerBody: "把第一次成功拆成 5 个动作。每一步都完成后，你再去模板库或命令中心，不然很容易迷路。",
-      stepsTitle: "最短成功路径",
-      stepsBody: "不管你选哪个系统，先把这一条链路跑通。不要一开始就接复杂 workflow。",
-      fastCommandTitle: "推荐的一次性起跑命令",
-      fastCommandBody: "先初始化、填密钥、跑体检，再做一次最小启动。这里的顺序不要打乱。",
       copyCommands: "复制命令",
       copied: "已复制",
-      stepCards: [
-        { title: "安装运行环境", body: "先确认 Node.js 18+ 正常，再安装 OpenClaw CLI。" },
-        { title: "准备 API Key", body: "把 key 放进 .env 或你明确知道的配置位置，不要分散在多个地方。" },
-        { title: "运行健康检查", body: "先执行 doctor，提前发现 PATH、权限、环境变量问题。" },
-        { title: "启动最小任务", body: "只跑一次最简单的链路，确认不是 401、429 或 timeout。" },
-        { title: "确认第一次成功", body: "看日志、看输出、看成本，然后再决定下一步去模板库、命令中心还是成本页。" }
-      ],
+      trackerTitle: "官方 5 步进度",
+      trackerBody:
+        "官方文档把第一次成功拆成 5 个关键结果。先把这 5 件事完成，再去扩展模板、工作流或更复杂的部署。",
       tracker: [
-        "Node.js 18+ 已安装",
-        "可用的 API Key 已放到正确位置",
-        "已经执行 openclaw doctor",
-        "已经成功完成一次最小运行",
-        "已经看过日志和成本结果"
-      ],
-      verifyTitle: "第一次成功，至少要看到这些信号",
-      verifyItems: [
-        "命令不是直接报错退出",
-        "日志里没有 401 / 429 / timeout",
-        "你知道当前用的是哪个模型",
-        "你知道下一步是去命令中心、模板库还是成本页"
-      ],
-      firstSuccessTitle: "如果你是第一次接触终端",
-      firstSuccessBody: "只记住一件事：你不是在“学完 OpenClaw”后才能开始，而是先完成一次最小成功，再逐步加内容。",
-      nextTitle: "跑通之后该去哪",
-      nextCards: [
-        { title: "环境或报错问题", body: "去命令中心查命令、配置片段和故障动作。", href: "/pages/command-center.html", cta: "打开命令中心" },
-        { title: "已经能跑，想马上做事", body: "去模板库选一个现成结构，先预览代码块再复制。", href: "/pages/task-library.html", cta: "打开模板库" },
-        { title: "担心预算失控", body: "先去成本计算器算一下日成本和月成本。", href: "/pages/cost-calculator.html", cta: "打开成本页" }
+        "已安装 OpenClaw",
+        "已添加可用的 API Key",
+        "已连接一个聊天渠道（推荐 Telegram）",
+        "已启动 openclaw gateway",
+        "已给机器人发出第一条消息"
       ],
       tracks: {
         windows: {
-          command: `npm install -g openclaw-cli\nopenclaw init\nopenclaw doctor\nopenclaw start`,
-          note: "Windows 最常见的问题是 PowerShell 没拿到环境变量，或者 PATH 没刷新。"
+          installCommand:
+            "curl -fsSL https://openclaw.ai/install.cmd -o install.cmd && install.cmd && del install.cmd",
+          fastNote:
+            "Windows 上先用官方一键安装脚本最稳。安装后如果命令找不到，先重开 Windows Terminal，再继续 onboard。",
+          guidedNote:
+            "如果 PowerShell 提示权限或 PATH 问题，不要先改一堆配置，先完成安装、重新打开终端，再执行 openclaw onboard。"
         },
         macos: {
-          command: `brew install node\nnpm install -g openclaw-cli\nopenclaw doctor\nopenclaw start`,
-          note: "macOS 上先用轻量模型做 smoke test，不要第一步就上高成本模型。"
+          installCommand: "curl -fsSL https://openclaw.ai/install.sh | bash",
+          fastNote:
+            "macOS 和 Linux 都用官方 install.sh。第一次跑通时先用默认推荐模型，不要一开始就改成高成本配置。",
+          guidedNote:
+            "安装脚本会自动准备依赖。等安装结束后再继续 API Key 和频道配置，不要边装边手动改目录。"
         },
         linux: {
-          command: `curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -\nsudo apt-get install -y nodejs\nnpm install -g openclaw-cli\nopenclaw doctor\nopenclaw start`,
-          note: "Linux 先确认前台运行没问题，再考虑 systemd 和长时间守护。"
+          installCommand: "curl -fsSL https://openclaw.ai/install.sh | bash",
+          fastNote:
+            "Linux 也走官方 install.sh。第一次只验证前台运行成功，不要先接 systemd、反向代理或长驻进程。",
+          guidedNote:
+            "先证明前台 gateway 能正常收发消息，再考虑长期运行方案。这样排错范围最小。"
         }
       }
     },
     en: {
       chooseTitle: "Choose how you want to start",
-      chooseBody: "The official Quick Start is strong because it is linear and easy to follow. Our version should go further by helping beginners understand what each step means and what to do next after the first successful run.",
+      chooseBody:
+        "The official Quick Start follows one clear chain: install OpenClaw, add an API key, connect a chat channel, start the gateway, and send the first message. This page keeps that flow and adds a bit more explanation around each step.",
       paths: [
         {
           title: "I know terminals and want the fastest path",
-          body: "Best for users who are comfortable copying commands, editing config, and checking logs. Get one minimal run working first.",
+          body: "Best for users who are comfortable copying commands, checking logs, and fixing environment issues. The goal is to complete the official happy path once.",
           badge: "Fast Path"
         },
         {
           title: "This is my first time and I want steps",
-          body: "Best for beginners. You only need five actions: install, add the key, run diagnostics, start once, and confirm the output.",
+          body: "Follow the official Quick Start flow exactly: open a terminal, install, get an API key, run onboard, create a Telegram bot, start the gateway, and send the first message.",
           badge: "Step-by-step"
         }
       ],
-      trackerTitle: "First successful run tracker",
-      trackerBody: "Break the first win into five concrete actions. Only move to templates or deeper docs after these are done.",
-      stepsTitle: "Shortest successful path",
-      stepsBody: "No matter which environment you choose, get this one chain working before you attach heavier workflows.",
-      fastCommandTitle: "Recommended launch command sequence",
-      fastCommandBody: "Initialize first, add the key, run diagnostics, then start one minimal run. Do not change the order yet.",
       copyCommands: "Copy Commands",
       copied: "Copied",
-      stepCards: [
-        { title: "Install the runtime", body: "Confirm Node.js 18+ works, then install the OpenClaw CLI." },
-        { title: "Prepare one API key", body: "Put the key in one clear place such as .env. Do not scatter it across multiple configs." },
-        { title: "Run diagnostics", body: "Use doctor before the first launch so PATH, permission, and env issues surface early." },
-        { title: "Start one minimal run", body: "Only run the smallest chain once. Do not attach a heavy workflow yet." },
-        { title: "Confirm the first win", body: "Check logs, output, and cost. Then decide whether your next page is Command Center, Task Library, or Cost Calculator." }
-      ],
+      trackerTitle: "Official 5-step progress",
+      trackerBody:
+        "The official guide reduces the first win to 5 concrete outcomes. Finish these before you branch into templates, workflows, or heavier deployment work.",
       tracker: [
-        "Node.js 18+ is installed",
-        "A working API key is in the right place",
-        "openclaw doctor has been run",
-        "One minimal run completed successfully",
-        "Logs and cost have been checked"
-      ],
-      verifyTitle: "These are the signals of a real first success",
-      verifyItems: [
-        "The command does not exit immediately with an error",
-        "Logs show no 401 / 429 / timeout",
-        "You know which model is currently being used",
-        "You know whether to go to Command Center, Task Library, or Cost Calculator next"
-      ],
-      firstSuccessTitle: "If this is your first terminal workflow",
-      firstSuccessBody: "Do not try to learn all of OpenClaw first. Get one small success, then expand from there.",
-      nextTitle: "After it works, go here next",
-      nextCards: [
-        { title: "Setup or runtime issue", body: "Use Command Center for commands, snippets, and troubleshooting steps.", href: "/pages/command-center.html", cta: "Open Command Center" },
-        { title: "Ready to ship something", body: "Use Task Library and start from a proven structure after previewing the code.", href: "/pages/task-library.html", cta: "Open Task Library" },
-        { title: "Need budget control", body: "Use Cost Calculator early so you know the daily and monthly spend.", href: "/pages/cost-calculator.html", cta: "Open Cost Calculator" }
+        "OpenClaw is installed",
+        "A working API key has been added",
+        "A chat channel is connected",
+        "openclaw gateway is running",
+        "The first message has been sent to the bot"
       ],
       tracks: {
         windows: {
-          command: `npm install -g openclaw-cli\nopenclaw init\nopenclaw doctor\nopenclaw start`,
-          note: "The most common Windows issue is PowerShell not loading env vars or PATH not refreshing."
+          installCommand:
+            "curl -fsSL https://openclaw.ai/install.cmd -o install.cmd && install.cmd && del install.cmd",
+          fastNote:
+            "On Windows, the official one-line installer is the safest starting point. If the command is not found after install, reopen Windows Terminal before running onboard.",
+          guidedNote:
+            "If PowerShell complains about permissions or PATH, do not start by editing a lot of config. Finish the installer, reopen the terminal, then run openclaw onboard."
         },
         macos: {
-          command: `brew install node\nnpm install -g openclaw-cli\nopenclaw doctor\nopenclaw start`,
-          note: "On macOS, start with a lightweight model for the first smoke test."
+          installCommand: "curl -fsSL https://openclaw.ai/install.sh | bash",
+          fastNote:
+            "macOS and Linux both use the official install.sh flow. For the first run, stick to the default recommended model instead of optimizing everything.",
+          guidedNote:
+            "The installer prepares the dependencies for you. Let it finish first, then move to API key and channel setup."
         },
         linux: {
-          command: `curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -\nsudo apt-get install -y nodejs\nnpm install -g openclaw-cli\nopenclaw doctor\nopenclaw start`,
-          note: "On Linux, prove the foreground run first before wiring systemd."
+          installCommand: "curl -fsSL https://openclaw.ai/install.sh | bash",
+          fastNote:
+            "Linux also starts with the official install.sh. First prove the foreground gateway run works before adding systemd, tunnels, or background supervision.",
+          guidedNote:
+            "Get one clean foreground run first, then decide how you want to make it persistent."
         }
+      }
+    }
+  };
+
+  const modeContent = {
+    zh: {
+      fast: {
+        commandTitle: "官方快速链路",
+        commandBody:
+          "这条路径保留官方 Quick Start 的主命令顺序，只压缩掉解释。顺序不要变：安装，onboard，gateway。",
+        noteTitle: "这一步在验证什么",
+        noteBody:
+          "如果这组命令能走通，说明安装、Key、频道配置和 gateway 启动已经基本成立，后面再去细化模板和部署。",
+        stepsTitle: "Fast Path 的 3 个动作",
+        stepsBody:
+          "适合已经知道怎么开终端、复制命令和读日志的人。先完成最小可运行链路，再做扩展。",
+        stepCards: [
+          {
+            title: "安装 OpenClaw",
+            body: "直接用官方安装脚本，让 Node.js 和依赖按官方路径装好。"
+          },
+          {
+            title: "跑 onboard 向导",
+            body: "在向导里填 API Key，并优先选 Telegram 作为第一个聊天渠道。"
+          },
+          {
+            title: "启动 gateway 并发消息",
+            body: "执行 openclaw gateway，随后立刻给机器人发一条消息确认它真的能响应。"
+          }
+        ],
+        successTitle: "什么算第一次成功",
+        successBody:
+          "不是把所有配置都做完，而是你已经能安装、能启动、能让机器人真正回你第一条消息。",
+        verifyTitle: "现在就检查这些信号",
+        verifyItems: [
+          "安装脚本完成，没有中途退出",
+          "openclaw onboard 已保存 API Key 和一个聊天渠道",
+          "gateway 启动后终端没有立即报错退出",
+          "你已经在 Telegram 或其他渠道收到第一条机器人回复"
+        ],
+        nextTitle: "跑通之后去哪里",
+        nextCards: [
+          {
+            title: "命令或日志还有问题",
+            body: "去命令中心继续排命令、环境变量和常见报错。",
+            href: "/pages/command-center.html",
+            cta: "打开命令中心"
+          },
+          {
+            title: "已经跑通，想立刻做事",
+            body: "去模板库，直接拿一个接近你场景的结构开始改。",
+            href: "/pages/task-library.html",
+            cta: "打开模板库"
+          },
+          {
+            title: "担心成本和模型选择",
+            body: "先去成本页估一遍日成本和月成本，再决定怎么扩。",
+            href: "/pages/cost-calculator.html",
+            cta: "打开成本页"
+          }
+        ],
+        trackerTitle: "Fast Path 检查表",
+        trackerBody:
+          "这不是完整部署清单，而是官方 quick start 的最小通过标准。"
+      },
+      guided: {
+        commandTitle: "官方 Step-by-step 命令流",
+        commandBody:
+          "这组命令对应官方文档的核心主线：安装 OpenClaw、运行 onboard、启动 gateway。中间的 API Key 和 Telegram Bot 会在步骤卡片里展开解释。",
+        noteTitle: "怎么用这组命令",
+        noteBody:
+          "先执行安装命令；安装完成后运行 openclaw onboard，填好 API Key、模型和 Telegram；最后执行 openclaw gateway，并给机器人发第一条消息。",
+        stepsTitle: "Step-by-step 的 7 个步骤",
+        stepsBody:
+          "这部分与官方 Quick Start 对齐，并补充了每一步你应该看到什么、为什么要这么做。",
+        stepCards: [
+          {
+            title: "打开终端",
+            body: "macOS 用 Spotlight 搜 Terminal，Windows 用 Win + X 打开 Windows Terminal 或 PowerShell。看到闪烁光标就对了。"
+          },
+          {
+            title: "安装 OpenClaw",
+            body: "复制官方安装命令执行。首次安装通常需要 2 到 5 分钟，期间会检查系统并安装所需工具。"
+          },
+          {
+            title: "准备 API Key",
+            body: "去 Anthropic 控制台创建一个以 sk-ant- 开头的 API Key。先只准备一个可用 key，不要同时接多家模型。"
+          },
+          {
+            title: "运行 openclaw onboard",
+            body: "向导里按顺序填 API Key、模型和聊天渠道。第一次建议选 Claude Sonnet 和 Telegram。"
+          },
+          {
+            title: "创建 Telegram Bot",
+            body: "在 Telegram 里找 @BotFather，发送 /newbot，拿到 bot token 后粘贴回 onboard 向导。"
+          },
+          {
+            title: "启动 openclaw gateway",
+            body: "执行 openclaw gateway，保持这个终端窗口开着。看到持续输出日志，说明服务已经在前台运行。"
+          },
+          {
+            title: "给机器人发第一条消息",
+            body: "在 Telegram 中搜索你刚创建的 bot 用户名，发送 Hello。只要收到回复，这次 Quick Start 就真正完成了。"
+          }
+        ],
+        successTitle: "官方 Quick Start 完成的标准",
+        successBody:
+          "真正完成，不是只把 CLI 装上，而是已经拿到 API Key、接好聊天渠道、启动 gateway，并和机器人完成第一轮对话。",
+        verifyTitle: "逐项确认这些结果",
+        verifyItems: [
+          "安装结束后可以直接运行 openclaw 命令",
+          "onboard 过程中已经填入 API Key、模型和 Telegram bot token",
+          "openclaw gateway 启动后终端持续输出运行日志",
+          "你已在 Telegram 中收到机器人回复，而不是只看到本地命令执行成功"
+        ],
+        nextTitle: "第一次跑通后该去哪里",
+        nextCards: [
+          {
+            title: "想继续做安全和部署",
+            body: "先去命令中心，把环境变量、日志和常见排错路径掌握住。",
+            href: "/pages/command-center.html",
+            cta: "去命令中心"
+          },
+          {
+            title: "想开始一个真实任务",
+            body: "去模板库选一个现成起点，不要从空白配置重新拼。",
+            href: "/pages/task-library.html",
+            cta: "去模板库"
+          },
+          {
+            title: "想控制模型与花费",
+            body: "去成本页估算不同模型和频率下的预算区间。",
+            href: "/pages/cost-calculator.html",
+            cta: "去成本页"
+          }
+        ],
+        trackerTitle: "第一次成功追踪器",
+        trackerBody:
+          "只要这 5 项都完成，你就已经和官方文档定义的 first success 对齐。"
+      }
+    },
+    en: {
+      fast: {
+        commandTitle: "Official fast path",
+        commandBody:
+          "This path keeps the official Quick Start command order and only compresses the explanations. Do not change the sequence yet: install, onboard, gateway.",
+        noteTitle: "What this proves",
+        noteBody:
+          "If this command flow works, installation, API key setup, channel connection, and gateway startup are all basically working. You can optimize after that.",
+        stepsTitle: "Fast Path in 3 actions",
+        stepsBody:
+          "Best for people who already know how to open a terminal, paste commands, and read logs. Get one official happy-path run first.",
+        stepCards: [
+          {
+            title: "Install OpenClaw",
+            body: "Use the official installer so Node.js and the base dependencies follow the official path."
+          },
+          {
+            title: "Run the onboard wizard",
+            body: "Add the API key inside the wizard and choose Telegram as the first chat channel."
+          },
+          {
+            title: "Start the gateway and send a message",
+            body: "Run openclaw gateway, then immediately message the bot to confirm that it really responds."
+          }
+        ],
+        successTitle: "What counts as first success",
+        successBody:
+          "Not that every config is finished, but that you can install, start, and get a real reply from your bot.",
+        verifyTitle: "Check these signals now",
+        verifyItems: [
+          "The installer completes without exiting early",
+          "openclaw onboard saved an API key and one chat channel",
+          "The gateway keeps running instead of failing immediately",
+          "You received the first reply in Telegram or your chosen channel"
+        ],
+        nextTitle: "Where to go after the first run",
+        nextCards: [
+          {
+            title: "Commands or logs still look wrong",
+            body: "Go to Command Center for commands, environment variables, and common troubleshooting flows.",
+            href: "/pages/command-center.html",
+            cta: "Open Command Center"
+          },
+          {
+            title: "The setup works and you want to build",
+            body: "Open Task Library and start from a template close to your real use case.",
+            href: "/pages/task-library.html",
+            cta: "Open Task Library"
+          },
+          {
+            title: "You need cost clarity",
+            body: "Estimate daily and monthly spend before expanding your setup.",
+            href: "/pages/cost-calculator.html",
+            cta: "Open Cost Calculator"
+          }
+        ],
+        trackerTitle: "Fast Path checklist",
+        trackerBody:
+          "This is not the full deployment checklist. It is the minimum pass condition for the official quick start."
+      },
+      guided: {
+        commandTitle: "Official step-by-step command flow",
+        commandBody:
+          "This command block mirrors the core flow in the official docs: install OpenClaw, run onboard, then start the gateway. The API key and Telegram bot work happen between those commands and are expanded in the step cards below.",
+        noteTitle: "How to use this command block",
+        noteBody:
+          "Run the install command first. After installation finishes, run openclaw onboard and fill in the API key, model, and Telegram details. Then run openclaw gateway and send your first message.",
+        stepsTitle: "Step-by-step in 7 moves",
+        stepsBody:
+          "This section follows the official Quick Start and adds more detail about what each step is verifying.",
+        stepCards: [
+          {
+            title: "Open a terminal",
+            body: "On macOS, use Spotlight and open Terminal. On Windows, use Win + X and open Windows Terminal or PowerShell. The blinking cursor is where you will paste commands."
+          },
+          {
+            title: "Install OpenClaw",
+            body: "Paste the official install command and press Enter. The first install usually takes 2 to 5 minutes while it checks the system and installs required tools."
+          },
+          {
+            title: "Get an API key",
+            body: "Create one Anthropic API key from the Anthropic console. For the first run, keep it simple and use one working key instead of mixing multiple providers."
+          },
+          {
+            title: "Run openclaw onboard",
+            body: "Use the setup wizard to enter the API key, pick a model, and choose a chat channel. The easiest first channel is Telegram."
+          },
+          {
+            title: "Create a Telegram bot",
+            body: "In Telegram, talk to @BotFather, run /newbot, and copy the bot token back into the onboard wizard."
+          },
+          {
+            title: "Start openclaw gateway",
+            body: "Run openclaw gateway and leave that terminal window open. Continuous log output means the gateway is alive."
+          },
+          {
+            title: "Send the first message",
+            body: "Search for your bot username in Telegram and send Hello. When it replies, the Quick Start is genuinely complete."
+          }
+        ],
+        successTitle: "What completion means in the official guide",
+        successBody:
+          "Completion is not just installing the CLI. It means the API key exists, the chat channel is connected, the gateway is live, and a real conversation happened.",
+        verifyTitle: "Confirm these outcomes one by one",
+        verifyItems: [
+          "You can run openclaw commands after installation",
+          "The onboard flow saved the API key, model, and Telegram bot token",
+          "The gateway keeps printing runtime logs after startup",
+          "You received a real bot reply in Telegram, not just a local success message"
+        ],
+        nextTitle: "Where to go after the first successful run",
+        nextCards: [
+          {
+            title: "You want security and setup depth",
+            body: "Use Command Center next so you understand the config, logs, and troubleshooting paths before scaling up.",
+            href: "/pages/command-center.html",
+            cta: "Go to Command Center"
+          },
+          {
+            title: "You want to try a real task",
+            body: "Open Task Library and start from a proven template instead of rebuilding from scratch.",
+            href: "/pages/task-library.html",
+            cta: "Go to Task Library"
+          },
+          {
+            title: "You want model and cost control",
+            body: "Use the cost page to estimate budget ranges before you expand usage.",
+            href: "/pages/cost-calculator.html",
+            cta: "Go to Cost Calculator"
+          }
+        ],
+        trackerTitle: "First-success tracker",
+        trackerBody:
+          "If these 5 items are done, you are aligned with the first-success definition in the official quick start."
       }
     }
   };
@@ -144,8 +391,15 @@
     return copy[lang()];
   }
 
+  function getModeContent(language, mode) {
+    const table = modeContent[language] || modeContent.en;
+    return table[mode] || table.fast;
+  }
+
   function currentTrack() {
-    const active = Array.from(document.querySelectorAll("[data-track]")).find((button) => button.className.includes("bg-red-500"));
+    const active = Array.from(document.querySelectorAll("[data-track]")).find((button) =>
+      button.className.includes("bg-red-500")
+    );
     return active ? active.dataset.track : "windows";
   }
 
@@ -166,7 +420,7 @@
   }
 
   function getModeKey() {
-    return `openclaw-quickstart-mode-${lang()}`;
+    return "openclaw-quickstart-mode";
   }
 
   function getMode() {
@@ -178,139 +432,25 @@
     localStorage.setItem(getModeKey(), next === "guided" ? "guided" : "fast");
   }
 
-  function getModeContent(language, mode) {
-    const table = {
-      zh: {
-        fast: {
-          commandTitle: "最快起步命令",
-          commandBody: "适合已经能接受复制命令、编辑配置和看日志的人。先跑通最小链路，再考虑要不要扩功能。",
-          noteTitle: "这一步的目标",
-          noteBody: "先确认命令、环境变量和 doctor 都正常，不要一开始就接复杂 workflow。",
-          stepsTitle: "Fast Path 的 3 步",
-          stepsBody: "这条路只追求一件事：先在本机跑通最小链路。",
-          stepCards: [
-            { title: "安装并初始化", body: "安装 CLI，立刻执行 init，确保配置文件生成正常。" },
-            { title: "跑 doctor", body: "先把 PATH、权限、环境变量和模型连通性问题排掉。" },
-            { title: "做一次最小运行", body: "只运行一次最简单任务，确认不是 401、429 或 timeout。" }
-          ],
-          successTitle: "Fast Path 成功的标准",
-          successBody: "你不需要一次把整套系统学完。只要命令能跑、日志正常、你知道当前模型是谁，这一轮就算成功。",
-          verifyTitle: "现在就检查这些",
-          verifyItems: [
-            "CLI 命令没有直接报错退出",
-            "doctor 没有报 PATH 或权限问题",
-            "日志里没有 401 / 429 / timeout",
-            "你知道下一个页面该去命令中心、模板库还是成本页"
-          ],
-          nextTitle: "跑通后下一步",
-          nextCards: [
-            { title: "要继续排错", body: "命令、日志或配置哪里不稳，就立刻去命令中心。", href: "/pages/command-center.html", cta: "打开命令中心" },
-            { title: "要立刻做事", body: "去模板库找一个现成结构，先预览再复制。", href: "/pages/task-library.html", cta: "打开模板库" },
-            { title: "要控制预算", body: "先算一遍日成本和月成本，避免刚跑通就超预算。", href: "/pages/cost-calculator.html", cta: "打开成本页" }
-          ],
-          trackerTitle: "Fast Path 检查表",
-          trackerBody: "这不是完整部署清单，而是“本机已经跑起来”的最小验证。"
-        },
-        guided: {
-          commandTitle: "跟着这组命令一步一步做",
-          commandBody: "适合第一次接触 OpenClaw。按顺序执行，不要跳步，也不要先改一堆配置。",
-          noteTitle: "这一轮你在做什么",
-          noteBody: "你现在不是在“搭完整系统”，而是在完成第一次成功启动，确认环境、密钥和最小任务都通了。",
-          stepsTitle: "Step-by-step 的 5 步",
-          stepsBody: "按这个顺序做，重点是每一步都知道自己在验证什么。",
-          stepCards: [
-            { title: "先装运行环境", body: "先确认 Node.js 18+ 正常，再安装 OpenClaw CLI。" },
-            { title: "放好 API Key", body: "把 key 放到 .env 或你明确知道的位置，不要分散在多个地方。" },
-            { title: "先做一次体检", body: "执行 doctor，把 PATH、权限和环境变量问题提前暴露。" },
-            { title: "启动最小任务", body: "先跑一次最小链路，目的只是确认服务真的能起来。" },
-            { title: "读懂第一次结果", body: "看日志、看输出、看成本，再决定下一步去哪里。" }
-          ],
-          successTitle: "第一次成功意味着什么",
-          successBody: "所谓“第一次成功”，不是功能全做完，而是你能清楚地说出：现在怎么启动、哪里看日志、哪个模型在跑、下一步去哪。",
-          verifyTitle: "第一次成功要看到这些信号",
-          verifyItems: [
-            "命令启动后不是直接报错退出",
-            "日志里没有 401 / 429 / timeout",
-            "你知道当前运行的是哪个模型",
-            "你知道下一步是去命令中心、模板库还是成本页"
-          ],
-          nextTitle: "第一次成功后去哪",
-          nextCards: [
-            { title: "还不确定哪里报错", body: "去命令中心，对照命令、配置片段和故障案例继续排。", href: "/pages/command-center.html", cta: "去命令中心" },
-            { title: "已经跑通，想先做一个任务", body: "去模板库挑一个最接近你场景的模板，先跑成一个完整例子。", href: "/pages/task-library.html", cta: "去模板库" },
-            { title: "担心一上来就花太多", body: "先去成本页估一下每天和每月会花多少钱。", href: "/pages/cost-calculator.html", cta: "去成本页" }
-          ],
-          trackerTitle: "第一次跑通追踪器",
-          trackerBody: "把第一次成功拆成 5 个动作。每一步完成后，你再决定要不要继续扩展。"
-        }
-      },
-      en: {
-        fast: {
-          commandTitle: "Fastest launch sequence",
-          commandBody: "Best for users who are comfortable copying commands, editing config, and reading logs. Get the minimum chain running before you expand.",
-          noteTitle: "What this step is for",
-          noteBody: "Prove the CLI, env vars, and doctor check are healthy first. Do not attach a larger workflow yet.",
-          stepsTitle: "Fast Path in 3 steps",
-          stepsBody: "This path only optimizes for one thing: getting one minimal chain running on your machine.",
-          stepCards: [
-            { title: "Install and initialize", body: "Install the CLI and run init immediately so the base config exists." },
-            { title: "Run doctor", body: "Clear PATH, permission, env, and model access issues before launch." },
-            { title: "Run one minimal task", body: "Start the smallest possible task and confirm it is not a 401, 429, or timeout." }
-          ],
-          successTitle: "What counts as success here",
-          successBody: "You do not need the whole system on day one. If the command runs, logs are clean, and you know the active model, this round succeeded.",
-          verifyTitle: "Check these now",
-          verifyItems: [
-            "The CLI command does not exit immediately with an error",
-            "doctor shows no PATH or permission issue",
-            "Logs show no 401 / 429 / timeout",
-            "You know whether the next page is Command Center, Task Library, or Cost Calculator"
-          ],
-          nextTitle: "After the fast path",
-          nextCards: [
-            { title: "Need to debug further", body: "If commands, logs, or config still feel unstable, go to Command Center now.", href: "/pages/command-center.html", cta: "Open Command Center" },
-            { title: "Ready to do real work", body: "Go to Task Library and start from a proven structure.", href: "/pages/task-library.html", cta: "Open Task Library" },
-            { title: "Need spend control", body: "Estimate the daily and monthly cost before you scale usage.", href: "/pages/cost-calculator.html", cta: "Open Cost Calculator" }
-          ],
-          trackerTitle: "Fast Path checklist",
-          trackerBody: "This is not a full deployment checklist. It only proves the local chain is alive."
-        },
-        guided: {
-          commandTitle: "Follow this command flow step by step",
-          commandBody: "Best for first-time users. Run these in order, do not skip steps, and do not start by editing too much config.",
-          noteTitle: "What you are actually doing",
-          noteBody: "You are not building the full system yet. You are completing the first successful start, then confirming env, key, and one minimal task.",
-          stepsTitle: "Step-by-step in 5 moves",
-          stepsBody: "Follow this order. The goal is to understand what each step is verifying.",
-          stepCards: [
-            { title: "Install the runtime", body: "Confirm Node.js 18+ works, then install the OpenClaw CLI." },
-            { title: "Place the API key", body: "Put the key in one clear location such as .env. Do not scatter it." },
-            { title: "Run doctor first", body: "Use diagnostics before launch so PATH, permissions, and env issues appear early." },
-            { title: "Start one small task", body: "Only run the smallest chain once so you can verify the service really starts." },
-            { title: "Read the first result", body: "Check logs, output, and cost before deciding where to go next." }
-          ],
-          successTitle: "What first success means",
-          successBody: "First success does not mean the whole setup is done. It means you can explain how it starts, where logs live, which model is running, and which page to open next.",
-          verifyTitle: "Signals of a real first success",
-          verifyItems: [
-            "The command starts instead of exiting immediately",
-            "Logs show no 401 / 429 / timeout",
-            "You know which model is running now",
-            "You know whether the next page is Command Center, Task Library, or Cost Calculator"
-          ],
-          nextTitle: "After the first successful run",
-          nextCards: [
-            { title: "Still unsure what failed", body: "Use Command Center to compare commands, snippets, and known failure cases.", href: "/pages/command-center.html", cta: "Go to Command Center" },
-            { title: "Ready to try one real task", body: "Use Task Library and pick the closest starting template.", href: "/pages/task-library.html", cta: "Go to Task Library" },
-            { title: "Worried about spend", body: "Open the cost page and estimate the daily and monthly budget before expanding.", href: "/pages/cost-calculator.html", cta: "Go to Cost Calculator" }
-          ],
-          trackerTitle: "First-run tracker",
-          trackerBody: "Break the first win into five concrete actions. Only expand after these are done."
-        }
-      }
-    };
+  function escapeHtml(value) {
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;");
+  }
 
-    return (table[language] && table[language][mode]) || table.en.fast;
+  function getCommandBlock(language, track, mode) {
+    const commentInstall = language === "zh" ? "# 安装 OpenClaw" : "# Install OpenClaw";
+    const commentOnboard =
+      language === "zh" ? "# 运行设置向导" : "# Run the setup wizard";
+    const commentGateway =
+      language === "zh" ? "# 启动 gateway" : "# Start the gateway";
+
+    if (mode === "guided") {
+      return `${commentInstall}\n${track.installCommand}\n\n${commentOnboard}\nopenclaw onboard\n\n${commentGateway}\nopenclaw gateway`;
+    }
+
+    return `${track.installCommand}\nopenclaw onboard\nopenclaw gateway`;
   }
 
   function renderExtras() {
@@ -322,12 +462,15 @@
     const panelSection = panel ? panel.parentElement : null;
     if (!root || !panel || !aside || !mainSection || !panelSection) return;
 
+    const language = lang();
     const text = getText();
     const trackId = currentTrack();
     const track = text.tracks[trackId] || text.tracks.windows;
     const trackerState = getTrackerState();
     const mode = getMode();
-    const modeContent = getModeContent(lang(), mode);
+    const content = getModeContent(language, mode);
+    const commandBlock = getCommandBlock(language, track, mode);
+    const trackNote = mode === "guided" ? track.guidedNote : track.fastNote;
 
     wrapper.className = "grid gap-6";
     mainSection.className = "space-y-5";
@@ -335,7 +478,8 @@
     let choose = document.querySelector("[data-quickstart-choose]");
     if (!choose) {
       choose = document.createElement("article");
-      choose.className = "mb-5 rounded-[28px] border border-red-400/20 bg-[linear-gradient(135deg,rgba(127,29,29,0.32),rgba(69,10,10,0.18))] p-6 shadow-2xl shadow-red-950/20";
+      choose.className =
+        "mb-5 rounded-[28px] border border-red-400/20 bg-[linear-gradient(135deg,rgba(127,29,29,0.32),rgba(69,10,10,0.18))] p-6 shadow-2xl shadow-red-950/20";
       choose.setAttribute("data-quickstart-choose", "true");
       panelSection.insertBefore(choose, panel);
     }
@@ -345,17 +489,27 @@
         <p class="mt-3 text-sm leading-7 text-slate-200">${text.chooseBody}</p>
       </div>
       <div class="mt-5 grid gap-4 xl:grid-cols-2">
-        ${text.paths.map((item, index) => {
-          const key = index === 0 ? "fast" : "guided";
-          const active = mode === key;
-          return `
-          <button type="button" data-start-mode="${key}" class="rounded-3xl border p-5 text-left transition ${active ? "border-red-400/40 bg-red-500/12 shadow-lg shadow-red-950/20" : "border-white/10 bg-white/[0.03] hover:border-red-400/25 hover:bg-white/[0.05]"}">
-            <div class="inline-flex rounded-full border ${active ? "border-red-300/30 bg-red-400/15 text-red-100" : "border-white/10 bg-white/5 text-slate-300"} px-3 py-1 text-xs uppercase tracking-[0.22em]">${item.badge}</div>
+        ${text.paths
+          .map((item, index) => {
+            const key = index === 0 ? "fast" : "guided";
+            const active = mode === key;
+            return `
+          <button type="button" data-start-mode="${key}" class="rounded-3xl border p-5 text-left transition ${
+            active
+              ? "border-red-400/40 bg-red-500/12 shadow-lg shadow-red-950/20"
+              : "border-white/10 bg-white/[0.03] hover:border-red-400/25 hover:bg-white/[0.05]"
+          }">
+            <div class="inline-flex rounded-full border ${
+              active
+                ? "border-red-300/30 bg-red-400/15 text-red-100"
+                : "border-white/10 bg-white/5 text-slate-300"
+            } px-3 py-1 text-xs uppercase tracking-[0.22em]">${item.badge}</div>
             <h3 class="mt-4 text-lg font-semibold text-white">${item.title}</h3>
             <p class="mt-3 text-sm leading-7 text-slate-300">${item.body}</p>
           </button>
         `;
-        }).join("")}
+          })
+          .join("")}
       </div>
     `;
 
@@ -363,21 +517,24 @@
       panelSection.insertBefore(panel, choose.nextSibling);
     }
 
-    panel.className = "rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-6 shadow-2xl shadow-slate-950/20";
+    panel.className =
+      "rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-6 shadow-2xl shadow-slate-950/20";
     panel.innerHTML = `
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div class="max-w-2xl">
-          <div class="inline-flex rounded-full border border-red-400/20 bg-red-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-red-200">${modeContent.commandTitle}</div>
-          <p class="mt-4 text-sm leading-7 text-slate-300">${modeContent.commandBody}</p>
+          <div class="inline-flex rounded-full border border-red-400/20 bg-red-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-red-200">${content.commandTitle}</div>
+          <p class="mt-4 text-sm leading-7 text-slate-300">${content.commandBody}</p>
         </div>
         <button id="copy-quickstart-command" class="rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-400">${text.copyCommands}</button>
       </div>
       <div class="mt-5 grid gap-4">
-        <pre class="overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-200">${track.command}</pre>
+        <pre class="overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-200">${escapeHtml(
+          commandBlock
+        )}</pre>
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
-          <div class="text-xs uppercase tracking-[0.24em] text-red-200">${modeContent.noteTitle}</div>
-          <p class="mt-4 text-sm leading-7 text-slate-300">${modeContent.noteBody}</p>
-          <div class="mt-4 rounded-2xl bg-white/5 px-4 py-4 text-sm leading-7 text-slate-300">${track.note}</div>
+          <div class="text-xs uppercase tracking-[0.24em] text-red-200">${content.noteTitle}</div>
+          <p class="mt-4 text-sm leading-7 text-slate-300">${content.noteBody}</p>
+          <div class="mt-4 rounded-2xl bg-white/5 px-4 py-4 text-sm leading-7 text-slate-300">${trackNote}</div>
         </div>
       </div>
     `;
@@ -402,17 +559,21 @@
     }
     steps.innerHTML = `
       <div class="max-w-3xl">
-        <h2 class="text-2xl font-semibold text-white">${modeContent.stepsTitle}</h2>
-        <p class="mt-3 text-sm leading-7 text-slate-300">${modeContent.stepsBody}</p>
+        <h2 class="text-2xl font-semibold text-white">${content.stepsTitle}</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${content.stepsBody}</p>
       </div>
       <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
-        ${modeContent.stepCards.map((item, index) => `
+        ${content.stepCards
+          .map(
+            (item, index) => `
           <article class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
             <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-red-400/25 bg-red-500/10 text-sm font-semibold text-red-200">${index + 1}</div>
             <h3 class="mt-4 text-base font-semibold text-white">${item.title}</h3>
-            <p class="mt-3 max-w-[28ch] text-sm leading-7 text-slate-300">${item.body}</p>
+            <p class="mt-3 text-sm leading-7 text-slate-300">${item.body}</p>
           </article>
-        `).join("")}
+        `
+          )
+          .join("")}
       </div>
     `;
 
@@ -426,13 +587,15 @@
     success.innerHTML = `
       <div class="grid gap-5 lg:grid-cols-2">
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
-          <h2 class="text-xl font-semibold text-white">${modeContent.successTitle}</h2>
-          <p class="mt-4 text-sm leading-7 text-slate-300">${modeContent.successBody}</p>
+          <h2 class="text-xl font-semibold text-white">${content.successTitle}</h2>
+          <p class="mt-4 text-sm leading-7 text-slate-300">${content.successBody}</p>
         </div>
         <div class="rounded-3xl border border-white/10 bg-slate-950/70 p-5">
-          <h2 class="text-xl font-semibold text-white">${modeContent.verifyTitle}</h2>
+          <h2 class="text-xl font-semibold text-white">${content.verifyTitle}</h2>
           <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
-            ${modeContent.verifyItems.map((item) => `<li class="rounded-2xl bg-white/5 px-4 py-3">${item}</li>`).join("")}
+            ${content.verifyItems
+              .map((item) => `<li class="rounded-2xl bg-white/5 px-4 py-3">${item}</li>`)
+              .join("")}
           </ul>
         </div>
       </div>
@@ -446,15 +609,19 @@
       success.insertAdjacentElement("afterend", nextMain);
     }
     nextMain.innerHTML = `
-      <h2 class="text-2xl font-semibold text-white">${modeContent.nextTitle}</h2>
+      <h2 class="text-2xl font-semibold text-white">${content.nextTitle}</h2>
       <div class="mt-5 grid gap-4 lg:grid-cols-3">
-        ${modeContent.nextCards.map((item) => `
+        ${content.nextCards
+          .map(
+            (item) => `
           <a href="${item.href}" class="block rounded-3xl border border-white/10 bg-slate-950/70 p-5 transition hover:border-red-400/40 hover:bg-slate-950">
             <div class="font-medium text-white">${item.title}</div>
             <p class="mt-3 text-sm leading-7 text-slate-300">${item.body}</p>
             <div class="mt-3 text-xs uppercase tracking-[0.24em] text-red-200">${item.cta}</div>
           </a>
-        `).join("")}
+        `
+          )
+          .join("")}
       </div>
     `;
 
@@ -462,17 +629,24 @@
       if (checklistArticle.parentElement !== panelSection) {
         panelSection.insertBefore(checklistArticle, nextMain.nextSibling);
       }
-      checklistArticle.className = "rounded-[28px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.2),rgba(15,23,42,0.92))] p-6";
+      checklistArticle.className =
+        "rounded-[28px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.2),rgba(15,23,42,0.92))] p-6";
       checklistArticle.innerHTML = `
-        <h2 class="text-2xl font-semibold text-white">${modeContent.trackerTitle}</h2>
-        <p class="mt-3 text-sm leading-7 text-slate-300">${modeContent.trackerBody}</p>
+        <h2 class="text-2xl font-semibold text-white">${text.trackerTitle}</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${text.trackerBody}</p>
         <div id="quickstart-checklist" class="mt-5 space-y-3">
-          ${text.tracker.map((item, index) => `
+          ${text.tracker
+            .map(
+              (item, index) => `
             <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-4">
-              <input data-step-check="${index}" type="checkbox" class="mt-1 h-4 w-4 accent-red-400" ${trackerState[index] ? "checked" : ""}>
+              <input data-step-check="${index}" type="checkbox" class="mt-1 h-4 w-4 accent-red-400" ${
+                trackerState[index] ? "checked" : ""
+              }>
               <span class="text-sm leading-7 text-slate-200">${item}</span>
             </label>
-          `).join("")}
+          `
+            )
+            .join("")}
         </div>
       `;
     }
@@ -481,7 +655,7 @@
     if (copyButton) {
       copyButton.addEventListener("click", async () => {
         try {
-          await navigator.clipboard.writeText(track.command);
+          await navigator.clipboard.writeText(commandBlock);
           copyButton.textContent = text.copied;
           setTimeout(() => {
             copyButton.textContent = text.copyCommands;
@@ -503,7 +677,11 @@
     }
 
     document.querySelectorAll(".quickstart-tab").forEach((button) => {
-      button.className = `quickstart-tab rounded-full border px-4 py-2 text-sm transition ${button.dataset.track === trackId ? "border-red-400/40 bg-red-500 text-white" : "border-white/10 text-slate-200 hover:border-red-400/40"}`;
+      button.className = `quickstart-tab rounded-full border px-4 py-2 text-sm transition ${
+        button.dataset.track === trackId
+          ? "border-red-400/40 bg-red-500 text-white"
+          : "border-white/10 text-slate-200 hover:border-red-400/40"
+      }`;
     });
   }
 
@@ -525,7 +703,11 @@
         if (trackButton) {
           document.querySelectorAll("[data-track]").forEach((button) => {
             const active = button === trackButton;
-            button.className = `quickstart-tab rounded-full border px-4 py-2 text-sm transition ${active ? "border-red-400/40 bg-red-500 text-white" : "border-white/10 text-slate-200 hover:border-red-400/40"}`;
+            button.className = `quickstart-tab rounded-full border px-4 py-2 text-sm transition ${
+              active
+                ? "border-red-400/40 bg-red-500 text-white"
+                : "border-white/10 text-slate-200 hover:border-red-400/40"
+            }`;
           });
           renderExtras();
         }
