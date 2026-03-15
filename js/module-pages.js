@@ -11,11 +11,10 @@
       quickstart: { zh: "快速开始", en: "Quick Start" },
       "command-center": { zh: "命令中心", en: "Command Center" },
       troubleshooting: { zh: "故障排除", en: "Troubleshooting" },
-      "task-library": { zh: "模板库", en: "Task Library" },
+      "task-library": { zh: "任务模板库", en: "Task Library" },
       "cost-calculator": { zh: "成本计算器", en: "Cost Calculator" },
       workflows: { zh: "工作流", en: "Workflows" },
       tools: { zh: "工具", en: "Tools" },
-      tutorials: { zh: "教程", en: "Tutorials" },
       community: { zh: "社区", en: "Community" },
       "release-notes": { zh: "更新日志", en: "Release Notes" }
     },
@@ -124,7 +123,6 @@
     { id: "troubleshooting", href: "/pages/troubleshooting.html" },
     { id: "task-library", href: "/pages/task-library.html" },
     { id: "cost-calculator", href: "/pages/cost-calculator.html" },
-    { id: "tutorials", href: "/pages/tutorials.html" },
     { id: "release-notes", href: "/pages/release-notes.html" }
   ];
 
@@ -220,7 +218,7 @@
         categories: { zh: "分类", en: "Categories" },
         actions: { zh: "动作", en: "Actions" }
       },
-      actionValue: { zh: "搜索 / 预览 / 复制", en: "Search / Preview" },
+      actionValue: { zh: "搜索 / 预览 / 复制", en: "Search / Preview / Copy" },
       searchPlaceholder: { zh: "搜索模板名称、用途或分类", en: "Search by template name, use case, or category" },
       allCategories: { zh: "全部分类", en: "All categories" },
       estimatedTimeFallback: { zh: "可直接使用", en: "Ready to use" },
@@ -866,7 +864,7 @@
       });
       list.innerHTML = result.map((item) => {
         const localized = localizeTaskTemplate(item);
-    return `<article class="${cardSurfaceClass}"><div class="flex flex-wrap items-start justify-between gap-4"><div><div class="inline-flex rounded-full border border-amber-300/20 bg-amber-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-amber-100">${localizeTaskCategory(item.category)}</div><h3 class="mt-3 text-xl font-semibold text-white">${localized.name}</h3><p class="mt-2 text-sm leading-6 text-slate-300">${localized.description}</p></div><div class="text-right text-sm text-slate-400"><div>★ ${item.stars}</div><div class="mt-1">${item.usageCount} ${t(ui.common.uses)}</div></div></div><div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-300"><span class="rounded-full border border-amber-300/14 bg-amber-500/8 px-3 py-1 text-amber-100/88">${item.preview && item.preview.estimatedTime ? localizeReadTime(item.preview.estimatedTime) : t(pageText.taskLibrary.estimatedTimeFallback)}</span><span class="rounded-full border border-amber-300/12 bg-amber-950/18 px-3 py-1 text-amber-50/80">${t(pageText.taskLibrary.reusableHint)}</span></div><div class="mt-5 flex flex-wrap gap-3"><button data-toggle-preview="${item.id}" aria-expanded="false" class="${buttonSecondaryClass} hover:border-orange-400/40">${t(pageText.taskLibrary.previewButton)}</button><button data-copy="${item.id}" class="rounded-full bg-orange-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-orange-400">${t(pageText.taskLibrary.copyButton)}</button></div><div id="preview-${item.id}" class="mt-4 hidden overflow-hidden rounded-2xl border border-amber-300/10 bg-slate-950/90"><div class="border-b border-amber-300/10 px-4 py-3 text-xs uppercase tracking-[0.2em] text-amber-100/70">${t(pageText.taskLibrary.previewTitle)}</div><pre class="max-h-80 overflow-auto px-4 py-4 text-sm leading-6 text-slate-300">${escapeHtml(item.copyFormat)}</pre></div></article>`;
+        return `<article class="${cardSurfaceClass}"><div class="flex flex-wrap items-start justify-between gap-4"><div class="min-w-0 flex-1"><h3 class="text-xl font-semibold text-white">${localized.name}</h3><p class="mt-2 text-sm leading-6 text-slate-300">${localized.description}</p></div><div class="shrink-0 rounded-full border border-amber-300/20 bg-amber-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-amber-100">${localizeTaskCategory(item.category)}</div></div><div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-300"><span class="rounded-full border border-amber-300/14 bg-amber-500/8 px-3 py-1 text-amber-100/88">${item.preview && item.preview.estimatedTime ? localizeReadTime(item.preview.estimatedTime) : t(pageText.taskLibrary.estimatedTimeFallback)}</span><span class="rounded-full border border-amber-300/12 bg-amber-950/18 px-3 py-1 text-amber-50/80">${t(pageText.taskLibrary.reusableHint)}</span></div><div class="mt-5 flex flex-wrap gap-3"><button data-toggle-preview="${item.id}" aria-expanded="false" class="${buttonSecondaryClass} hover:border-orange-400/40">${t(pageText.taskLibrary.previewButton)}</button><button data-copy="${item.id}" class="rounded-full bg-orange-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-orange-400">${t(pageText.taskLibrary.copyButton)}</button></div><div id="preview-${item.id}" class="mt-4 hidden overflow-hidden rounded-2xl border border-amber-300/10 bg-slate-950/90"><div class="border-b border-amber-300/10 px-4 py-3 text-xs uppercase tracking-[0.2em] text-amber-100/70">${t(pageText.taskLibrary.previewTitle)}</div><pre class="max-h-80 overflow-auto px-4 py-4 text-sm leading-6 text-slate-300">${escapeHtml(item.copyFormat)}</pre></div></article>`;
       }).join("") || `<div class="rounded-3xl border border-dashed border-white/10 p-10 text-center text-slate-400">${t(pageText.taskLibrary.empty)}</div>`;
     }
 

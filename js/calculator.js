@@ -1,26 +1,82 @@
 const modelPricing = {
-  "claude-opus-4.6": {
-    name: "Claude Opus 4.6",
+  "claude-opus-4.1": {
+    name: "Claude Opus 4.1",
     provider: "anthropic",
     inputPrice: 15,
     outputPrice: 75,
     quality: 5,
     tier: "premium"
   },
-  "claude-sonnet-4.6": {
-    name: "Claude Sonnet 4.6",
+  "claude-sonnet-4": {
+    name: "Claude Sonnet 4",
     provider: "anthropic",
     inputPrice: 3,
     outputPrice: 15,
     quality: 4,
     tier: "balanced"
   },
-  "claude-haiku-4.6": {
-    name: "Claude Haiku 4.6",
+  "claude-3.7-sonnet": {
+    name: "Claude 3.7 Sonnet",
     provider: "anthropic",
-    inputPrice: 0.25,
-    outputPrice: 1.25,
+    inputPrice: 3,
+    outputPrice: 15,
+    quality: 4,
+    tier: "balanced"
+  },
+  "claude-3.5-haiku": {
+    name: "Claude 3.5 Haiku",
+    provider: "anthropic",
+    inputPrice: 0.8,
+    outputPrice: 4,
     quality: 3,
+    tier: "light"
+  },
+  "gpt-5": {
+    name: "GPT-5",
+    provider: "openai",
+    inputPrice: 1.25,
+    outputPrice: 10,
+    quality: 5,
+    tier: "premium"
+  },
+  "gpt-5-mini": {
+    name: "GPT-5 Mini",
+    provider: "openai",
+    inputPrice: 0.25,
+    outputPrice: 2,
+    quality: 4,
+    tier: "balanced"
+  },
+  "gpt-5-nano": {
+    name: "GPT-5 Nano",
+    provider: "openai",
+    inputPrice: 0.05,
+    outputPrice: 0.4,
+    quality: 3,
+    tier: "light"
+  },
+  "gpt-4.1": {
+    name: "GPT-4.1",
+    provider: "openai",
+    inputPrice: 2,
+    outputPrice: 8,
+    quality: 4,
+    tier: "balanced"
+  },
+  "gpt-4.1-mini": {
+    name: "GPT-4.1 Mini",
+    provider: "openai",
+    inputPrice: 0.4,
+    outputPrice: 1.6,
+    quality: 3,
+    tier: "light"
+  },
+  "gpt-4.1-nano": {
+    name: "GPT-4.1 Nano",
+    provider: "openai",
+    inputPrice: 0.1,
+    outputPrice: 0.4,
+    quality: 2,
     tier: "light"
   },
   "gpt-4o": {
@@ -39,13 +95,61 @@ const modelPricing = {
     quality: 3,
     tier: "light"
   },
-  "deepseek-v3": {
-    name: "DeepSeek V3",
-    provider: "deepseek",
-    inputPrice: 0.27,
-    outputPrice: 0.55,
+  "o4-mini": {
+    name: "o4-mini",
+    provider: "openai",
+    inputPrice: 1.1,
+    outputPrice: 4.4,
+    quality: 4,
+    tier: "balanced"
+  },
+  "gemini-2.5-pro": {
+    name: "Gemini 2.5 Pro",
+    provider: "google",
+    inputPrice: 1.25,
+    outputPrice: 10,
+    quality: 5,
+    tier: "premium"
+  },
+  "gemini-2.5-flash": {
+    name: "Gemini 2.5 Flash",
+    provider: "google",
+    inputPrice: 0.3,
+    outputPrice: 2.5,
+    quality: 4,
+    tier: "balanced"
+  },
+  "gemini-2.5-flash-lite": {
+    name: "Gemini 2.5 Flash-Lite",
+    provider: "google",
+    inputPrice: 0.1,
+    outputPrice: 0.4,
     quality: 3,
     tier: "light"
+  },
+  "gemini-2.0-flash": {
+    name: "Gemini 2.0 Flash",
+    provider: "google",
+    inputPrice: 0.1,
+    outputPrice: 0.4,
+    quality: 3,
+    tier: "light"
+  },
+  "deepseek-chat": {
+    name: "DeepSeek Chat",
+    provider: "deepseek",
+    inputPrice: 0.27,
+    outputPrice: 1.1,
+    quality: 3,
+    tier: "light"
+  },
+  "deepseek-reasoner": {
+    name: "DeepSeek Reasoner",
+    provider: "deepseek",
+    inputPrice: 0.55,
+    outputPrice: 2.19,
+    quality: 4,
+    tier: "balanced"
   },
   "qwen-max": {
     name: "Qwen Max",
@@ -121,6 +225,10 @@ const modelProviders = {
   openai: {
     zh: "OpenAI",
     en: "OpenAI"
+  },
+  google: {
+    zh: "Google",
+    en: "Google"
   },
   deepseek: {
     zh: "DeepSeek",
@@ -354,11 +462,13 @@ function mapQuestionnaireToWorkload(answers) {
     + output.score
     + (answers.frequency === "50+" ? 0.5 : answers.frequency === "21-50" ? 0.25 : 0);
 
-  let recommendedModel = "gpt-4o-mini";
+  let recommendedModel = "gpt-4.1-mini";
   if (score >= 3.5) {
-    recommendedModel = "claude-opus-4.6";
+    recommendedModel = "claude-opus-4.1";
+  } else if (score >= 2.25) {
+    recommendedModel = "gpt-5";
   } else if (score >= 1.5) {
-    recommendedModel = "claude-sonnet-4.6";
+    recommendedModel = "claude-sonnet-4";
   }
 
   return {
@@ -398,10 +508,10 @@ function buildCostNarrative(summary, lang = "en") {
 
 function buildShareText(summary, lang = "en") {
   if (lang === "zh") {
-    return `我测了一下 OpenClaw Agent 成本：${summary.modelName} 大约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${summary.takeawayZh} openclaw-hub.com`;
+    return `我测了一下 OpenClaw Agent 成本：${summary.modelName} 大约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${summary.takeawayZh} openclaw-resource-hub.vercel.app/pages/cost-calculator.html`;
   }
 
-  return `I estimated my OpenClaw agent cost on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${summary.takeawayEn} openclaw-hub.com`;
+  return `I estimated my OpenClaw agent cost on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${summary.takeawayEn} openclaw-resource-hub.vercel.app/pages/cost-calculator.html`;
 }
 
 function drawRoundedRect(ctx, x, y, width, height, radius) {
@@ -532,7 +642,7 @@ function generateShareCard(summary) {
 
   ctx.fillStyle = "rgba(248,250,252,0.64)";
   ctx.font = "500 22px Arial";
-  ctx.fillText("openclaw-hub.com", 140, 1080);
+  ctx.fillText("openclaw-resource-hub.vercel.app/pages/cost-calculator.html", 140, 1080);
 
   return canvas;
 }

@@ -4,7 +4,7 @@
     activePreset: "operator",
     answers: { frequency: "6-20", complexity: "medium", web: "some", output: "medium" },
     selectedProvider: "anthropic",
-    selectedModelId: "claude-sonnet-4.6",
+    selectedModelId: "claude-sonnet-4",
     advancedOpen: false,
     advancedLinked: true,
     advanced: { dailyTasks: 12, stepsPerTask: 50 },

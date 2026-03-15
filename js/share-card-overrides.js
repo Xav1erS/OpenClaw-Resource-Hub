@@ -39,6 +39,16 @@
     return summary.lang === "zh" ? zh : en;
   }
 
+  function getSiteUrl() {
+    const meta = document.querySelector('meta[name="openclaw-site-url"]');
+    return (meta && meta.content) || window.location.origin || "https://openclaw-resource-hub.vercel.app";
+  }
+
+  function getShareLandingUrl() {
+    const siteUrl = getSiteUrl().replace(/\/$/, "");
+    return `${siteUrl}/pages/cost-calculator.html`;
+  }
+
   function getWarningSentence(summary, lang) {
     const zh = {
       low: "当前成本仍在可控区间，适合先跑起来。",
@@ -67,10 +77,10 @@
 
   function buildShareText(summary, lang = "en") {
     if (lang === "zh") {
-      return `我测了一下 OpenClaw Agent 成本：${summary.modelName} 约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${buildShareCardTakeaway(summary, "zh")} openclaw-hub.com`;
+      return `我测了一下 OpenClaw Agent 成本：${summary.modelName} 约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${buildShareCardTakeaway(summary, "zh")} ${getShareLandingUrl()}`;
     }
 
-    return `I estimated my OpenClaw agent cost on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${buildShareCardTakeaway(summary, "en")} openclaw-hub.com`;
+    return `I estimated my OpenClaw agent cost on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${buildShareCardTakeaway(summary, "en")} ${getShareLandingUrl()}`;
   }
 
   function statCard(ctx, options) {
@@ -221,16 +231,35 @@
     ctx.font = "500 28px Arial";
     wrapCanvasText(ctx, buildShareCardTakeaway(summary, summary.lang), 140, 960, 920, 40);
 
+    ctx.fillStyle = "rgba(255,255,255,0.04)";
+    drawRoundedRect(ctx, 740, 1010, 320, 88, 24);
+    ctx.fill();
+    ctx.fillStyle = "rgba(248,250,252,0.9)";
+    ctx.font = "700 22px Arial";
+    ctx.fillText(label(summary, "OpenClaw 资源中心", "OpenClaw Resource Hub"), 772, 1052);
+    ctx.fillStyle = "rgba(248,250,252,0.62)";
+    ctx.font = "500 18px Arial";
+    wrapCanvasText(ctx, label(summary, "更多模板、排错和命令速查", "More templates, fixes, and commands"), 772, 1082, 260, 22);
+
     ctx.fillStyle = "rgba(248,250,252,0.64)";
     ctx.font = "500 22px Arial";
-    ctx.fillText("openclaw-hub.com", 140, 1095);
+    ctx.fillText(getShareLandingUrl().replace(/^https?:\/\//, ""), 140, 1095);
+
+    ctx.save();
+    ctx.globalAlpha = 0.08;
+    ctx.fillStyle = "#f8fafc";
+    ctx.font = "700 92px Arial";
+    ctx.translate(900, 920);
+    ctx.rotate(-0.18);
+    ctx.fillText("OPENCLAW", 0, 0);
+    ctx.restore();
 
     return canvas;
   }
 
   async function shareCostResult(summary, lang = "en", canvas) {
     const shareText = buildShareText(summary, lang);
-    const shareUrl = window.location.href;
+    const shareUrl = getShareLandingUrl();
 
     if (navigator.share && canvas && navigator.canShare) {
       try {

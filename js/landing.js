@@ -14,7 +14,7 @@
       primary: "快速开始",
       secondary: "命令中心",
       modulesTitle: "核心页面",
-      modulesSubtitle: "只保留最有用的入口。模板库解决“从什么结构开始”，命令中心解决“命令怎么写”，故障排除模块解决“问题先从哪一层排”。",
+      modulesSubtitle: "只保留最有用的入口。任务模板库解决“从什么结构开始”，命令中心解决“命令怎么写”，故障排除模块解决“问题先从哪一层排”。",
       pathsTitle: "推荐路径",
       pathsSubtitle: "按你当前的目标进入，不需要先把整站看完。",
       releaseTitle: "当前站点状态",
@@ -34,7 +34,7 @@
       },
       releaseLinks: {
         notes: "更新日志",
-        library: "模板库",
+        library: "任务模板库",
         command: "命令中心",
         troubleshooting: "故障排除"
       },
@@ -42,15 +42,14 @@
         { name: "快速开始", desc: "按环境选择安装命令，用最小配置先跑通。", href: "/pages/quickstart.html", badge: "Start" },
         { name: "命令中心", desc: "查 CLI 命令、频道管理、模型探针和 cheatsheet 参考。", href: "/pages/command-center.html", badge: "Cheatsheet" },
         { name: "故障排除", desc: "按症状排 gateway、channels、memory 和官方 fast fixes。", href: "/pages/troubleshooting.html", badge: "Fixes" },
-        { name: "模板库", desc: "找现成任务模板，先预览代码块再复制。", href: "/pages/task-library.html", badge: "Templates" },
+        { name: "任务模板库", desc: "找现成任务模板，先预览代码块再复制。", href: "/pages/task-library.html", badge: "Templates" },
         { name: "成本计算器", desc: "先算清每天和每月成本，再决定模型和使用规模。", href: "/pages/cost-calculator.html", badge: "Cost" },
-        { name: "教程", desc: "从安装到排错，按场景补齐知识缺口。", href: "/pages/tutorials.html", badge: "Guides" },
         { name: "更新日志", desc: "跟踪当前版本做到哪里，以及下一轮重点。", href: "/pages/release-notes.html", badge: "Updates" }
       ],
       paths: [
         { title: "第一次接触 OpenClaw", steps: ["先看快速开始", "命令不确定就去命令中心", "报错或无响应就进故障排除"] },
-        { title: "已经能跑，想控制成本", steps: ["先打开成本计算器", "比较不同模型", "再回模板库优化任务结构"] },
-        { title: "想立刻开始做事", steps: ["直接进入模板库", "按模板改成你的任务", "遇到问题再补故障排除和教程"] }
+        { title: "已经能跑，想控制成本", steps: ["先打开成本计算器", "比较不同模型", "再回任务模板库优化任务结构"] },
+        { title: "想立刻开始做事", steps: ["直接进入任务模板库", "按模板改成你的任务", "遇到问题先补故障排除"] }
       ]
     },
     en: {
@@ -93,13 +92,12 @@
         { name: "Troubleshooting", desc: "Debug gateway, channels, memory, and official fast fixes by symptom.", href: "/pages/troubleshooting.html", badge: "Fixes" },
         { name: "Task Library", desc: "Start from a ready-made task template and preview the code before copying.", href: "/pages/task-library.html", badge: "Templates" },
         { name: "Cost Calculator", desc: "Estimate daily and monthly cost before you scale up.", href: "/pages/cost-calculator.html", badge: "Cost" },
-        { name: "Tutorials", desc: "Fill in knowledge gaps from setup to troubleshooting.", href: "/pages/tutorials.html", badge: "Guides" },
         { name: "Release Notes", desc: "Track what has shipped and what the next round will focus on.", href: "/pages/release-notes.html", badge: "Updates" }
       ],
       paths: [
         { title: "First time with OpenClaw", steps: ["Open Quick Start", "Use Command Center when you need the exact command", "Open Troubleshooting when the broken layer is still unclear"] },
         { title: "Already running, need cost control", steps: ["Start with Cost Calculator", "Compare models", "Then optimize with Task Library"] },
-        { title: "Want to start shipping quickly", steps: ["Open Task Library", "Adapt one template to your job", "Use Troubleshooting before Tutorials when something breaks"] }
+        { title: "Want to start shipping quickly", steps: ["Open Task Library", "Adapt one template to your job", "Use Troubleshooting when something breaks"] }
       ]
     }
   };

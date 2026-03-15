@@ -9,7 +9,7 @@
       output: "medium"
     },
     selectedProvider: "anthropic",
-    selectedModelId: "claude-sonnet-4.6",
+    selectedModelId: "claude-sonnet-4",
     advancedOpen: false,
     advancedLinked: true,
     advanced: {
