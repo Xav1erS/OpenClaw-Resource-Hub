@@ -23,7 +23,7 @@ openclaw init
 openclaw start`,
     notes: [
       "建议把 API Key 放到 .env 或系统 Keychain，不要写死在仓库里。",
-      "Apple Silicon 机器优先用轻量模型做 smoke test。"
+      "Apple Silicon 机器优先用轻量模型做基础验证。"
     ]
   },
   {
@@ -46,7 +46,7 @@ const quickStartChecklist = [
   "安装 Node.js 18+",
   "准备一个可用的模型 API Key",
   "执行 openclaw init 生成配置",
-  "先用轻量模型做一次 smoke test",
+  "先用轻量模型做一次基础验证",
   "打开日志和成本监控"
 ];
 
@@ -147,28 +147,28 @@ const troubleshootingItems = [
 
 const releaseNotes = [
   {
-    version: "MVP Sprint 3",
+    version: "模块上线 3",
     date: "2026-03-13",
     highlights: [
-      "独立页从占位状态改为真实模块页。",
-      "新增 Quick Start、Command Center、Release Notes 三个静态功能页。",
-      "模板库、工作流、教程、社区页统一成同一套页面框架。"
+      "独立页统一升级为可访问的功能模块页。",
+      "补上快速开始、命令中心、更新日志三页。",
+      "模板库、工作流、教程、社区页统一为同一套页面框架。"
     ]
   },
   {
-    version: "MVP Sprint 2",
+    version: "模块上线 2",
     date: "2026-03-12",
     highlights: [
-      "成本计算器接入多模型对比和优化建议。",
+      "成本计算器加入多模型对比和优化建议。",
       "补齐模块页基础导航和复制交互。"
     ]
   },
   {
-    version: "MVP Sprint 1",
+    version: "模块上线 1",
     date: "2026-03-11",
     highlights: [
-      "项目从单首页结构切出 6 个模块入口。",
-      "建立首批任务模板、工作流和教程种子数据。"
+      "项目从单首页扩展为 6 个模块入口。",
+      "上线首批任务模板、工作流和教程内容。"
     ]
   }
 ];

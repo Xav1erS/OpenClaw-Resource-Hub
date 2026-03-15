@@ -1,27 +1,27 @@
 (function () {
   const extra = {
     zh: {
-      sectionTitle: "官方 Cheatsheet 补充区",
+      sectionTitle: "官方速查表补充区",
       copy: "复制",
       troubleshooting: "打开故障排除",
       packs: [
         {
-          title: "Workspace Anatomy",
-          description: "这些是 workspace 里真正会影响代理行为的文件。先弄清楚它们分别负责什么，再调命令才不会跑偏。",
+          title: "工作区结构",
+          description: "这些是工作区里真正会影响代理行为的文件。先弄清它们分别负责什么，再调命令才不会跑偏。",
           commands: [
             { label: "AGENTS.md", code: "Agent 的规则、工作方式和约束。" },
-            { label: "SOUL.md", code: "Agent 的人格、语气和偏好。" },
+            { label: "SOUL.md", code: "Agent 的人格、语气和行为风格。" },
             { label: "USER.md", code: "用户偏好、长期上下文和工作习惯。" },
-            { label: "IDENTITY.md", code: "Agent 名称、主题、头像和身份信息。" },
-            { label: "MEMORY.md", code: "长期记忆摘要，沉淀稳定事实。" },
-            { label: "memory/YYYY-MM-DD.md", code: "每日会话和短期记忆。" },
+            { label: "IDENTITY.md", code: "Agent 名称、主题和身份信息。" },
+            { label: "MEMORY.md", code: "长期记忆摘要和稳定事实。" },
+            { label: "memory/YYYY-MM-DD.md", code: "每日记录和短期记忆。" },
             { label: "HEARTBEAT.md", code: "周期检查、主动任务和提醒逻辑。" },
-            { label: "BOOT.md", code: "gateway 启动时通过 hooks 执行的启动说明。" },
+            { label: "BOOT.md", code: "网关启动时通过 hooks 执行的启动说明。" },
             { label: ".openclaw/", code: "项目级配置、状态和本地运行数据。" }
           ]
         },
         {
-          title: "Memory & Models",
+          title: "记忆与模型",
           description: "把记忆检索、索引重建、模型切换和授权探针放在一起，方便第一轮排查时快速定位。",
           commands: [
             { label: "搜索记忆", code: "openclaw memory search --query \"deployment notes\"" },
@@ -30,11 +30,11 @@
             { label: "列出模型", code: "openclaw models list --provider anthropic" },
             { label: "切换默认模型", code: "openclaw models set claude-3-5-sonnet" },
             { label: "模型探针", code: "openclaw models status --probe" },
-            { label: "配置 provider token", code: "openclaw models auth setup-token --provider anthropic" }
+            { label: "设置服务商令牌", code: "openclaw models auth setup-token --provider anthropic" }
           ]
         },
         {
-          title: "Channel Management",
+          title: "频道管理",
           description: "频道管理往往比模型配置更容易先出问题。把登录、探针和添加频道的命令放在同一组里更容易排查。",
           commands: [
             { label: "添加或更新频道", code: "openclaw channels add" },
@@ -47,19 +47,19 @@
           ]
         },
         {
-          title: "Hooks & Skills",
+          title: "钩子与技能",
           description: "当你要把 boot 逻辑、skills 和社区扩展接进来时，这组命令是最常用的入口。",
           commands: [
-            { label: "列出 hooks", code: "openclaw hooks list" },
-            { label: "启用 hook", code: "openclaw hooks enable boot-md" },
-            { label: "列出 skills", code: "openclaw skills list" },
-            { label: "检查 skill 依赖", code: "openclaw skills check" },
+            { label: "列出钩子", code: "openclaw hooks list" },
+            { label: "启用钩子", code: "openclaw hooks enable boot-md" },
+            { label: "列出技能", code: "openclaw skills list" },
+            { label: "检查技能依赖", code: "openclaw skills check" },
             { label: "搜索社区技能", code: "clawhub search \"gmail\"" },
             { label: "安装社区技能", code: "clawhub install <slug>" }
           ]
         },
         {
-          title: "Slash Commands",
+          title: "斜杠命令",
           description: "这些是对话中的快速命令，用于上下文切换、压缩会话和停止当前动作。",
           commands: [
             { label: "列出上下文", code: "/context list" },
@@ -72,7 +72,7 @@
           ]
         },
         {
-          title: "Automation & Research",
+          title: "自动化与调研",
           description: "浏览器自动化、cron、sessions 和 heartbeat 的快入口都在这里，适合部署后做持续运行。",
           commands: [
             { label: "浏览器状态", code: "openclaw browser status" },

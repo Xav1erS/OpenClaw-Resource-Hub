@@ -133,12 +133,7 @@
     content: { zh: "内容创作", en: "Content" },
     ops: { zh: "运营自动化", en: "Operations" },
     dev: { zh: "开发辅助", en: "Developer" },
-    office: { zh: "办公效率", en: "Productivity" },
-    "甯傚満璋冪爺": { zh: "市场调研", en: "Research" },
-    "鍐呭鍒涗綔": { zh: "内容创作", en: "Content" },
-    "杩愯惀鑷姩鍖?": { zh: "运营自动化", en: "Operations" },
-    "寮€鍙戣緟鍔?": { zh: "开发辅助", en: "Developer" },
-    "鍔炲叕鏁堢巼": { zh: "办公效率", en: "Productivity" }
+    office: { zh: "办公效率", en: "Productivity" }
   };
 
   const taskTemplateText = {
@@ -188,7 +183,7 @@
       macos: {
         badge: { zh: "最快上手", en: "Fastest Setup" },
         notes: {
-          zh: ["建议把 API Key 放到 .env 或系统 Keychain，不要写死在仓库里。", "Apple Silicon 机器优先用轻量模型做 smoke test。"],
+      zh: ["建议把 API Key 放到 .env 或系统 Keychain，不要写死在仓库里。", "Apple Silicon 机器优先用轻量模型做基础验证。"],
           en: ["Keep API keys in .env or Keychain instead of hardcoding them.", "On Apple Silicon, start with a lightweight model for your smoke test."]
         }
       },
@@ -201,7 +196,7 @@
       }
     },
     checklist: {
-      zh: ["安装 Node.js 18+", "准备一个可用的模型 API Key", "执行 openclaw init 生成配置", "先用轻量模型做一次 smoke test", "打开日志和成本监控"],
+      zh: ["安装 Node.js 18+", "准备一个可用的模型 API Key", "执行 openclaw init 生成配置", "先用轻量模型做一次基础验证", "打开日志和成本监控"],
       en: ["Install Node.js 18+", "Prepare a working model API key", "Run openclaw init to generate config", "Use a lightweight model for a smoke test", "Turn on logs and cost monitoring"]
     },
     stacks: {
@@ -225,10 +220,10 @@
         categories: { zh: "分类", en: "Categories" },
         actions: { zh: "动作", en: "Actions" }
       },
-      actionValue: { zh: "搜索 / 复制 / 组合", en: "Search / Preview" },
+      actionValue: { zh: "搜索 / 预览 / 复制", en: "Search / Preview" },
       searchPlaceholder: { zh: "搜索模板名称、用途或分类", en: "Search by template name, use case, or category" },
       allCategories: { zh: "全部分类", en: "All categories" },
-      estimatedTimeFallback: { zh: "快速预览", en: "Quick scan" },
+      estimatedTimeFallback: { zh: "可直接使用", en: "Ready to use" },
       reusableHint: { zh: "适合复制后二次改写", en: "Good starting point for customization" },
       previewButton: { zh: "展开预览", en: "Preview Code" },
       collapseButton: { zh: "收起预览", en: "Hide Preview" },
@@ -269,7 +264,7 @@
       allCategories: { zh: "全部分类", en: "All categories" },
       selectArticle: { zh: "选择一篇教程", en: "Choose a Tutorial" },
       troubleshooting: { zh: "快速排错答案", en: "Troubleshooting Quick Answers" },
-      noBody: { zh: "当前提供摘要版内容。", en: "This article currently ships as a concise summary. Switch to Chinese for the full version." }
+      noBody: { zh: "当前页提供核心步骤与快速排错入口。", en: "This page focuses on the core steps and troubleshooting path." }
     },
     cost: {
       stats: {
@@ -303,12 +298,12 @@
       targetValue: { zh: "起步更快", en: "Faster Setup" },
       actionValue: { zh: "生成 / 复制 / 诊断", en: "Generate / Copy / Diagnose" },
       promptTitle: { zh: "Prompt 优化器", en: "Prompt Optimizer" },
-      promptPlaceholder: { zh: "贴入原始 Prompt", en: "Paste your original prompt" },
+      promptPlaceholder: { zh: "贴入原始提示词", en: "Paste your original prompt" },
       promptButton: { zh: "生成优化版", en: "Generate Better Prompt" },
       configTitle: { zh: "配置生成器", en: "Config Generator" },
       configButton: { zh: "生成 YAML", en: "Generate YAML" },
       errorTitle: { zh: "错误解码器", en: "Error Decoder" },
-      errorPlaceholder: { zh: "贴入日志或错误信息", en: "Paste a log or error message" },
+      errorPlaceholder: { zh: "贴入日志或报错信息", en: "Paste a log or error message" },
       errorButton: { zh: "分析错误", en: "Analyze Error" },
       promptToast: { zh: "先输入原始 Prompt", en: "Enter a prompt first" },
       errorFallbackTitle: { zh: "未命中预设错误", en: "No Known Error Matched" },
@@ -361,7 +356,7 @@
         actions: { zh: "动作", en: "Actions" }
       },
       actionValue: { zh: "定位 / 修复", en: "Triage / Fix" },
-      searchPlaceholder: { zh: "搜索 401、gateway、channels、memory、doctor、超时", en: "Search 401, gateway, channels, memory, doctor, or timeout" },
+      searchPlaceholder: { zh: "搜索 401、网关、频道、记忆、体检、超时", en: "Search 401, gateway, channels, memory, doctor, or timeout" },
       ladderTitle: { zh: "推荐排查顺序", en: "Recommended Triage Order" },
       ladder: {
         zh: ["先跑 openclaw doctor，收敛显式环境问题。", "再看 gateway 是否存活，而不是先改 prompt。", "然后检查 channels 探针和 bot 登录状态。", "再检查 models probe 和 provider token。", "最后处理 memory 索引、长链路超时和高级症状。"],
@@ -390,30 +385,34 @@
   };
 
   const workflowCategoryMap = {
-    "鑷姩鍖?": { zh: "自动化", en: "Automation" },
-    "璋冪爺鍒嗘瀽": { zh: "调研分析", en: "Research" },
-    "鍐呭鍒涗綔": { zh: "内容创作", en: "Content" },
-    "寮€鍙戝伐鍏?": { zh: "开发工具", en: "Developer" }
+    automation: { zh: "自动化", en: "Automation" },
+    "自动化": { zh: "自动化", en: "Automation" },
+    research: { zh: "调研分析", en: "Research" },
+    "调研分析": { zh: "调研分析", en: "Research" },
+    creation: { zh: "内容创作", en: "Content" },
+    "内容创作": { zh: "内容创作", en: "Content" },
+    dev: { zh: "开发工具", en: "Developer" },
+    "开发工具": { zh: "开发工具", en: "Developer" }
   };
 
   const workflowTagMap = {
-    "鑷姩鍖?": { zh: "自动化", en: "Automation" },
-    "璋冪爺": { zh: "调研", en: "Research" },
-    "鍟嗕笟": { zh: "商业", en: "Business" },
-    "鍒涗笟": { zh: "创业", en: "Startup" },
-    "楠岃瘉": { zh: "验证", en: "Validation" },
-    "鍒嗘瀽": { zh: "分析", en: "Analysis" },
-    "浠ｇ爜": { zh: "代码", en: "Code" },
-    "鏂囨。": { zh: "文档", en: "Docs" },
+    "自动化": { zh: "自动化", en: "Automation" },
+    "调研": { zh: "调研", en: "Research" },
+    "商业": { zh: "商业", en: "Business" },
+    "创业": { zh: "创业", en: "Startup" },
+    "验证": { zh: "验证", en: "Validation" },
+    "分析": { zh: "分析", en: "Analysis" },
+    "代码": { zh: "代码", en: "Code" },
+    "文档": { zh: "文档", en: "Docs" },
     API: { zh: "API", en: "API" },
-    "娴嬭瘯": { zh: "测试", en: "Testing" },
-    "鏁版嵁": { zh: "数据", en: "Data" },
-    "鍐呭": { zh: "内容", en: "Content" },
+    "测试": { zh: "测试", en: "Testing" },
+    "数据": { zh: "数据", en: "Data" },
+    "内容": { zh: "内容", en: "Content" },
     SEO: { zh: "SEO", en: "SEO" },
-    "鏁版嵁搴?": { zh: "数据库", en: "Database" },
-    "閮ㄧ讲": { zh: "部署", en: "Deployment" },
-    "鐩戞帶": { zh: "监控", en: "Monitoring" },
-    "浼樺寲": { zh: "优化", en: "Optimization" }
+    "数据库": { zh: "数据库", en: "Database" },
+    "部署": { zh: "部署", en: "Deployment" },
+    "监控": { zh: "监控", en: "Monitoring" },
+    "优化": { zh: "优化", en: "Optimization" }
   };
 
   const tutorialCategoryMap = {
@@ -421,10 +420,10 @@
     advanced: { zh: "进阶技巧", en: "Advanced" },
     faq: { zh: "常见问题", en: "FAQ" },
     "best-practice": { zh: "最佳实践", en: "Best Practices" },
-    "鏂版墜鍏ラ棬": { zh: "新手入门", en: "Beginner" },
-    "杩涢樁鎶€宸?": { zh: "进阶技巧", en: "Advanced" },
-    "甯歌闂": { zh: "常见问题", en: "FAQ" },
-    "鏈€浣冲疄璺?": { zh: "最佳实践", en: "Best Practices" }
+    "新手入门": { zh: "新手入门", en: "Beginner" },
+    "进阶技巧": { zh: "进阶技巧", en: "Advanced" },
+    "常见问题": { zh: "常见问题", en: "FAQ" },
+    "最佳实践": { zh: "最佳实践", en: "Best Practices" }
   };
 
   const tutorialTitleMap = {
@@ -474,23 +473,27 @@
   };
 
   const difficultyMap = {
-    "绠€鍗?": { zh: "简单", en: "Easy" },
-    "涓瓑": { zh: "中等", en: "Intermediate" },
-    "鍥伴毦": { zh: "困难", en: "Advanced" }
+    "简单": { zh: "简单", en: "Easy" },
+    "中等": { zh: "中等", en: "Intermediate" },
+    "困难": { zh: "困难", en: "Advanced" }
   };
 
   const showcaseCategoryMap = {
-    "鑷姩鍖?": { zh: "自动化", en: "Automation" },
-    "鏁堢巼": { zh: "效率", en: "Productivity" },
-    "寮€鍙?": { zh: "开发", en: "Developer" },
-    "璋冪爺鍒嗘瀽": { zh: "调研分析", en: "Research" }
+    automation: { zh: "自动化", en: "Automation" },
+    "自动化": { zh: "自动化", en: "Automation" },
+    productivity: { zh: "效率", en: "Productivity" },
+    "效率": { zh: "效率", en: "Productivity" },
+    developer: { zh: "开发", en: "Developer" },
+    "开发": { zh: "开发", en: "Developer" },
+    research: { zh: "调研分析", en: "Research" },
+    "调研分析": { zh: "调研分析", en: "Research" }
   };
 
   const commandSections = {
     zh: [
-      { title: "CLI 启动", description: "最常用的本地初始化和排错命令。", commands: [{ label: "初始化项目", code: "openclaw init" }, { label: "启动服务", code: "openclaw start" }, { label: "环境体检", code: "openclaw doctor" }, { label: "查看版本", code: "openclaw --version" }] },
-      { title: "Gateway 与运行状态", description: "对齐官方速查表的第一层运行控制。先确认 gateway 活着，再判断频道和模型是否正常。", commands: [{ label: "启动 gateway", code: "openclaw gateway start" }, { label: "查看 gateway 状态", code: "openclaw gateway status" }, { label: "重启 gateway", code: "openclaw gateway restart" }, { label: "查看 agent 会话", code: "openclaw sessions list" }] },
-      { title: "模型与授权", description: "当模型探针失败或 provider 权限有问题时，先从这里排。", commands: [{ label: "列出模型", code: "openclaw models list --provider anthropic" }, { label: "模型状态探针", code: "openclaw models status --probe" }, { label: "切换默认模型", code: "openclaw models set claude-3-5-sonnet" }, { label: "设置 provider token", code: "openclaw models auth setup-token --provider anthropic" }] },
+      { title: "命令行启动", description: "最常用的本地初始化和排错命令。", commands: [{ label: "初始化项目", code: "openclaw init" }, { label: "启动服务", code: "openclaw start" }, { label: "环境体检", code: "openclaw doctor" }, { label: "查看版本", code: "openclaw --version" }] },
+      { title: "网关与运行状态", description: "对齐官方速查表的第一层运行控制。先确认网关活着，再判断频道和模型是否正常。", commands: [{ label: "启动网关", code: "openclaw gateway start" }, { label: "查看网关状态", code: "openclaw gateway status" }, { label: "重启网关", code: "openclaw gateway restart" }, { label: "查看会话", code: "openclaw sessions list" }] },
+      { title: "模型与授权", description: "当模型探针失败或服务商权限有问题时，先从这里排。", commands: [{ label: "列出模型", code: "openclaw models list --provider anthropic" }, { label: "模型探针", code: "openclaw models status --probe" }, { label: "切换默认模型", code: "openclaw models set claude-3-5-sonnet" }, { label: "设置服务商令牌", code: "openclaw models auth setup-token --provider anthropic" }] },
       { title: "配置片段", description: "当前阶段最值得保留的 YAML 片段。", commands: [{ label: "轻量模型", code: "model: claude-haiku-4.6\nmax_steps: 24" }, { label: "心跳配置", code: "heartbeat:\n  enabled: true\n  interval: 60" }, { label: "日志输出", code: "logging:\n  level: info\n  file: openclaw.log" }] },
       { title: "上线前检查", description: "避免最常见的首发事故。", commands: [{ label: "检查端口", code: "netstat -ano | findstr 8080" }, { label: "检查环境变量", code: "echo %OPENCLAW_API_KEY%" }, { label: "检查日志", code: "type openclaw.log" }] }
     ],
@@ -523,15 +526,15 @@
   const releaseNotes = {
     zh: [
       { version: "Launch Baseline", date: "2026-03-15", highlights: ["补齐首页与核心内页的 SEO 元信息、canonical、OG 与 Twitter 卡片。", "新增 robots.txt、sitemap.xml、404 页面与站点静态校验脚本。", "接入可后续填写 GA4 ID 的埋点基线，并清理发布时的未完成感文案。"] },
-      { version: "MVP Sprint 3", date: "2026-03-14", highlights: ["独立页从占位状态改为真实模块页。", "新增 Quick Start、Command Center、Release Notes 三个静态功能页。", "补齐中英文切换并重做独立页渲染层。"] },
-      { version: "MVP Sprint 2", date: "2026-03-13", highlights: ["成本计算器接入多模型对比和优化建议。", "补齐模块页基础导航和复制交互。"] },
-      { version: "MVP Sprint 1", date: "2026-03-11", highlights: ["项目从单首页结构切出 6 个模块入口。", "建立首批任务模板、工作流和教程种子数据。"] }
+      { version: "模块上线 3", date: "2026-03-14", highlights: ["独立页统一升级为可访问的功能模块页。", "补上快速开始、命令中心、更新日志三页。", "补齐中英文切换，并统一独立页渲染层。"] },
+      { version: "模块上线 2", date: "2026-03-13", highlights: ["成本计算器加入多模型对比和优化建议。", "补齐模块页基础导航和复制交互。"] },
+      { version: "模块上线 1", date: "2026-03-11", highlights: ["项目从单首页扩展为 6 个核心模块入口。", "上线首批任务模板、工作流和教程内容。"] }
     ],
     en: [
       { version: "Launch Baseline", date: "2026-03-15", highlights: ["Added canonical, OG, Twitter, and shared SEO metadata across the homepage and core pages.", "Added robots.txt, sitemap.xml, a 404 page, and a static site verification script.", "Prepared analytics wiring for a future GA4 ID and cleaned up unfinished-looking launch copy."] },
-      { version: "MVP Sprint 3", date: "2026-03-14", highlights: ["Standalone pages are now real module pages, not placeholders.", "Added Quick Start, Command Center, and Release Notes pages.", "Rebuilt the bilingual page renderer and cleaned the content layer."] },
-      { version: "MVP Sprint 2", date: "2026-03-13", highlights: ["Cost calculator now compares models and shows optimization hints.", "Filled in module page navigation and copy interactions."] },
-      { version: "MVP Sprint 1", date: "2026-03-11", highlights: ["Split the project from a single homepage into six module entry points.", "Created seed data for templates, workflows, and tutorials."] }
+      { version: "Module Rollout 3", date: "2026-03-14", highlights: ["Standalone pages were upgraded into fully accessible module pages.", "Added Quick Start, Command Center, and Release Notes.", "Completed the bilingual page renderer and unified the module shell."] },
+      { version: "Module Rollout 2", date: "2026-03-13", highlights: ["Added model comparisons and optimization guidance to the cost calculator.", "Completed baseline navigation and copy interactions across module pages."] },
+      { version: "Module Rollout 1", date: "2026-03-11", highlights: ["Expanded the project from a single homepage into six core module entry points.", "Published the first usable set of templates, workflows, and tutorials."] }
     ]
   };
 
@@ -659,8 +662,8 @@
   }
 
   function localizeWorkflowAuthor(author) {
-    if (author === "OpenClaw瀹樻柟") return state.currentLang === "zh" ? "OpenClaw 官方" : "OpenClaw Official";
-    if (author === "绀惧尯璐＄尞") return state.currentLang === "zh" ? "社区贡献者" : "Community Contributor";
+    if (author === "OpenClaw官方" || author === "OpenClaw Official") return state.currentLang === "zh" ? "OpenClaw 官方" : "OpenClaw Official";
+    if (author === "社区贡献" || author === "社区贡献者" || author === "Community Contributor") return state.currentLang === "zh" ? "社区贡献者" : "Community Contributor";
     return author;
   }
 
@@ -687,12 +690,12 @@
   function localizeTutorialPreview(item) {
     const entry = tutorialPreviewMap[item.id];
     if (entry) return t(entry);
-    return state.currentLang === "zh" ? "这篇教程正在整理成更完整的正文版本，当前先提供摘要和快速排错入口。" : "This guide is being expanded into a fuller article. For now, use the summary and troubleshooting panel.";
+    return state.currentLang === "zh" ? "这篇教程先给出核心步骤与快速排错入口，方便你先跑通整条流程。" : "This guide starts with the core steps and troubleshooting path so you can get through the workflow quickly.";
   }
 
   function localizeReadTime(value) {
     const raw = String(value || "");
-    if (state.currentLang === "zh") return raw.replace(/鍒嗛挓/g, "分钟");
+    if (state.currentLang === "zh") return raw.replace(/\bmin\b/g, "分钟");
     const minutes = raw.match(/\d+/g);
     return minutes ? `${minutes.join("-")} min` : raw;
   }

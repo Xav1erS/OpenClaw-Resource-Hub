@@ -16,7 +16,7 @@
 
   const copy = {
     zh: {
-      pageTag: "传播优先",
+      pageTag: "成本预估",
       title: "成本计算器",
       subtitle: "左侧做选择，右侧立即给出推荐、成本和分享卡片。",
       helper: "默认模式先用人话问卷估算，只有真正需要精调时才展开高级模式。",
@@ -94,7 +94,7 @@
       savingsLabel: "预计每月节省"
     },
     en: {
-      pageTag: "Share-First",
+      pageTag: "Cost Planning",
       title: "Cost Calculator",
       subtitle: "Pick on the left and review the live recommendation, cost, and share card on the right.",
       helper: "The default flow starts with human-readable questions. Open advanced mode only when you want exact workload control.",

@@ -25,7 +25,7 @@
     zh: {
       brandTop: "OPENCLAW",
       brandBottom: "Resource Hub",
-      pageTag: "传播优先",
+      pageTag: "成本预估",
       title: "成本计算器",
       subtitle: "先固定你要用的模型，再按任务强度估算每天会吃掉多少 Token，最后统一看结果并生成分享卡片。",
       helper: "快速预设只调整任务强度，不会再偷偷切换模型。模型始终由你自己决定。",
@@ -101,7 +101,7 @@
     en: {
       brandTop: "OPENCLAW",
       brandBottom: "Resource Hub",
-      pageTag: "Share-First",
+      pageTag: "Cost Planning",
       title: "Cost Calculator",
       subtitle: "Lock in the model first, then estimate daily token usage from task intensity. Results and sharing live in one clear flow below.",
       helper: "Quick presets only adjust workload assumptions. They do not change the selected model anymore.",
@@ -412,10 +412,12 @@
                 <a href="/pages/command-center.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-slate-200 transition hover:border-red-400/40 hover:text-white">${commandAction}</a>
               </div>
             </div>
-            <div class="grid auto-rows-fr gap-3 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
+            <div class="grid auto-rows-fr gap-3 sm:grid-cols-3 xl:grid-cols-2">
               ${text.stats.map((item) => {
                 const compact = String(item.value).length > 12;
-                return `<article class="min-w-0 rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.025))] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-xs uppercase tracking-[0.2em] text-slate-400">${item.label}</div><div class="mt-3 ${compact ? "text-[clamp(1.25rem,1.8vw,1.85rem)] max-w-[9ch]" : "text-[clamp(1.5rem,2.1vw,2.2rem)]"} font-semibold leading-[1.02] text-white break-words">${item.value}</div></article>`;
+                const numeric = /^[0-9]+$/.test(String(item.value).trim());
+                const spanClass = item === text.stats[2] ? "xl:col-span-2" : "";
+                return `<article class="${spanClass} relative min-w-0 overflow-hidden rounded-[28px] bg-[radial-gradient(circle_at_top_left,rgba(248,113,113,0.08),transparent_38%),linear-gradient(180deg,rgba(15,23,42,0.92),rgba(15,23,42,0.7))] p-4 shadow-[0_18px_50px_rgba(2,6,23,0.2),inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur"><div class="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-red-200/15 to-transparent"></div><div class="flex h-full flex-col justify-between"><div class="flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-slate-400"><span class="h-1.5 w-1.5 rounded-full bg-red-300/55"></span><span>${item.label}</span></div><div class="mt-6 ${numeric ? "text-[clamp(2.15rem,4vw,3rem)]" : compact ? "text-[clamp(1.28rem,1.8vw,1.86rem)] max-w-[12ch]" : "text-[clamp(1.5rem,2vw,2.1rem)]"} font-semibold leading-[1.02] text-white break-words">${item.value}</div></div></article>`;
               }).join("")}
             </div>
           </section>
