@@ -16,6 +16,7 @@
       dailyTasks: 12,
       stepsPerTask: 50
     },
+    shareFormat: "square",
     summary: null,
     shareCanvas: null,
     shareDataUrl: ""
@@ -215,6 +216,20 @@
     };
   }
 
+  function getShareFormats() {
+    if (state.lang === "zh") {
+      return [
+        { id: "square", label: "聊天分享", note: "1:1 方卡，适合群聊和朋友圈配图" },
+        { id: "portrait", label: "竖版种草", note: "4:5 竖卡，适合移动端信息流" }
+      ];
+    }
+
+    return [
+      { id: "square", label: "Chat Share", note: "1:1 card for chats and quick reposting" },
+      { id: "portrait", label: "Vertical Post", note: "4:5 card for mobile feeds" }
+    ];
+  }
+
   function showToast(message) {
     const toast = document.querySelector("[data-toast]");
     if (!toast) return;
@@ -301,7 +316,7 @@
 
   async function refreshShareAssets() {
     state.summary = getSummary();
-    state.shareCanvas = await window.generateShareCard(state.summary);
+    state.shareCanvas = await window.generateShareCard(state.summary, state.shareFormat);
     state.shareDataUrl = state.shareCanvas.toDataURL("image/png");
   }
 
@@ -407,6 +422,7 @@
 
     const text = t();
     const pricingMeta = getPricingMeta();
+    const shareFormats = getShareFormats();
     const scrollY = preserveScroll ? window.scrollY : null;
     const isZh = state.lang === "zh";
     const heroTitleClass = isZh
@@ -514,6 +530,17 @@
             <article class="rounded-[32px] border border-white/10 bg-white/[0.05] p-6 shadow-2xl shadow-slate-950/30">
               <h2 class="text-2xl font-semibold text-white">${text.shareTitle}</h2>
               <p class="mt-3 text-sm leading-7 text-slate-300">${text.shareBody}</p>
+              <div class="mt-5 grid gap-3 lg:grid-cols-2">
+                ${shareFormats.map((format) => `
+                  <button type="button" data-share-format="${format.id}" class="rounded-[24px] border p-4 text-left transition ${state.shareFormat === format.id ? "border-red-300/40 bg-red-500/10" : "border-white/10 bg-slate-950/45 hover:border-red-300/25 hover:bg-white/[0.05]"}">
+                    <div class="flex items-center justify-between gap-3">
+                      <div class="text-base font-semibold text-white">${format.label}</div>
+                      <div class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-300">${format.id === "square" ? "1:1" : "4:5"}</div>
+                    </div>
+                    <div class="mt-2 text-sm leading-6 text-slate-300">${format.note}</div>
+                  </button>
+                `).join("")}
+              </div>
               <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 <button data-generate-card class="rounded-full bg-red-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-red-400">${text.generateCard}</button>
                 <button data-download-card class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${text.downloadCard}</button>
@@ -522,7 +549,7 @@
               </div>
               <div class="mt-5 rounded-[28px] border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-3">
                 <div class="mb-3 flex items-center justify-between gap-3"><div class="text-sm uppercase tracking-[0.24em] text-slate-400">${text.generatedLabel}</div><div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">${state.summary.warningLabel}</div></div>
-                <img src="${state.shareDataUrl}" alt="Share card preview" class="aspect-square w-full max-w-[760px] rounded-[24px] border border-white/10 bg-slate-950 object-cover shadow-2xl shadow-slate-950/40">
+                <img src="${state.shareDataUrl}" alt="Share card preview" class="${state.shareFormat === "portrait" ? "aspect-[4/5] max-w-[640px]" : "aspect-square max-w-[760px]"} w-full rounded-[24px] border border-white/10 bg-slate-950 object-cover shadow-2xl shadow-slate-950/40">
               </div>
               <div class="mt-5 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
                 <article class="rounded-[28px] border border-white/10 bg-slate-950/60 p-5">
@@ -572,6 +599,16 @@
 
     document.querySelectorAll("[data-preset]").forEach((button) => {
       button.addEventListener("click", () => applyPreset(button.getAttribute("data-preset")));
+    });
+
+    document.querySelectorAll("[data-share-format]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const format = button.getAttribute("data-share-format");
+        if (!format || format === state.shareFormat) return;
+        state.shareFormat = format;
+        track("cost_share_format_selected", { format });
+        void renderApp(true);
+      });
     });
 
     document.querySelectorAll("[data-question]").forEach((button) => {
@@ -649,7 +686,7 @@
     if (downloadButton) {
       downloadButton.addEventListener("click", async () => {
         await refreshShareAssets();
-        window.downloadCanvasAsPng(state.shareCanvas, `openclaw-agent-cost-${state.selectedModelId}.png`);
+        window.downloadCanvasAsPng(state.shareCanvas, `openclaw-agent-cost-${state.selectedModelId}-${state.shareFormat}.png`);
         track("cost_card_downloaded", { model: state.selectedModelId });
       });
     }
