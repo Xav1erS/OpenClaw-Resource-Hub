@@ -56,7 +56,7 @@
     en: {
       chooseTitle: "Choose how you want to start",
       chooseBody:
-        "The official Quick Start follows one clear chain: install OpenClaw, add an API key, connect a chat channel, start the gateway, and send the first message. This page keeps that flow and adds a bit more explanation around each step.",
+        "The official Quick Start follows one clear chain: install OpenClaw, add an API Key, connect a chat channel, start the gateway, and send the first message. This page keeps that flow and adds a bit more explanation around each step.",
       paths: [
         {
           title: "I know terminals and want the fastest path",
@@ -65,7 +65,7 @@
         },
         {
           title: "This is my first time and I want steps",
-          body: "Follow the official Quick Start flow exactly: open a terminal, install, get an API key, run onboard, create a Telegram bot, start the gateway, and send the first message.",
+          body: "Follow the official Quick Start flow exactly: open a terminal, install, get an API Key, run onboard, create a Telegram bot, start the gateway, and send the first message.",
           badge: "Step-by-step"
         }
       ],
@@ -76,7 +76,7 @@
         "The official guide reduces the first win to 5 concrete outcomes. Finish these before you branch into templates, workflows, or heavier deployment work.",
       tracker: [
         "OpenClaw is installed",
-        "A working API key has been added",
+        "A working API Key has been added",
         "A chat channel is connected",
         "openclaw gateway is running",
         "The first message has been sent to the bot"
@@ -95,7 +95,7 @@
           fastNote:
             "macOS and Linux both use the official install.sh flow. For the first run, stick to the default recommended model instead of optimizing everything.",
           guidedNote:
-            "The installer prepares the dependencies for you. Let it finish first, then move to API key and channel setup."
+            "The installer prepares the dependencies for you. Let it finish first, then move to API Key and channel setup."
         },
         linux: {
           installCommand: "curl -fsSL https://openclaw.ai/install.sh | bash",
@@ -252,7 +252,7 @@
           "This path keeps the official Quick Start command order and only compresses the explanations. Do not change the sequence yet: install, onboard, gateway.",
         noteTitle: "What this proves",
         noteBody:
-          "If this command flow works, installation, API key setup, channel connection, and gateway startup are all basically working. You can optimize after that.",
+          "If this command flow works, installation, API Key setup, channel connection, and gateway startup are all basically working. You can optimize after that.",
         stepsTitle: "Fast Path in 3 actions",
         stepsBody:
           "Best for people who already know how to open a terminal, paste commands, and read logs. Get one official happy-path run first.",
@@ -263,7 +263,7 @@
           },
           {
             title: "Run the onboard wizard",
-            body: "Add the API key inside the wizard and choose Telegram as the first chat channel."
+            body: "Add the API Key inside the wizard and choose Telegram as the first chat channel."
           },
           {
             title: "Start the gateway and send a message",
@@ -276,7 +276,7 @@
         verifyTitle: "Check these signals now",
         verifyItems: [
           "The installer completes without exiting early",
-          "openclaw onboard saved an API key and one chat channel",
+          "openclaw onboard saved an API Key and one chat channel",
           "The gateway keeps running instead of failing immediately",
           "You received the first reply in Telegram or your chosen channel"
         ],
@@ -308,10 +308,10 @@
       guided: {
         commandTitle: "Official step-by-step command flow",
         commandBody:
-          "This command block mirrors the core flow in the official docs: install OpenClaw, run onboard, then start the gateway. The API key and Telegram bot work happen between those commands and are expanded in the step cards below.",
+          "This command block mirrors the core flow in the official docs: install OpenClaw, run onboard, then start the gateway. The API Key and Telegram bot work happen between those commands and are expanded in the step cards below.",
         noteTitle: "How to use this command block",
         noteBody:
-          "Run the install command first. After installation finishes, run openclaw onboard and fill in the API key, model, and Telegram details. Then run openclaw gateway and send your first message.",
+          "Run the install command first. After installation finishes, run openclaw onboard and fill in the API Key, model, and Telegram details. Then run openclaw gateway and send your first message.",
         stepsTitle: "Step-by-step in 7 moves",
         stepsBody:
           "This section follows the official Quick Start and adds more detail about what each step is verifying.",
@@ -325,12 +325,12 @@
             body: "Paste the official install command and press Enter. The first install usually takes 2 to 5 minutes while it checks the system and installs required tools."
           },
           {
-            title: "Get an API key",
-            body: "Create one Anthropic API key from the Anthropic console. For the first run, keep it simple and use one working key instead of mixing multiple providers."
+            title: "Get an API Key",
+            body: "Create one Anthropic API Key from the Anthropic console. For the first run, keep it simple and use one working key instead of mixing multiple providers."
           },
           {
             title: "Run openclaw onboard",
-            body: "Use the setup wizard to enter the API key, pick a model, and choose a chat channel. The easiest first channel is Telegram."
+            body: "Use the setup wizard to enter the API Key, pick a model, and choose a chat channel. The easiest first channel is Telegram."
           },
           {
             title: "Create a Telegram bot",
@@ -347,11 +347,11 @@
         ],
         successTitle: "What completion means in the official guide",
         successBody:
-          "Completion is not just installing the CLI. It means the API key exists, the chat channel is connected, the gateway is live, and a real conversation happened.",
+          "Completion is not just installing the CLI. It means the API Key exists, the chat channel is connected, the gateway is live, and a real conversation happened.",
         verifyTitle: "Confirm these outcomes one by one",
         verifyItems: [
           "You can run openclaw commands after installation",
-          "The onboard flow saved the API key, model, and Telegram bot token",
+          "The onboard flow saved the API Key, model, and Telegram bot token",
           "The gateway keeps printing runtime logs after startup",
           "You received a real bot reply in Telegram, not just a local success message"
         ],

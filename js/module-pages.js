@@ -184,7 +184,7 @@
         badge: { zh: "最快上手", en: "Fastest Setup" },
         notes: {
       zh: ["建议把 API Key 放到 .env 或系统 Keychain，不要写死在仓库里。", "Apple Silicon 机器优先用轻量模型做基础验证。"],
-          en: ["Keep API keys in .env or Keychain instead of hardcoding them.", "On Apple Silicon, start with a lightweight model for your smoke test."]
+          en: ["Keep API Keys in .env or Keychain instead of hardcoding them.", "On Apple Silicon, start with a lightweight model for your smoke test."]
         }
       },
       linux: {
@@ -197,7 +197,7 @@
     },
     checklist: {
       zh: ["安装 Node.js 18+", "准备一个可用的模型 API Key", "执行 openclaw init 生成配置", "先用轻量模型做一次基础验证", "打开日志和成本监控"],
-      en: ["Install Node.js 18+", "Prepare a working model API key", "Run openclaw init to generate config", "Use a lightweight model for a smoke test", "Turn on logs and cost monitoring"]
+      en: ["Install Node.js 18+", "Prepare a working model API Key", "Run openclaw init to generate config", "Use a lightweight model for a smoke test", "Turn on logs and cost monitoring"]
     },
     stacks: {
       zh: [
@@ -307,7 +307,7 @@
       errorButton: { zh: "分析错误", en: "Analyze Error" },
       promptToast: { zh: "先输入原始 Prompt", en: "Enter a prompt first" },
       errorFallbackTitle: { zh: "未命中预设错误", en: "No Known Error Matched" },
-      errorFallbackBody: { zh: "先检查 API Key、网络、步骤数和日志文件，再把关键报错贴到社区页的提问模板里。", en: "Check API key, network, step count, and logs first, then post the key error in a community issue template." }
+      errorFallbackBody: { zh: "先检查 API Key、网络、步骤数和日志文件，再把关键报错贴到社区页的提问模板里。", en: "Check the API Key, network, step count, and logs first, then post the key error in a community issue template." }
     },
     community: {
       stats: {
@@ -468,7 +468,7 @@
     },
     "beginner-05": {
       zh: "对比常见模型平台的 API Key 获取方式，并完成本地环境注入。",
-      en: "Compare common model providers, obtain an API key, and load it into your local environment."
+      en: "Compare common model providers, obtain an API Key, and load it into your local environment."
     }
   };
 
@@ -512,10 +512,10 @@
       { title: "请求频率过高", symptoms: "429 rate limit / 批量任务间歇性失败", diagnosis: "通常不是 OpenClaw 本身故障，而是并发或重试策略过猛。", fix: ["把批处理改成队列执行。", "降低 max_steps 或减少同时运行的 Agent 数量。", "高峰时段切到轻量模型。"] },
       { title: "日志里出现 timeout", symptoms: "步骤卡住 / 浏览器工具返回慢", diagnosis: "常见于网页抓取链路过长，或者模型输出太大。", fix: ["先缩短输入上下文。", "把一个长任务拆成两到三段。", "必要时限制每步输出格式。"] },
       { title: "频道不回消息", symptoms: "DM 无回复 / 群聊沉默", diagnosis: "先不要猜是 prompt 或模型问题。官方速查表的第一步是做频道探针。", fix: ["运行 openclaw channels status --probe。", "确认 bot token 和频道登录还有效。", "先在私聊验证，再回到群聊检查权限。"] },
-      { title: "Memory 结果不准", symptoms: "记忆搜索不到 / 返回旧内容", diagnosis: "多半是索引陈旧或 memory provider 状态异常。", fix: ["运行 openclaw memory status。", "检查当前索引和 provider 是否健康。", "必要时执行 openclaw memory index --force。"] }
+      { title: "memory 结果不准", symptoms: "记忆搜索不到 / 返回旧内容", diagnosis: "多半是索引陈旧或 memory provider 状态异常。", fix: ["运行 openclaw memory status。", "检查当前索引和 provider 是否健康。", "必要时执行 openclaw memory index --force。"] }
     ],
     en: [
-      { title: "API key is invalid or missing", symptoms: "401 on startup / model calls fail immediately", diagnosis: "Check whether line breaks, quotes, or whitespace were copied into the config.", fix: ["Copy the API key again without trailing spaces.", "Load the key from environment variables.", "Validate with a minimal one-step request first."] },
+      { title: "API Key is invalid or missing", symptoms: "401 on startup / model calls fail immediately", diagnosis: "Check whether line breaks, quotes, or whitespace were copied into the config.", fix: ["Copy the API Key again without trailing spaces.", "Load the key from environment variables.", "Validate with a minimal one-step request first."] },
       { title: "Rate limit is too high", symptoms: "429 rate limit / intermittent batch failures", diagnosis: "This is usually concurrency or retry pressure, not an OpenClaw platform issue.", fix: ["Move batch work into a queue.", "Reduce max_steps or active agents.", "Switch to a lighter model during peak usage."] },
       { title: "Timeout appears in logs", symptoms: "A step hangs / browser tool responds slowly", diagnosis: "Often caused by long page-fetching chains or overly large outputs.", fix: ["Reduce input context first.", "Split one long task into two or three stages.", "Constrain output format per step."] },
       { title: "Channel does not reply", symptoms: "No DM reply / silent group chat", diagnosis: "Do not start by blaming the prompt or model. The official cheatsheet says to probe the channel first.", fix: ["Run openclaw channels status --probe.", "Confirm the bot token or login is still valid.", "Prove the bot works in DM first, then inspect group permissions."] },
@@ -1068,7 +1068,7 @@
       if (content.includes("401") || content.includes("api key")) {
         output.innerHTML = state.currentLang === "zh"
           ? `<div class="font-medium text-white">API Key 无效或未加载</div><p class="mt-2">检查配置文件中的空格、引号，以及环境变量的绑定方式。</p>`
-          : `<div class="font-medium text-white">API key is invalid or missing</div><p class="mt-2">Check whitespace, quotes, and how the key is loaded into the environment.</p>`;
+          : `<div class="font-medium text-white">API Key is invalid or missing</div><p class="mt-2">Check whitespace, quotes, and how the key is loaded into the environment.</p>`;
         return;
       }
       output.innerHTML = `<div class="font-medium text-white">${t(pageText.tools.errorFallbackTitle)}</div><p class="mt-2">${t(pageText.tools.errorFallbackBody)}</p>`;

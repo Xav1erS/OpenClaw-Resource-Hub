@@ -14,7 +14,7 @@
           body: "先不要猜是模型问题。官方 fast path 的第一步是直接测频道健康和认证状态。",
           steps: [
             "运行 openclaw channels status --probe",
-            "确认频道认证仍有效，Gateway 已连接",
+            "确认频道认证仍有效，gateway 已连接",
             "如果是 Telegram / Discord，确认 bot token 没失效"
           ]
         },
@@ -37,7 +37,7 @@
           ]
         },
         {
-          title: "Gateway 没起来或状态异常",
+          title: "gateway 没起来或状态异常",
           body: "先确认是服务本身没起，还是起了但频道没通。不要把两类问题混在一起排。",
           steps: [
             "运行 openclaw gateway status",

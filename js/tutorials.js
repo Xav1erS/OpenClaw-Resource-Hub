@@ -598,13 +598,13 @@ model: claude-sonnet-4.6
     },
     {
         id: 'faq-03',
-        title: '遇到"API key invalid"错误怎么办？',
+        title: '遇到"API Key invalid"错误怎么办？',
         category: '常见问题',
         difficulty: '简单',
         readTime: '3分钟',
         views: 7120,
         likes: 450,
-        content: `# 遇到"API key invalid"错误怎么办？
+        content: `# 遇到"API Key invalid"错误怎么办？
 
 ## 排查步骤
 
