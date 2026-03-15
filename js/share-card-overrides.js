@@ -49,6 +49,24 @@
     return `${siteUrl}/pages/cost-calculator.html`;
   }
 
+  let qrImagePromise = null;
+
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = src;
+    });
+  }
+
+  function getQrImage() {
+    if (!qrImagePromise) {
+      qrImagePromise = loadImage("/assets/cost-calculator-qr.png").catch(() => null);
+    }
+    return qrImagePromise;
+  }
+
   function getWarningSentence(summary, lang) {
     const zh = {
       low: "当前成本仍在可控区间，适合先跑起来。",
@@ -123,7 +141,7 @@
     }
   }
 
-  function generateShareCard(summary) {
+  async function generateShareCard(summary) {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = 1200;
@@ -231,6 +249,20 @@
     ctx.font = "500 28px Arial";
     wrapCanvasText(ctx, buildShareCardTakeaway(summary, summary.lang), 140, 960, 920, 40);
 
+    const qrImage = await getQrImage();
+    if (qrImage) {
+      ctx.fillStyle = "rgba(255,255,255,0.06)";
+      drawRoundedRect(ctx, 864, 844, 196, 196, 28);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      drawRoundedRect(ctx, 882, 862, 160, 160, 24);
+      ctx.fill();
+      ctx.drawImage(qrImage, 894, 874, 136, 136);
+      ctx.fillStyle = "rgba(248,250,252,0.82)";
+      ctx.font = "600 18px Arial";
+      ctx.fillText(label(summary, "扫码打开计算器", "Scan to open"), 886, 1020);
+    }
+
     ctx.fillStyle = "rgba(255,255,255,0.04)";
     drawRoundedRect(ctx, 740, 1010, 320, 88, 24);
     ctx.fill();
@@ -259,7 +291,6 @@
 
   async function shareCostResult(summary, lang = "en", canvas) {
     const shareText = buildShareText(summary, lang);
-    const shareUrl = getShareLandingUrl();
 
     if (navigator.share && canvas && navigator.canShare) {
       try {
@@ -281,7 +312,7 @@
     }
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+      await navigator.clipboard.writeText(shareText);
       return { mode: "clipboard" };
     }
 

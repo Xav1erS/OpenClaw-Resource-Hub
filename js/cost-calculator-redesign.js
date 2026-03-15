@@ -181,6 +181,39 @@
   function numberFmt(value) { return new Intl.NumberFormat(state.lang === "zh" ? "zh-CN" : "en-US").format(Math.round(Number(value))); }
   function escapeHtml(value) { return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
   function track(name, payload) { if (typeof window.trackEvent === "function") window.trackEvent(name, { lang: state.lang, ...(payload || {}) }); }
+  function getPricingMeta() {
+    if (state.lang === "zh") {
+      return {
+        title: "价格来源与更新时间",
+        body: "全球主流模型价格基于官方 API 定价页整理。分享卡里的二维码会直接回到当前成本页，方便继续查看或转发。",
+        updatedLabel: "价格更新",
+        updatedValue: "2026-03-15",
+        qrLabel: "扫码打开成本页",
+        qrHint: "适合放进截图、群聊或朋友圈继续引流。",
+        sources: [
+          { label: "OpenAI API Pricing", url: "https://openai.com/api/pricing/" },
+          { label: "Anthropic Pricing", url: "https://docs.anthropic.com/en/docs/about-claude/pricing" },
+          { label: "Google Gemini API Pricing", url: "https://ai.google.dev/gemini-api/docs/pricing" },
+          { label: "DeepSeek API Pricing", url: "https://api-docs.deepseek.com/quick_start/pricing" }
+        ]
+      };
+    }
+
+    return {
+      title: "Pricing sources and freshness",
+      body: "Global model pricing is based on official API pricing pages. The QR code on the share card routes people back to this calculator for the next step.",
+      updatedLabel: "Price snapshot",
+      updatedValue: "2026-03-15",
+      qrLabel: "Open this calculator",
+      qrHint: "Useful for screenshots, group chats, and outbound sharing.",
+      sources: [
+        { label: "OpenAI API Pricing", url: "https://openai.com/api/pricing/" },
+        { label: "Anthropic Pricing", url: "https://docs.anthropic.com/en/docs/about-claude/pricing" },
+        { label: "Google Gemini API Pricing", url: "https://ai.google.dev/gemini-api/docs/pricing" },
+        { label: "DeepSeek API Pricing", url: "https://api-docs.deepseek.com/quick_start/pricing" }
+      ]
+    };
+  }
 
   function showToast(message) {
     const toast = document.querySelector("[data-toast]");
@@ -232,7 +265,7 @@
     state.advancedLinked = true;
     syncWorkloadFromAnswers();
     track("cost_preset_selected", { preset: presetId });
-    renderApp(true);
+    void renderApp(true);
   }
 
   function getSummary() {
@@ -266,9 +299,9 @@
     return summary;
   }
 
-  function refreshShareAssets() {
+  async function refreshShareAssets() {
     state.summary = getSummary();
-    state.shareCanvas = window.generateShareCard(state.summary);
+    state.shareCanvas = await window.generateShareCard(state.summary);
     state.shareDataUrl = state.shareCanvas.toDataURL("image/png");
   }
 
@@ -367,12 +400,13 @@
     `;
   }
 
-  function renderApp(preserveScroll) {
+  async function renderApp(preserveScroll) {
     if (state.advancedLinked) syncWorkloadFromAnswers();
     ensureModelSelection();
-    refreshShareAssets();
+    await refreshShareAssets();
 
     const text = t();
+    const pricingMeta = getPricingMeta();
     const scrollY = preserveScroll ? window.scrollY : null;
     const isZh = state.lang === "zh";
     const heroTitleClass = isZh
@@ -490,6 +524,25 @@
                 <div class="mb-3 flex items-center justify-between gap-3"><div class="text-sm uppercase tracking-[0.24em] text-slate-400">${text.generatedLabel}</div><div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">${state.summary.warningLabel}</div></div>
                 <img src="${state.shareDataUrl}" alt="Share card preview" class="aspect-square w-full max-w-[760px] rounded-[24px] border border-white/10 bg-slate-950 object-cover shadow-2xl shadow-slate-950/40">
               </div>
+              <div class="mt-5 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+                <article class="rounded-[28px] border border-white/10 bg-slate-950/60 p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h3 class="text-lg font-semibold text-white">${pricingMeta.title}</h3>
+                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300">${pricingMeta.updatedLabel} ${pricingMeta.updatedValue}</span>
+                  </div>
+                  <p class="mt-3 text-sm leading-7 text-slate-300">${pricingMeta.body}</p>
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    ${pricingMeta.sources.map((source) => `<a href="${source.url}" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${source.label}</a>`).join("")}
+                  </div>
+                </article>
+                <article class="rounded-[28px] border border-white/10 bg-slate-950/60 p-5">
+                  <div class="text-sm font-medium text-white">${pricingMeta.qrLabel}</div>
+                  <p class="mt-2 text-sm leading-7 text-slate-300">${pricingMeta.qrHint}</p>
+                  <div class="mt-4 inline-flex rounded-[24px] bg-white p-3 shadow-[0_14px_40px_rgba(15,23,42,0.38)]">
+                    <img src="/assets/cost-calculator-qr.png" alt="Cost calculator QR code" class="h-40 w-40 rounded-[16px] object-cover">
+                  </div>
+                </article>
+              </div>
             </article>
             <section class="grid gap-6 xl:grid-cols-[0.9fr,1.1fr]">
               <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6"><h2 class="text-2xl font-semibold text-white">${text.suggestionsTitle}</h2><ul class="mt-5 space-y-3">${renderSuggestionList()}</ul></article>
@@ -513,7 +566,7 @@
         if (!nextLang || nextLang === state.lang) return;
         state.lang = nextLang;
         localStorage.setItem("openclaw-module-lang", nextLang);
-        renderApp(true);
+        void renderApp(true);
       });
     });
 
@@ -530,7 +583,7 @@
         state.advancedLinked = true;
         syncWorkloadFromAnswers();
         track("cost_question_answered", { question, value });
-        renderApp(true);
+        void renderApp(true);
       });
     });
 
@@ -539,7 +592,7 @@
       providerSelect.addEventListener("change", (event) => {
         state.selectedProvider = event.target.value;
         ensureModelSelection();
-        renderApp(true);
+        void renderApp(true);
       });
     }
 
@@ -547,7 +600,7 @@
     if (modelSelect) {
       modelSelect.addEventListener("change", (event) => {
         state.selectedModelId = event.target.value;
-        renderApp(true);
+        void renderApp(true);
       });
     }
 
@@ -556,7 +609,7 @@
       toggleButton.addEventListener("click", () => {
         state.advancedOpen = !state.advancedOpen;
         track("cost_advanced_toggled", { open: state.advancedOpen });
-        renderApp(true);
+        void renderApp(true);
       });
     }
 
@@ -567,7 +620,7 @@
         state.advanced[field] = value;
         state.advancedLinked = false;
         track("cost_advanced_edited", { field, value });
-        renderApp(true);
+        void renderApp(true);
       });
     });
 
@@ -577,14 +630,14 @@
         state.advancedLinked = true;
         syncWorkloadFromAnswers();
         track("cost_advanced_relinked");
-        renderApp(true);
+        void renderApp(true);
       });
     }
 
     const refreshButton = document.querySelector("[data-generate-card]");
     if (refreshButton) {
-      refreshButton.addEventListener("click", () => {
-        refreshShareAssets();
+      refreshButton.addEventListener("click", async () => {
+        await refreshShareAssets();
         const preview = document.querySelector("img[alt='Share card preview']");
         if (preview) preview.src = state.shareDataUrl;
         track("cost_card_generated", { model: state.selectedModelId });
@@ -594,8 +647,8 @@
 
     const downloadButton = document.querySelector("[data-download-card]");
     if (downloadButton) {
-      downloadButton.addEventListener("click", () => {
-        refreshShareAssets();
+      downloadButton.addEventListener("click", async () => {
+        await refreshShareAssets();
         window.downloadCanvasAsPng(state.shareCanvas, `openclaw-agent-cost-${state.selectedModelId}.png`);
         track("cost_card_downloaded", { model: state.selectedModelId });
       });
@@ -604,7 +657,7 @@
     const copyButton = document.querySelector("[data-copy-share]");
     if (copyButton) {
       copyButton.addEventListener("click", async () => {
-        refreshShareAssets();
+        await refreshShareAssets();
         const text = window.buildShareText(state.summary, state.lang);
         await navigator.clipboard.writeText(text);
         track("cost_share_text_copied", { model: state.selectedModelId });
@@ -615,7 +668,7 @@
     const shareButton = document.querySelector("[data-share-card]");
     if (shareButton) {
       shareButton.addEventListener("click", async () => {
-        refreshShareAssets();
+        await refreshShareAssets();
         const result = await window.shareCostResult(state.summary, state.lang, state.shareCanvas);
         track("cost_share_triggered", { mode: result.mode, model: state.selectedModelId });
         if (result.mode === "native") showToast(t().shared);
@@ -626,5 +679,5 @@
   }
 
   syncWorkloadFromAnswers();
-  renderApp(false);
+  void renderApp(false);
 })();
