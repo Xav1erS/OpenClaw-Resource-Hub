@@ -112,7 +112,9 @@
   }
 
   function drawLines(ctx, lines, x, y, lineHeight) {
-    lines.forEach((line, index) => ctx.fillText(line, x, y + index * lineHeight));
+    lines.forEach((line, index) => {
+      ctx.fillText(line, x, y + index * lineHeight);
+    });
   }
 
   function getCanvasPreset(format) {
@@ -173,16 +175,23 @@
     ctx.font = "600 18px Arial";
     ctx.fillText(card.title, card.x + 28, card.y + 40);
 
+    const large = Boolean(card.large);
+    const valueFont = large ? "700 58px Georgia, serif" : "700 28px Georgia, serif";
+    const valueLineHeight = large ? 56 : 30;
+    const valueStart = card.y + (large ? 116 : 86);
+    const valueMaxLines = large ? 1 : 2;
+
     ctx.fillStyle = "#f8fafc";
-    ctx.font = card.large ? "700 58px Georgia, serif" : "700 32px Georgia, serif";
-    const valueLines = wrapLines(ctx, card.value, card.width - 56, card.large ? 2 : 2);
-    drawLines(ctx, valueLines, card.x + 28, card.y + (card.large ? 116 : 92), card.large ? 56 : 34);
+    ctx.font = valueFont;
+    const valueLines = wrapLines(ctx, card.value, card.width - 56, valueMaxLines);
+    drawLines(ctx, valueLines, card.x + 28, valueStart, valueLineHeight);
 
     if (card.note) {
       ctx.fillStyle = "rgba(203,213,225,0.74)";
-      ctx.font = "600 16px Arial";
+      ctx.font = "600 15px Arial";
       const noteLines = wrapLines(ctx, card.note, card.width - 56, 2);
-      drawLines(ctx, noteLines, card.x + 28, card.y + card.height - (noteLines.length === 2 ? 42 : 28), 18);
+      const noteY = card.y + card.height - (noteLines.length * 18) - 16;
+      drawLines(ctx, noteLines, card.x + 28, noteY, 18);
     }
   }
 
@@ -204,40 +213,45 @@
 
     const bullets = [
       label(summary, `模型：${summary.modelName}`, `Model: ${summary.modelName}`),
-      label(summary, `风险：${summary.warningLabel}`, `Risk: ${summary.warningLabel}`),
       label(summary, "扫码看模型对比和降本建议", "Scan for comparisons and savings ideas")
     ];
 
+    ctx.fillStyle = "rgba(226,232,240,0.86)";
     ctx.font = "600 17px Arial";
-    let y = panel.y + 156;
+    let currentY = panel.y + 164;
     bullets.forEach((bullet) => {
       ctx.fillStyle = summary.warning.accent;
       ctx.beginPath();
-      ctx.arc(panel.x + 40, y - 6, 4, 0, Math.PI * 2);
+      ctx.arc(panel.x + 40, currentY - 6, 4, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = "rgba(226,232,240,0.86)";
       const lines = wrapLines(ctx, bullet, panel.width - 94, 2);
-      drawLines(ctx, lines, panel.x + 56, y, 22);
-      y += lines.length * 22 + 18;
+      drawLines(ctx, lines, panel.x + 56, currentY, 22);
+      currentY += lines.length * 22 + 18;
     });
   }
 
   function drawQrPanel(ctx, summary, qrImage, panel) {
     fillRoundedRect(ctx, panel.x, panel.y, panel.width, panel.height, 30, "rgba(9,13,28,0.82)");
-    fillRoundedRect(ctx, panel.x + (panel.width - panel.qrBox) / 2, panel.y + 18, panel.qrBox, panel.qrBox, 24, "#ffffff");
+
+    const qrWrapX = panel.x + (panel.width - panel.qrBox) / 2;
+    fillRoundedRect(ctx, qrWrapX, panel.y + 18, panel.qrBox, panel.qrBox, 24, "#ffffff");
     if (qrImage) {
       const qrSize = panel.qrBox - 28;
       ctx.drawImage(qrImage, panel.x + (panel.width - qrSize) / 2, panel.y + 32, qrSize, qrSize);
     }
 
+    ctx.textAlign = "center";
     ctx.fillStyle = "#f8fafc";
     ctx.font = "700 18px Arial";
-    ctx.textAlign = "center";
     ctx.fillText(label(summary, "扫码看完整成本页", "Scan for the full calculator"), panel.x + panel.width / 2, panel.y + panel.qrBox + 54);
+
     ctx.fillStyle = "rgba(203,213,225,0.72)";
-    ctx.font = "600 15px Arial";
-    const desktopLines = wrapLines(ctx, label(summary, "桌面端：openclaw-resource-hub.vercel.app", "Desktop: openclaw-resource-hub.vercel.app"), panel.width - 36, 2);
-    drawLines(ctx, desktopLines, panel.x + 18, panel.y + panel.qrBox + 84, 18);
+    ctx.font = "600 14px Arial";
+    const desktopLines = wrapLines(ctx, label(summary, `桌面端：${getDesktopUrl()}`, `Desktop: ${getDesktopUrl()}`), panel.width - 36, 2);
+    desktopLines.forEach((line, index) => {
+      ctx.fillText(line, panel.x + panel.width / 2, panel.y + panel.qrBox + 82 + index * 18);
+    });
     ctx.textAlign = "start";
   }
 
@@ -265,20 +279,20 @@
   function renderSquareCard(ctx, summary, qrImage, preset) {
     drawHeader(ctx, summary, preset);
 
-    drawMetricCard(ctx, { x: 96, y: 286, width: 474, height: 188, title: label(summary, "预计每日成本", "Estimated daily cost"), value: `$${summary.dailyCost.toFixed(2)}`, note: label(summary, "按当前模型与任务强度估算", "Based on your model and workload"), large: true });
-    drawMetricCard(ctx, { x: 628, y: 286, width: 474, height: 188, title: label(summary, "预计每月成本", "Estimated monthly cost"), value: `$${summary.monthlyCost.toFixed(2)}`, note: label(summary, "按 30 天估算", "Assuming 30 active days"), large: true });
-    drawMetricCard(ctx, { x: 96, y: 524, width: 474, height: 132, title: label(summary, "当前模型", "Current model"), value: summary.modelName, note: summary.providerName });
-    drawMetricCard(ctx, { x: 628, y: 524, width: 474, height: 132, title: label(summary, "每天使用频率", "Daily usage"), value: summary.frequencyLabel, note: `${summary.dailyTasks} ${label(summary, "次/天", "runs/day")}` });
-    drawMetricCard(ctx, { x: 96, y: 698, width: 474, height: 132, title: label(summary, "任务复杂度", "Task complexity"), value: summary.complexityLabel, note: `${summary.stepsPerTask} ${label(summary, "步/次", "steps/run")}` });
-    drawMetricCard(ctx, { x: 628, y: 698, width: 474, height: 132, title: label(summary, "核心动作", "Next action"), value: label(summary, "扫码继续看", "Scan for next step"), note: label(summary, "看模型对比和降本建议", "Open comparisons and savings ideas") });
+    drawMetricCard(ctx, { x: 96, y: 286, width: 474, height: 180, title: label(summary, "预计每日成本", "Estimated daily cost"), value: `$${summary.dailyCost.toFixed(2)}`, note: label(summary, "按当前模型与任务强度估算", "Based on your model and workload"), large: true });
+    drawMetricCard(ctx, { x: 628, y: 286, width: 474, height: 180, title: label(summary, "预计每月成本", "Estimated monthly cost"), value: `$${summary.monthlyCost.toFixed(2)}`, note: label(summary, "按 30 天估算", "Assuming 30 active days"), large: true });
 
-    drawSummaryPanel(ctx, summary, { x: 96, y: 882, width: 650, height: 224 });
-    drawQrPanel(ctx, summary, qrImage, { x: 826, y: 868, width: 236, height: 270, qrBox: 160 });
-    drawBrandPanel(ctx, summary, 782, 1038, 280, 76);
+    drawMetricCard(ctx, { x: 96, y: 500, width: 474, height: 156, title: label(summary, "当前模型", "Current model"), value: summary.modelName, note: summary.providerName });
+    drawMetricCard(ctx, { x: 628, y: 500, width: 474, height: 156, title: label(summary, "每天使用频率", "Daily usage"), value: summary.frequencyLabel, note: `${summary.dailyTasks} ${label(summary, "次/天", "runs/day")}` });
+    drawMetricCard(ctx, { x: 96, y: 684, width: 474, height: 156, title: label(summary, "任务复杂度", "Task complexity"), value: summary.complexityLabel, note: `${summary.stepsPerTask} ${label(summary, "步/次", "steps/run")}` });
+    drawMetricCard(ctx, { x: 628, y: 684, width: 474, height: 156, title: label(summary, "核心动作", "Next action"), value: label(summary, "扫码继续看", "Scan for next step"), note: label(summary, "看模型对比和降本建议", "Open comparisons and savings ideas") });
+
+    drawSummaryPanel(ctx, summary, { x: 96, y: 872, width: 650, height: 216 });
+    drawQrPanel(ctx, summary, qrImage, { x: 826, y: 872, width: 236, height: 250, qrBox: 152 });
 
     ctx.fillStyle = "rgba(248,250,252,0.46)";
     ctx.font = "600 15px Arial";
-    ctx.fillText(label(summary, "桌面端：openclaw-resource-hub.vercel.app", "Desktop: openclaw-resource-hub.vercel.app"), 96, 1126);
+    ctx.fillText(label(summary, `桌面端：${getDesktopUrl()}`, `Desktop: ${getDesktopUrl()}`), 96, 1126);
     drawWatermark(ctx, preset.width, preset.height);
   }
 
@@ -286,12 +300,12 @@
     drawHeader(ctx, summary, preset);
 
     drawMetricCard(ctx, { x: 86, y: 286, width: 908, height: 176, title: label(summary, "预计每月成本", "Estimated monthly cost"), value: `$${summary.monthlyCost.toFixed(2)}`, note: label(summary, "最适合直接转发的一行结果", "The one line most worth sharing"), large: true });
-    drawMetricCard(ctx, { x: 86, y: 500, width: 438, height: 136, title: label(summary, "当前模型", "Current model"), value: summary.modelName, note: summary.providerName });
-    drawMetricCard(ctx, { x: 556, y: 500, width: 438, height: 136, title: label(summary, "任务强度", "Task intensity"), value: summary.complexityLabel, note: `${summary.dailyTasks} ${label(summary, "次/天", "runs/day")}` });
+    drawMetricCard(ctx, { x: 86, y: 500, width: 438, height: 156, title: label(summary, "当前模型", "Current model"), value: summary.modelName, note: summary.providerName });
+    drawMetricCard(ctx, { x: 556, y: 500, width: 438, height: 156, title: label(summary, "任务强度", "Task intensity"), value: summary.complexityLabel, note: `${summary.dailyTasks} ${label(summary, "次/天", "runs/day")}` });
 
-    drawSummaryPanel(ctx, summary, { x: 86, y: 684, width: 908, height: 282 });
-    drawBrandPanel(ctx, summary, 86, 1178, 292, 76);
-    drawQrPanel(ctx, summary, qrImage, { x: 762, y: 1002, width: 232, height: 276, qrBox: 154 });
+    drawSummaryPanel(ctx, summary, { x: 86, y: 692, width: 908, height: 236 });
+    drawBrandPanel(ctx, summary, 86, 1184, 292, 76);
+    drawQrPanel(ctx, summary, qrImage, { x: 762, y: 976, width: 232, height: 266, qrBox: 150 });
     drawWatermark(ctx, preset.width, preset.height);
   }
 
