@@ -151,22 +151,23 @@
     ctx.font = preset.width === 1080 ? "600 40px Georgia, serif" : "600 48px Georgia, serif";
     ctx.fillText("OpenClaw Agent Cost", 96, 132);
 
+    fillRoundedRect(ctx, 96, 154, 262, 52, 26, "rgba(255,255,255,0.05)");
     ctx.fillStyle = "rgba(226,232,240,0.78)";
-    ctx.font = preset.width === 1080 ? "600 18px Arial" : "600 20px Arial";
-    ctx.fillText(label(summary, "一眼看懂的成本卡", "A cost card built to repost"), 96, 174);
+    ctx.font = "600 16px Arial";
+    ctx.fillText(label(summary, "一眼看懂的成本卡", "A cost card built to repost"), 120, 186);
 
-    fillRoundedRect(ctx, 96, 206, 226, 44, 22, "rgba(255,255,255,0.05)");
+    fillRoundedRect(ctx, 96, 220, 214, 40, 20, "rgba(255,255,255,0.05)");
     ctx.fillStyle = "rgba(248,250,252,0.82)";
-    ctx.font = "700 16px Arial";
-    ctx.fillText(label(summary, "风险", "Risk"), 120, 234);
-    fillRoundedRect(ctx, 176, 214, 112, 28, 14, summary.warning.accent);
+    ctx.font = "700 15px Arial";
+    ctx.fillText(label(summary, "风险", "Risk"), 118, 245);
+    fillRoundedRect(ctx, 168, 226, 112, 28, 14, summary.warning.accent);
     ctx.fillStyle = "#020617";
     ctx.font = "700 16px Arial";
-    ctx.fillText(summary.warningLabel, 208, 234);
+    ctx.fillText(summary.warningLabel, 200, 245);
 
-    ctx.fillStyle = "rgba(248,250,252,0.55)";
-    ctx.font = "600 16px Arial";
-    ctx.fillText(preset.ratioLabel, preset.width - 128, 92);
+    ctx.fillStyle = "rgba(248,250,252,0.36)";
+    ctx.font = "600 14px Arial";
+    ctx.fillText(preset.ratioLabel, preset.width - 114, 88);
   }
 
   function drawMetricCard(ctx, card) {
@@ -239,23 +240,11 @@
     const headlineLines = wrapLines(ctx, headline, panel.width - 68, 2);
     drawLines(ctx, headlineLines, panel.x + 34, panel.y + 92, 28);
 
-    const bullets = [
-      label(summary, "扫码看模型对比和降本建议", "Scan for comparisons and savings ideas")
-    ];
-
     ctx.fillStyle = "rgba(226,232,240,0.86)";
-    ctx.font = "600 16px Arial";
-    let currentY = panel.y + 144;
-    bullets.forEach((bullet) => {
-      ctx.fillStyle = summary.warning.accent;
-      ctx.beginPath();
-      ctx.arc(panel.x + 40, currentY - 6, 4, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = "rgba(226,232,240,0.86)";
-      const lines = wrapLines(ctx, bullet, panel.width - 94, 2);
-      drawLines(ctx, lines, panel.x + 56, currentY, 20);
-      currentY += lines.length * 20 + 16;
-    });
+    ctx.font = "600 17px Arial";
+    const action = label(summary, "扫码看模型对比和降本建议", "Scan for comparisons and savings ideas");
+    const actionLines = wrapLines(ctx, action, panel.width - 68, 2);
+    drawLines(ctx, actionLines, panel.x + 34, panel.y + 150, 22);
   }
 
   function drawQrPanel(ctx, summary, qrImage, panel) {
@@ -326,8 +315,8 @@
     drawMetricCard(ctx, { x: 556, y: 500, width: 438, height: 156, title: label(summary, "任务强度", "Task intensity"), value: summary.complexityLabel, note: `${summary.dailyTasks} ${label(summary, "次/天", "runs/day")}` });
 
     drawSummaryPanel(ctx, summary, { x: 86, y: 692, width: 908, height: 208 });
-    drawBrandPanel(ctx, summary, 86, 1184, 292, 76);
-    drawQrPanel(ctx, summary, qrImage, { x: 774, y: 988, width: 220, height: 242, qrBox: 132 });
+    drawBrandPanel(ctx, summary, 86, 1202, 292, 76);
+    drawQrPanel(ctx, summary, qrImage, { x: 786, y: 968, width: 208, height: 236, qrBox: 128 });
     drawWatermark(ctx, preset.width, preset.height);
   }
 
