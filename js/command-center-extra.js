@@ -209,12 +209,12 @@
     );
 
     const snippetShellClass = "rounded-[22px] bg-[linear-gradient(180deg,rgba(6,10,20,0.88),rgba(15,23,42,0.56))] px-4 py-3 shadow-[0_14px_34px_rgba(2,6,23,0.16),inset_0_1px_0_rgba(255,255,255,0.02)]";
-    const snippetCodeClass = "inline-flex max-w-full whitespace-pre-wrap break-words rounded-[14px] bg-rose-300/[0.08] px-3 py-2 font-mono text-[13px] leading-6 text-rose-200 shadow-[inset_0_0_0_1px_rgba(254,205,211,0.08)]";
+    const snippetCodeClass = "inline-flex max-w-full whitespace-pre-wrap break-words rounded-[14px] bg-cyan-300/[0.08] px-3 py-2 font-mono text-[13px] leading-6 text-cyan-100 shadow-[inset_0_0_0_1px_rgba(165,243,252,0.08)]";
 
     extraRoot.innerHTML = `
       <div class="xl:col-span-2 flex items-center justify-between gap-3">
         <h2 class="text-xl font-semibold text-white">${text.sectionTitle}</h2>
-        <a href="/pages/troubleshooting.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${text.troubleshooting}</a>
+        <a href="/pages/troubleshooting.html" class="rounded-full border border-cyan-300/12 bg-cyan-950/16 px-4 py-2.5 text-sm text-cyan-50/84 transition hover:border-cyan-300/24 hover:text-white">${text.troubleshooting}</a>
       </div>
       ${packs.map((pack) => `
         <article class="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.02))] p-5 shadow-[0_20px_60px_rgba(2,6,23,0.22)]">
@@ -225,13 +225,13 @@
               <div class="${snippetShellClass}">
                 <div class="flex items-start justify-between gap-3">
                   <div class="min-w-0 flex-1">
-                    <div class="text-[11px] uppercase tracking-[0.22em] text-slate-500">${cmd.label}</div>
+                    <div class="inline-flex rounded-full bg-cyan-950/22 px-2.5 py-1 text-[11px] uppercase tracking-[0.22em] text-cyan-100/70 shadow-[inset_0_0_0_1px_rgba(103,232,249,0.08)]">${cmd.label}</div>
                     <div class="mt-2 flex items-start gap-2">
-                      <span class="mt-0.5 text-rose-300/80">&gt;</span>
+                      <span class="mt-0.5 text-cyan-200/75">&gt;</span>
                       <code class="${snippetCodeClass}">${cmd.code}</code>
                     </div>
                   </div>
-                  <button data-extra-copy="${encodeURIComponent(cmd.code)}" class="rounded-full bg-slate-900/78 px-3 py-1 text-xs text-slate-300 transition hover:bg-slate-800/92 hover:text-white">${text.copy}</button>
+                  <button data-extra-copy="${encodeURIComponent(cmd.code)}" class="rounded-full bg-cyan-950/18 px-3 py-1 text-xs text-cyan-50/78 transition hover:bg-cyan-900/30 hover:text-white">${text.copy}</button>
                 </div>
               </div>
             `).join("")}
