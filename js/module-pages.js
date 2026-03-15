@@ -10,6 +10,7 @@
     nav: {
       quickstart: { zh: "快速开始", en: "Quick Start" },
       "command-center": { zh: "命令中心", en: "Command Center" },
+      troubleshooting: { zh: "故障排除", en: "Troubleshooting" },
       "task-library": { zh: "模板库", en: "Task Library" },
       "cost-calculator": { zh: "成本计算器", en: "Cost Calculator" },
       workflows: { zh: "工作流", en: "Workflows" },
@@ -94,8 +95,16 @@
         eyebrow: { zh: "官方速查", en: "Official Cheatsheet" },
         title: { zh: "命令中心 / Cheatsheet", en: "Command Center / Cheatsheet" },
         subtitle: {
-          zh: "把官方 cheatsheet 的主干命令、运行状态、频道管理、模型探针和 fast fixes 集中到一个可搜索页面。",
-          en: "A searchable mirror of the official cheatsheet for runtime commands, channels, model probes, and fast fixes."
+          zh: "把官方 cheatsheet 的主干命令、运行状态、频道管理、模型探针和 workspace 参考集中到一个可搜索页面。",
+          en: "A searchable mirror of the official cheatsheet for runtime commands, channels, model probes, and workspace references."
+        }
+      },
+      troubleshooting: {
+        eyebrow: { zh: "故障定位", en: "Failure Triage" },
+        title: { zh: "故障排除", en: "Troubleshooting" },
+        subtitle: {
+          zh: "把常见报错、频道无响应、gateway 状态异常、memory 失准和官方 fast fixes 拆成独立排查模块。",
+          en: "A dedicated troubleshooting module for common failures, silent channels, unhealthy gateways, memory issues, and official fast fixes."
         }
       },
       "release-notes": {
@@ -112,6 +121,7 @@
   const navItems = [
     { id: "quickstart", href: "/pages/quickstart.html" },
     { id: "command-center", href: "/pages/command-center.html" },
+    { id: "troubleshooting", href: "/pages/troubleshooting.html" },
     { id: "task-library", href: "/pages/task-library.html" },
     { id: "cost-calculator", href: "/pages/cost-calculator.html" },
     { id: "tutorials", href: "/pages/tutorials.html" },
@@ -337,11 +347,31 @@
     command: {
       stats: {
         groups: { zh: "速查分组", en: "Cheatsheet Blocks" },
-        issues: { zh: "Fast Fixes", en: "Fast Fixes" },
+        focus: { zh: "覆盖层", en: "Coverage" },
         actions: { zh: "入口", en: "Entry Points" }
       },
-      actionValue: { zh: "搜索 / 复制 / 探针", en: "Search / Copy / Probe" },
-      searchPlaceholder: { zh: "搜索 gateway、channels、memory、slash commands、故障关键词", en: "Search gateway, channels, memory, slash commands, or fixes" }
+      focusValue: { zh: "Gateway / Models / Channels", en: "Gateway / Models / Channels" },
+      actionValue: { zh: "搜索 / 复制 / 跳转", en: "Search / Copy / Navigate" },
+      searchPlaceholder: { zh: "搜索 gateway、channels、memory、slash commands、workspace", en: "Search gateway, channels, memory, slash commands, or workspace" }
+    },
+    troubleshooting: {
+      stats: {
+        issues: { zh: "故障场景", en: "Failure Cases" },
+        fixes: { zh: "Fast Fixes", en: "Fast Fixes" },
+        actions: { zh: "动作", en: "Actions" }
+      },
+      actionValue: { zh: "搜索 / 排查 / 升级", en: "Search / Triage / Escalate" },
+      searchPlaceholder: { zh: "搜索 401、gateway、channels、memory、doctor、超时", en: "Search 401, gateway, channels, memory, doctor, or timeout" },
+      ladderTitle: { zh: "推荐排查顺序", en: "Recommended Triage Order" },
+      ladder: {
+        zh: ["先跑 openclaw doctor，收敛显式环境问题。", "再看 gateway 是否存活，而不是先改 prompt。", "然后检查 channels 探针和 bot 登录状态。", "再检查 models probe 和 provider token。", "最后处理 memory 索引、长链路超时和高级症状。"],
+        en: ["Start with openclaw doctor to eliminate explicit environment problems.", "Then verify the gateway is alive before touching prompts.", "Next inspect channel probes and bot login state.", "Then check model probes and provider tokens.", "Handle memory indexing, long-chain timeouts, and advanced symptoms last."]
+      },
+      escalationTitle: { zh: "什么时候回命令中心", en: "When to Jump Back to Cheatsheet" },
+      escalationBody: {
+        zh: "如果你已经知道是哪一层坏了，就回到命令中心复制对应命令；如果你还不知道坏在哪一层，就留在故障排除页按顺序缩小范围。",
+        en: "If you already know which layer is broken, go back to Command Center and copy the exact command. If the broken layer is still unclear, stay here and narrow the scope first."
+      }
     },
     release: {
       stats: {
@@ -1053,22 +1083,18 @@
   function renderCommandCenterPage() {
     setPage("command-center", renderCommandCenterPage);
     const sections = commandSections[state.currentLang];
-    const issues = troubleshooting[state.currentLang];
     pageShell("command-center", [
       { label: pageText.command.stats.groups, value: sections.length },
-      { label: pageText.command.stats.issues, value: issues.length },
+      { label: pageText.command.stats.focus, value: pageText.command.focusValue },
       { label: pageText.command.stats.actions, value: pageText.command.actionValue }
     ]);
-    document.getElementById("page-root").innerHTML = `<div class="space-y-4"><div class="rounded-3xl border border-white/10 bg-white/[0.03] p-4"><input id="command-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400" placeholder="${t(pageText.command.searchPlaceholder)}"></div><div class="grid gap-4 xl:grid-cols-[1.02fr,0.98fr]"><section id="command-sections" class="grid gap-4"></section><aside id="issue-sections" class="grid gap-4 xl:sticky xl:top-24 xl:self-start"></aside></div></div>`;
+    document.getElementById("page-root").innerHTML = `<div class="space-y-4"><div class="rounded-3xl border border-white/10 bg-white/[0.03] p-4"><input id="command-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400" placeholder="${t(pageText.command.searchPlaceholder)}"></div><section id="command-sections" class="grid gap-4 xl:grid-cols-2"></section></div>`;
     const input = document.getElementById("command-search");
     const commandRoot = document.getElementById("command-sections");
-    const issueRoot = document.getElementById("issue-sections");
     function draw() {
       const q = input.value.trim().toLowerCase();
       const cmdList = sections.filter((section) => `${section.title} ${section.description} ${section.commands.map((item) => `${item.label} ${item.code}`).join(" ")}`.toLowerCase().includes(q));
-      const issueList = issues.filter((item) => `${item.title} ${item.symptoms} ${item.diagnosis} ${item.fix.join(" ")}`.toLowerCase().includes(q));
       commandRoot.innerHTML = cmdList.map((section) => `<article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${section.title}</h2><p class="mt-2 text-sm leading-6 text-slate-300">${section.description}</p><div class="mt-4 space-y-3">${section.commands.map((item) => `<div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><div class="flex items-center justify-between gap-3"><div class="font-medium text-white">${item.label}</div><button data-copy-code="${encodeURIComponent(item.code)}" class="rounded-full bg-white/5 px-3 py-1 text-xs text-slate-200 transition hover:bg-white/10">${t(ui.common.copy)}</button></div><pre class="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">${item.code}</pre></div>`).join("")}</div></article>`).join("");
-      issueRoot.innerHTML = issueList.map((item) => `<article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${item.title}</h2><div class="mt-3 text-sm text-slate-400">${item.symptoms}</div><p class="mt-3 text-sm leading-6 text-slate-300">${item.diagnosis}</p><ul class="mt-4 space-y-2 text-sm text-slate-300">${item.fix.map((step) => `<li class="rounded-2xl bg-slate-950/70 px-3 py-2">${step}</li>`).join("")}</ul></article>`).join("");
     }
     document.getElementById("page-root").addEventListener("click", (event) => {
       const button = event.target.closest("[data-copy-code]");
@@ -1076,6 +1102,26 @@
       copyToClipboard(decodeURIComponent(button.dataset.copyCode), t(ui.common.copied));
       track("command_copy", { lang: state.currentLang });
     });
+    input.addEventListener("input", draw);
+    draw();
+  }
+
+  function renderTroubleshootingPage() {
+    setPage("troubleshooting", renderTroubleshootingPage);
+    const issues = troubleshooting[state.currentLang];
+    pageShell("troubleshooting", [
+      { label: pageText.troubleshooting.stats.issues, value: issues.length },
+      { label: pageText.troubleshooting.stats.fixes, value: 6 },
+      { label: pageText.troubleshooting.stats.actions, value: pageText.troubleshooting.actionValue }
+    ]);
+    document.getElementById("page-root").innerHTML = `<div class="space-y-4"><div class="rounded-3xl border border-white/10 bg-white/[0.03] p-4"><input id="troubleshooting-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400" placeholder="${t(pageText.troubleshooting.searchPlaceholder)}"></div><div class="grid gap-4 xl:grid-cols-[0.9fr,1.1fr]"><aside class="space-y-4"><article class="rounded-3xl border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.22),rgba(15,23,42,0.92))] p-5"><h2 class="text-xl font-semibold text-white">${t(pageText.troubleshooting.ladderTitle)}</h2><ul class="mt-4 space-y-3 text-sm leading-6 text-slate-200">${pageText.troubleshooting.ladder[state.currentLang].map((item) => `<li class="rounded-2xl bg-slate-950/60 px-4 py-3">${item}</li>`).join("")}</ul></article><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-xl font-semibold text-white">${t(pageText.troubleshooting.escalationTitle)}</h2><p class="mt-4 text-sm leading-7 text-slate-300">${t(pageText.troubleshooting.escalationBody)}</p><div class="mt-4 flex flex-wrap gap-3"><a href="/pages/command-center.html" class="rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-400">${t(ui.nav["command-center"])}</a><a href="/pages/quickstart.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${t(ui.nav.quickstart)}</a></div></article></aside><section id="troubleshooting-sections" class="grid gap-4 md:grid-cols-2"></section></div></div>`;
+    const input = document.getElementById("troubleshooting-search");
+    const issueRoot = document.getElementById("troubleshooting-sections");
+    function draw() {
+      const q = input.value.trim().toLowerCase();
+      const issueList = issues.filter((item) => `${item.title} ${item.symptoms} ${item.diagnosis} ${item.fix.join(" ")}`.toLowerCase().includes(q));
+      issueRoot.innerHTML = issueList.map((item) => `<article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${item.title}</h2><div class="mt-3 text-sm text-slate-400">${item.symptoms}</div><p class="mt-3 text-sm leading-6 text-slate-300">${item.diagnosis}</p><ul class="mt-4 space-y-2 text-sm text-slate-300">${item.fix.map((step) => `<li class="rounded-2xl bg-slate-950/70 px-3 py-2">${step}</li>`).join("")}</ul></article>`).join("");
+    }
     input.addEventListener("input", draw);
     draw();
   }
@@ -1174,6 +1220,7 @@
     renderCommunityPage,
     renderQuickStartPage,
     renderCommandCenterPage,
+    renderTroubleshootingPage,
     renderReleaseNotesPage
   };
 })();

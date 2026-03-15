@@ -2,17 +2,17 @@
   const text = {
     zh: {
       title: "这里适合做什么",
-      body: "教程页用来补方法论、上手顺序和排错思路。模板库解决“拿什么开工”，命令中心解决“命令怎么写”，这里解决“为什么这么做”。",
+      body: "教程页用来补方法论、上手顺序和排错思路。模板库解决“拿什么开工”，命令中心解决“命令怎么写”，故障排除模块解决“从哪一层开始排”。这里解决“为什么这么做”。",
       pills: ["补方法论", "理解顺序", "建立排错思路"],
       asideTitle: "阅读建议",
-      asideBody: "如果你已经知道要做什么，先去模板库；如果你卡在环境或命令，先去命令中心；如果你想理解背后的做法，再看教程。"
+      asideBody: "如果你已经知道要做什么，先去模板库；如果你卡在报错或无响应，先去故障排除；如果你只需要确切命令，再去命令中心；如果你想理解背后的做法，再看教程。"
     },
     en: {
       title: "Use This Page For",
-      body: "Tutorials explain the reasoning, setup order, and debugging approach. Templates answer what to start from. Command Center answers which command to run.",
+      body: "Tutorials explain the reasoning, setup order, and debugging approach. Templates answer what to start from. Command Center answers which command to run. Troubleshooting answers which layer to debug first.",
       pills: ["Learn the reasoning", "Understand the sequence", "Build debugging intuition"],
       asideTitle: "Reading Advice",
-      asideBody: "If you already know the job, start with Task Library. If you are blocked by setup or commands, use Command Center. Use Tutorials when you need the why behind the workflow."
+      asideBody: "If you already know the job, start with Task Library. If you are blocked by failures or no-response cases, use Troubleshooting. If you only need the exact command, use Command Center. Use Tutorials when you need the why behind the workflow."
     }
   };
 

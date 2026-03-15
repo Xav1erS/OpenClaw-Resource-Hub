@@ -148,9 +148,9 @@
         nextCards: [
           {
             title: "命令或日志还有问题",
-            body: "去命令中心继续排命令、环境变量和常见报错。",
-            href: "/pages/command-center.html",
-            cta: "打开命令中心"
+            body: "先去故障排除，按 gateway、channels、models、memory 的顺序缩小范围。",
+            href: "/pages/troubleshooting.html",
+            cta: "打开故障排除"
           },
           {
             title: "已经跑通，想立刻做事",
@@ -222,10 +222,10 @@
         nextTitle: "第一次跑通后该去哪里",
         nextCards: [
           {
-            title: "想继续做安全和部署",
-            body: "先去命令中心，把环境变量、日志和常见排错路径掌握住。",
-            href: "/pages/command-center.html",
-            cta: "去命令中心"
+            title: "想继续排错和稳定运行",
+            body: "先去故障排除，把 gateway、channels、memory 和 doctor 的排查顺序掌握住。",
+            href: "/pages/troubleshooting.html",
+            cta: "去故障排除"
           },
           {
             title: "想开始一个真实任务",
@@ -284,9 +284,9 @@
         nextCards: [
           {
             title: "Commands or logs still look wrong",
-            body: "Go to Command Center for commands, environment variables, and common troubleshooting flows.",
-            href: "/pages/command-center.html",
-            cta: "Open Command Center"
+            body: "Go to Troubleshooting and narrow the issue through gateway, channels, models, and memory.",
+            href: "/pages/troubleshooting.html",
+            cta: "Open Troubleshooting"
           },
           {
             title: "The setup works and you want to build",
@@ -358,10 +358,10 @@
         nextTitle: "Where to go after the first successful run",
         nextCards: [
           {
-            title: "You want security and setup depth",
-            body: "Use Command Center next so you understand the config, logs, and troubleshooting paths before scaling up.",
-            href: "/pages/command-center.html",
-            cta: "Go to Command Center"
+            title: "You want debugging depth first",
+            body: "Use Troubleshooting next so you can localize gateway, channel, model, and memory failures before scaling up.",
+            href: "/pages/troubleshooting.html",
+            cta: "Go to Troubleshooting"
           },
           {
             title: "You want to try a real task",

@@ -2,6 +2,7 @@
   const navItems = [
     { id: "quickstart", href: "/pages/quickstart.html", label: { zh: "快速开始", en: "Quick Start" } },
     { id: "command-center", href: "/pages/command-center.html", label: { zh: "命令中心", en: "Command Center" } },
+    { id: "troubleshooting", href: "/pages/troubleshooting.html", label: { zh: "故障排除", en: "Troubleshooting" } },
     { id: "task-library", href: "/pages/task-library.html", label: { zh: "模板库", en: "Task Library" } },
     { id: "cost-calculator", href: "/pages/cost-calculator.html", label: { zh: "成本计算器", en: "Cost Calculator" } },
     { id: "tutorials", href: "/pages/tutorials.html", label: { zh: "教程", en: "Tutorials" } },

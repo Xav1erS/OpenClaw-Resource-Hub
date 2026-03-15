@@ -14,7 +14,7 @@
       primary: "快速开始",
       secondary: "命令中心",
       modulesTitle: "核心页面",
-      modulesSubtitle: "只保留最有用的入口。模板库解决“从什么结构开始”，命令中心解决“命令怎么写、配置怎么查、问题怎么修”。",
+      modulesSubtitle: "只保留最有用的入口。模板库解决“从什么结构开始”，命令中心解决“命令怎么写”，故障排除模块解决“问题先从哪一层排”。",
       pathsTitle: "推荐路径",
       pathsSubtitle: "按你当前的目标进入，不需要先把整站看完。",
       releaseTitle: "当前站点状态",
@@ -35,20 +35,22 @@
       releaseLinks: {
         notes: "更新日志",
         library: "模板库",
-        command: "命令中心"
+        command: "命令中心",
+        troubleshooting: "故障排除"
       },
       modules: [
         { name: "快速开始", desc: "按环境选择安装命令，用最小配置先跑通。", href: "/pages/quickstart.html", badge: "Start" },
-        { name: "命令中心", desc: "查 CLI 命令、配置片段和故障处理步骤。", href: "/pages/command-center.html", badge: "Cheatsheet" },
+        { name: "命令中心", desc: "查 CLI 命令、频道管理、模型探针和 cheatsheet 参考。", href: "/pages/command-center.html", badge: "Cheatsheet" },
+        { name: "故障排除", desc: "按症状排 gateway、channels、memory 和官方 fast fixes。", href: "/pages/troubleshooting.html", badge: "Fixes" },
         { name: "模板库", desc: "找现成任务模板，先预览代码块再复制。", href: "/pages/task-library.html", badge: "Templates" },
         { name: "成本计算器", desc: "先算清每天和每月成本，再决定模型和使用规模。", href: "/pages/cost-calculator.html", badge: "Cost" },
         { name: "教程", desc: "从安装到排错，按场景补齐知识缺口。", href: "/pages/tutorials.html", badge: "Guides" },
         { name: "更新日志", desc: "跟踪当前版本做到哪里，以及下一轮重点。", href: "/pages/release-notes.html", badge: "Updates" }
       ],
       paths: [
-        { title: "第一次接触 OpenClaw", steps: ["先看快速开始", "再打开命令中心", "最后复制一个模板开始试跑"] },
+        { title: "第一次接触 OpenClaw", steps: ["先看快速开始", "命令不确定就去命令中心", "报错或无响应就进故障排除"] },
         { title: "已经能跑，想控制成本", steps: ["先打开成本计算器", "比较不同模型", "再回模板库优化任务结构"] },
-        { title: "想立刻开始做事", steps: ["直接进入模板库", "按模板改成你的任务", "遇到问题再补教程和命令中心"] }
+        { title: "想立刻开始做事", steps: ["直接进入模板库", "按模板改成你的任务", "遇到问题再补故障排除和教程"] }
       ]
     },
     en: {
@@ -61,7 +63,7 @@
       primary: "Quick Start",
       secondary: "Command Center",
       modulesTitle: "Core Pages",
-      modulesSubtitle: "Only the useful entry points remain. Task Library answers what to start from. Command Center answers which command, config, or fix to use.",
+      modulesSubtitle: "Only the useful entry points remain. Task Library answers what to start from. Command Center answers which command to run. Troubleshooting answers which layer to debug first.",
       pathsTitle: "Recommended Paths",
       pathsSubtitle: "Start from the goal you have right now instead of learning the whole site first.",
       releaseTitle: "Current Site Status",
@@ -82,20 +84,22 @@
       releaseLinks: {
         notes: "Release Notes",
         library: "Task Library",
-        command: "Command Center"
+        command: "Command Center",
+        troubleshooting: "Troubleshooting"
       },
       modules: [
         { name: "Quick Start", desc: "Choose your environment and run the smallest working setup first.", href: "/pages/quickstart.html", badge: "Start" },
-        { name: "Command Center", desc: "Look up CLI commands, config snippets, and troubleshooting steps.", href: "/pages/command-center.html", badge: "Cheatsheet" },
+        { name: "Command Center", desc: "Look up CLI commands, channel management, model probes, and cheatsheet references.", href: "/pages/command-center.html", badge: "Cheatsheet" },
+        { name: "Troubleshooting", desc: "Debug gateway, channels, memory, and official fast fixes by symptom.", href: "/pages/troubleshooting.html", badge: "Fixes" },
         { name: "Task Library", desc: "Start from a ready-made task template and preview the code before copying.", href: "/pages/task-library.html", badge: "Templates" },
         { name: "Cost Calculator", desc: "Estimate daily and monthly cost before you scale up.", href: "/pages/cost-calculator.html", badge: "Cost" },
         { name: "Tutorials", desc: "Fill in knowledge gaps from setup to troubleshooting.", href: "/pages/tutorials.html", badge: "Guides" },
         { name: "Release Notes", desc: "Track what has shipped and what the next round will focus on.", href: "/pages/release-notes.html", badge: "Updates" }
       ],
       paths: [
-        { title: "First time with OpenClaw", steps: ["Open Quick Start", "Then use Command Center", "Finally copy one template and run a first trial"] },
+        { title: "First time with OpenClaw", steps: ["Open Quick Start", "Use Command Center when you need the exact command", "Open Troubleshooting when the broken layer is still unclear"] },
         { title: "Already running, need cost control", steps: ["Start with Cost Calculator", "Compare models", "Then optimize with Task Library"] },
-        { title: "Want to start shipping quickly", steps: ["Open Task Library", "Adapt one template to your job", "Use Tutorials only when you hit a gap"] }
+        { title: "Want to start shipping quickly", steps: ["Open Task Library", "Adapt one template to your job", "Use Troubleshooting before Tutorials when something breaks"] }
       ]
     }
   };
@@ -204,6 +208,7 @@
                 <a href="/pages/release-notes.html" class="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${text.releaseLinks.notes}</a>
                 <a href="/pages/task-library.html" class="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${text.releaseLinks.library}</a>
                 <a href="/pages/command-center.html" class="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${text.releaseLinks.command}</a>
+                <a href="/pages/troubleshooting.html" class="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${text.releaseLinks.troubleshooting}</a>
               </div>
             </aside>
           </section>
