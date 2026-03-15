@@ -719,8 +719,47 @@
     return t(map[level] || map.medium);
   }
 
+  const cardSurfaceClass = "rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.02))] p-5 shadow-[0_20px_60px_rgba(2,6,23,0.22)]";
+  const cardSurfaceDenseClass = "rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-4 shadow-[0_18px_48px_rgba(2,6,23,0.2)]";
+  const searchShellClass = "rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(15,23,42,0.48))] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.2)]";
+  const insetPanelClass = "rounded-2xl border border-white/10 bg-slate-950/72";
+  const fieldClass = "w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400 focus:ring-1 focus:ring-red-400/30";
+  const fieldClassOrange = "w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400 focus:ring-1 focus:ring-orange-400/30";
+  const pillClass = "rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300";
+  const buttonPrimaryClass = "rounded-full bg-red-500 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-400";
+  const buttonSecondaryClass = "rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white";
+  const buttonSecondaryCompactClass = "rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200 transition hover:bg-white/10";
+
+  function getTypeScale() {
+    const isZh = state.currentLang === "zh";
+    return {
+      heroTitle: isZh
+        ? "text-[clamp(2.6rem,5vw,4.4rem)] tracking-tight leading-[0.95]"
+        : "text-[clamp(2.35rem,4.5vw,4rem)] tracking-[-0.035em] leading-[0.96]",
+      heroBody: isZh
+        ? "text-base leading-7 sm:text-[1.05rem]"
+        : "text-[15px] leading-7 sm:text-[1rem]",
+      sectionTitle: isZh
+        ? "text-2xl font-semibold"
+        : "text-[1.85rem] font-semibold tracking-[-0.02em]",
+      cardTitle: isZh
+        ? "text-xl font-semibold"
+        : "text-[1.18rem] font-semibold tracking-[-0.015em]",
+      body: isZh
+        ? "text-[15px] leading-7"
+        : "text-[14px] leading-[1.72]",
+      compactBody: isZh
+        ? "text-[14px] leading-6"
+        : "text-[13.5px] leading-[1.65]",
+      meta: isZh
+        ? "text-sm leading-6"
+        : "text-[13px] leading-[1.55]"
+    };
+  }
+
   function pageShell(pageId, stats) {
     const meta = ui.pageMeta[pageId];
+    const type = getTypeScale();
     document.title = `${t(meta.title)} | ${ui.shell.brand}`;
     if (window.openClawSeo) {
       window.openClawSeo.update({
@@ -743,26 +782,30 @@
         <div class="pointer-events-none fixed inset-0 opacity-50" style="background-image:linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px); background-size: 32px 32px;"></div>
         ${headerMarkup}
         <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <section class="grid gap-6 xl:grid-cols-[1.35fr,0.85fr] xl:items-end">
-            <div>
+          <section class="grid gap-5 xl:grid-cols-[minmax(0,1.24fr)_minmax(320px,0.76fr)] xl:items-stretch">
+            <div class="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.55),rgba(15,23,42,0.18))] p-6 shadow-[0_24px_80px_rgba(2,6,23,0.28)] sm:p-7">
               <p class="mb-4 text-xs uppercase tracking-[0.36em] text-red-200">${t(meta.eyebrow)}</p>
-              <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-[3.25rem] leading-tight break-words">${t(meta.title)}</h1>
-              <p class="mt-3 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">${t(meta.subtitle)}</p>
-              <div class="mt-5 flex flex-wrap gap-3 text-sm">
-                <a href="/pages/quickstart.html" class="rounded-full bg-red-500 px-4 py-2 font-medium text-white transition hover:bg-red-400">${t(ui.shell.quickAction)}</a>
-                <a href="/pages/command-center.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-200 transition hover:border-red-400/40 hover:text-white">${t(ui.shell.commandAction)}</a>
+              <h1 class="max-w-4xl ${type.heroTitle} font-semibold text-white break-words">${t(meta.title)}</h1>
+              <p class="mt-4 max-w-3xl ${type.heroBody} text-slate-300">${t(meta.subtitle)}</p>
+              <div class="mt-6 flex flex-wrap gap-3 text-sm">
+                <a href="/pages/quickstart.html" class="${buttonPrimaryClass}">${t(ui.shell.quickAction)}</a>
+                <a href="/pages/command-center.html" class="${buttonSecondaryClass}">${t(ui.shell.commandAction)}</a>
               </div>
             </div>
-            <div class="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
+            <div class="grid auto-rows-fr gap-3 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
               ${safeArray(stats).map((item) => {
                 const valueText = t(item.value);
-                const compact = String(valueText).length > 14;
-                return `<article class="min-w-0 rounded-3xl border border-white/10 bg-white/5 p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-sm text-slate-400">${t(item.label)}</div><div class="mt-2 ${compact ? "text-[clamp(1.1rem,1.7vw,1.7rem)] max-w-[8ch]" : "text-[clamp(1.4rem,2.4vw,2.2rem)]"} font-semibold leading-tight text-white break-words">${valueText}</div></article>`;
+                const compact = String(valueText).length > 12;
+                const numeric = /^[0-9]+$/.test(String(valueText).trim());
+                return `<article class="min-w-0 rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.025))] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.25)] backdrop-blur"><div class="text-xs uppercase tracking-[0.2em] text-slate-400">${t(item.label)}</div><div class="mt-3 ${numeric ? "text-[clamp(2.1rem,4vw,3rem)]" : compact ? "text-[clamp(1.25rem,1.8vw,1.85rem)] max-w-[9ch]" : "text-[clamp(1.5rem,2.1vw,2.2rem)]"} font-semibold leading-[1.02] text-white break-words">${valueText}</div></article>`;
               }).join("")}
             </div>
           </section>
-          <section class="mt-7 rounded-[28px] border border-white/10 bg-slate-950/50 p-3 shadow-2xl shadow-slate-950/20 sm:p-5">
-            <div id="page-root"></div>
+          <section class="relative mt-7 overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.82),rgba(2,6,23,0.72))] shadow-[0_28px_90px_rgba(2,6,23,0.28)]">
+            <div class="pointer-events-none absolute inset-x-0 mt-px h-px bg-gradient-to-r from-transparent via-white/18 to-transparent"></div>
+            <div class="rounded-[31px] bg-[linear-gradient(180deg,rgba(15,23,42,0.42),rgba(2,6,23,0.12))] p-3 sm:p-5 lg:p-6">
+              <div id="page-root" class="space-y-6"></div>
+            </div>
           </section>
         </main>
       </div>
@@ -787,8 +830,8 @@
       <div class="grid gap-6 xl:grid-cols-[1.45fr,0.9fr]">
         <section>
           <div class="mb-4 grid gap-3 sm:grid-cols-[1fr,220px]">
-            <input id="task-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400" placeholder="${t(pageText.taskLibrary.searchPlaceholder)}">
-            <select id="task-category" class="rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400">
+            <input id="task-search" class="${fieldClass}" placeholder="${t(pageText.taskLibrary.searchPlaceholder)}">
+            <select id="task-category" class="${fieldClass}">
               <option value="">${t(pageText.taskLibrary.allCategories)}</option>
               ${categories.map((item) => `<option value="${item.name}">${localizeTaskCategory(item.name)}</option>`).join("")}
             </select>
@@ -815,7 +858,7 @@
       });
       list.innerHTML = result.map((item) => {
         const localized = localizeTaskTemplate(item);
-        return `<article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><div class="flex flex-wrap items-start justify-between gap-4"><div><div class="inline-flex rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-orange-200">${localizeTaskCategory(item.category)}</div><h3 class="mt-3 text-xl font-semibold text-white">${localized.name}</h3><p class="mt-2 text-sm leading-6 text-slate-300">${localized.description}</p></div><div class="text-right text-sm text-slate-400"><div>★ ${item.stars}</div><div class="mt-1">${item.usageCount} ${t(ui.common.uses)}</div></div></div><div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-300"><span class="rounded-full bg-white/5 px-3 py-1">${item.preview && item.preview.estimatedTime ? localizeReadTime(item.preview.estimatedTime) : t(pageText.taskLibrary.estimatedTimeFallback)}</span><span class="rounded-full bg-white/5 px-3 py-1">${t(pageText.taskLibrary.reusableHint)}</span></div><div class="mt-5 flex flex-wrap gap-3"><button data-toggle-preview="${item.id}" aria-expanded="false" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-400/40 hover:text-white">${t(pageText.taskLibrary.previewButton)}</button><button data-copy="${item.id}" class="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-slate-950 transition hover:bg-orange-400">${t(pageText.taskLibrary.copyButton)}</button></div><div id="preview-${item.id}" class="mt-4 hidden overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90"><div class="border-b border-white/10 px-4 py-3 text-xs uppercase tracking-[0.2em] text-slate-400">${t(pageText.taskLibrary.previewTitle)}</div><pre class="max-h-80 overflow-auto px-4 py-4 text-sm leading-6 text-slate-300">${escapeHtml(item.copyFormat)}</pre></div></article>`;
+    return `<article class="${cardSurfaceClass}"><div class="flex flex-wrap items-start justify-between gap-4"><div><div class="inline-flex rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-orange-200">${localizeTaskCategory(item.category)}</div><h3 class="mt-3 text-xl font-semibold text-white">${localized.name}</h3><p class="mt-2 text-sm leading-6 text-slate-300">${localized.description}</p></div><div class="text-right text-sm text-slate-400"><div>★ ${item.stars}</div><div class="mt-1">${item.usageCount} ${t(ui.common.uses)}</div></div></div><div class="mt-4 flex flex-wrap gap-2 text-xs text-slate-300"><span class="${pillClass}">${item.preview && item.preview.estimatedTime ? localizeReadTime(item.preview.estimatedTime) : t(pageText.taskLibrary.estimatedTimeFallback)}</span><span class="${pillClass}">${t(pageText.taskLibrary.reusableHint)}</span></div><div class="mt-5 flex flex-wrap gap-3"><button data-toggle-preview="${item.id}" aria-expanded="false" class="${buttonSecondaryClass} hover:border-orange-400/40">${t(pageText.taskLibrary.previewButton)}</button><button data-copy="${item.id}" class="rounded-full bg-orange-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-orange-400">${t(pageText.taskLibrary.copyButton)}</button></div><div id="preview-${item.id}" class="mt-4 hidden overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90"><div class="border-b border-white/10 px-4 py-3 text-xs uppercase tracking-[0.2em] text-slate-400">${t(pageText.taskLibrary.previewTitle)}</div><pre class="max-h-80 overflow-auto px-4 py-4 text-sm leading-6 text-slate-300">${escapeHtml(item.copyFormat)}</pre></div></article>`;
       }).join("") || `<div class="rounded-3xl border border-dashed border-white/10 p-10 text-center text-slate-400">${t(pageText.taskLibrary.empty)}</div>`;
     }
 
@@ -864,12 +907,12 @@
     document.getElementById("page-root").innerHTML = `
       <div class="grid gap-6 xl:grid-cols-[0.82fr,1.18fr]">
         <section class="space-y-4">
-          <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-4"><select id="tutorial-category" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400"><option value="">${t(pageText.tutorial.allCategories)}</option>${categories.map((item) => `<option value="${item.name}">${localizeTutorialCategory(item)}</option>`).join("")}</select></div>
+          <div class="${searchShellClass}"><select id="tutorial-category" class="${fieldClass}"><option value="">${t(pageText.tutorial.allCategories)}</option>${categories.map((item) => `<option value="${item.name}">${localizeTutorialCategory(item)}</option>`).join("")}</select></div>
           <div id="tutorial-list" class="grid gap-4"></div>
         </section>
         <aside class="space-y-4 xl:sticky xl:top-24 xl:self-start">
-          <article class="rounded-[28px] border border-white/10 bg-white/[0.03] p-6 shadow-2xl shadow-slate-950/20"><h2 id="tutorial-title" class="text-2xl font-semibold text-white">${t(pageText.tutorial.selectArticle)}</h2><div id="tutorial-meta" class="mt-3 text-sm text-slate-400"></div><pre id="tutorial-preview" class="mt-5 min-h-[360px] max-h-[520px] overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-300"></pre></article>
-          <article class="rounded-[28px] border border-white/10 bg-white/[0.03] p-6"><h2 class="text-lg font-semibold text-white">${t(pageText.tutorial.troubleshooting)}</h2><div class="mt-4 space-y-3">${troubleshooting[state.currentLang].map((item) => `<details class="rounded-2xl border border-white/10 bg-slate-950/60 p-4"><summary class="cursor-pointer text-sm font-medium text-white">${item.title}</summary><p class="mt-3 text-sm leading-6 text-slate-300">${item.diagnosis}</p></details>`).join("")}</div></article>
+          <article class="${cardSurfaceClass}"><h2 id="tutorial-title" class="text-2xl font-semibold text-white">${t(pageText.tutorial.selectArticle)}</h2><div id="tutorial-meta" class="mt-3 text-sm text-slate-400"></div><pre id="tutorial-preview" class="mt-5 min-h-[360px] max-h-[520px] overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-300"></pre></article>
+          <article class="${cardSurfaceClass}"><h2 class="text-lg font-semibold text-white">${t(pageText.tutorial.troubleshooting)}</h2><div class="mt-4 space-y-3">${troubleshooting[state.currentLang].map((item) => `<details class="${insetPanelClass} p-4"><summary class="cursor-pointer text-sm font-medium text-white">${item.title}</summary><p class="mt-3 text-sm leading-6 text-slate-300">${item.diagnosis}</p></details>`).join("")}</div></article>
         </aside>
       </div>
     `;
@@ -890,7 +933,7 @@
     function draw() {
       const c = category.value;
       const result = items.filter((item) => !c || item.category === c || item.id.startsWith(String(c).split("-")[0]));
-      list.innerHTML = result.map((item) => `<button data-open="${item.id}" class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 text-left transition hover:border-orange-400/40 hover:bg-white/[0.05]"><div class="text-sm text-slate-400">${localizeTutorialCategory({ id: item.id.split("-").slice(0, -1).join("-"), name: item.category })} · ${localizeTutorialDifficulty(item.difficulty)}</div><div class="mt-2 text-lg font-semibold text-white">${localizeTutorialTitle(item)}</div><div class="mt-2 text-sm text-slate-300">${localizeReadTime(item.readTime)} · ${item.views} ${t(ui.common.views)}</div></button>`).join("");
+      list.innerHTML = result.map((item) => `<button data-open="${item.id}" class="${cardSurfaceClass} text-left transition hover:border-orange-400/40 hover:bg-white/[0.05]"><div class="text-sm text-slate-400">${localizeTutorialCategory({ id: item.id.split("-").slice(0, -1).join("-"), name: item.category })} · ${localizeTutorialDifficulty(item.difficulty)}</div><div class="mt-2 text-lg font-semibold text-white">${localizeTutorialTitle(item)}</div><div class="mt-2 text-sm text-slate-300">${localizeReadTime(item.readTime)} · ${item.views} ${t(ui.common.views)}</div></button>`).join("");
       if (result[0]) showTutorial(result[0]);
     }
 
@@ -925,15 +968,15 @@
     ]);
     document.getElementById("page-root").innerHTML = `
       <div class="grid gap-6 lg:grid-cols-[0.95fr,1.05fr]">
-        <form id="cost-form" class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+        <form id="cost-form" class="${cardSurfaceClass}">
           <div class="grid gap-4">
-            <div><label class="mb-2 block text-sm text-slate-300">${t(pageText.cost.scenario)}</label><select id="scenario" class="w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100">${Object.keys(presets).map((key) => `<option value="${key}">${t(presetNames[key] || { zh: key, en: key })}</option>`).join("")}</select></div>
-            <div><label class="mb-2 block text-sm text-slate-300">${t(pageText.cost.model)}</label><select id="model" class="w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100">${Object.entries(pricing).map(([key, value]) => `<option value="${key}">${value.name}</option>`).join("")}</select></div>
-            <div class="grid gap-4 sm:grid-cols-2"><div><label class="mb-2 block text-sm text-slate-300">${t(pageText.cost.dailyTasks)}</label><input id="dailyTasks" type="number" min="1" class="w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100"></div><div><label class="mb-2 block text-sm text-slate-300">${t(pageText.cost.stepsPerTask)}</label><input id="stepsPerTask" type="number" min="1" class="w-full rounded-2xl border border-white/10 bg-slate-950/90 px-4 py-3 text-slate-100"></div></div>
-            <div class="flex flex-wrap gap-3"><button class="rounded-full bg-orange-500 px-4 py-2 font-medium text-slate-950 transition hover:bg-orange-400" type="submit">${t(pageText.cost.calcButton)}</button><button id="copy-cost-summary" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:text-white" type="button">${t(pageText.cost.copySummary)}</button></div>
+            <div><label class="mb-2 block text-sm text-slate-300">${t(pageText.cost.scenario)}</label><select id="scenario" class="${fieldClass}">${Object.keys(presets).map((key) => `<option value="${key}">${t(presetNames[key] || { zh: key, en: key })}</option>`).join("")}</select></div>
+            <div><label class="mb-2 block text-sm text-slate-300">${t(pageText.cost.model)}</label><select id="model" class="${fieldClass}">${Object.entries(pricing).map(([key, value]) => `<option value="${key}">${value.name}</option>`).join("")}</select></div>
+            <div class="grid gap-4 sm:grid-cols-2"><div><label class="mb-2 block text-sm text-slate-300">${t(pageText.cost.dailyTasks)}</label><input id="dailyTasks" type="number" min="1" class="${fieldClass}"></div><div><label class="mb-2 block text-sm text-slate-300">${t(pageText.cost.stepsPerTask)}</label><input id="stepsPerTask" type="number" min="1" class="${fieldClass}"></div></div>
+            <div class="flex flex-wrap gap-3"><button class="rounded-full bg-orange-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-orange-400" type="submit">${t(pageText.cost.calcButton)}</button><button id="copy-cost-summary" class="${buttonSecondaryClass}" type="button">${t(pageText.cost.copySummary)}</button></div>
           </div>
         </form>
-        <div class="grid gap-4"><article id="cost-summary" class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"></article><article id="cost-compare" class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"></article><article id="cost-suggestions" class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"></article></div>
+        <div class="grid gap-4"><article id="cost-summary" class="${cardSurfaceClass}"></article><article id="cost-compare" class="${cardSurfaceClass}"></article><article id="cost-suggestions" class="${cardSurfaceClass}"></article></div>
       </div>
     `;
 
@@ -1044,15 +1087,15 @@
       { label: pageText.quickstart.stats.checks, value: resourceText.checklist[state.currentLang].length },
       { label: pageText.quickstart.stats.goal, value: pageText.quickstart.goalValue }
     ]);
-    document.getElementById("page-root").innerHTML = `<div class="grid gap-6 xl:grid-cols-[1.15fr,0.85fr]"><section class="space-y-4"><div class="flex flex-wrap gap-3">${tracks.map((track) => `<button data-track="${track.id}" class="quickstart-tab rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-400/40">${track.name}</button>`).join("")}</div><article id="quickstart-panel" class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"></article><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.stacksTitle)}</h2><div class="mt-4 grid gap-3 md:grid-cols-3">${resourceText.stacks[state.currentLang].map((stack) => `<div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><div class="font-medium text-white">${stack.name}</div><div class="mt-2 text-sm text-slate-300">${stack.outcome}</div></div>`).join("")}</div></article></section><aside class="space-y-4 xl:sticky xl:top-24 xl:self-start"><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.checklistTitle)}</h2><div id="quickstart-checklist" class="mt-4 space-y-3"></div></article><article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.nextTitle)}</h2><ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">${pageText.quickstart.nextList[state.currentLang].map((item) => `<li>${item}</li>`).join("")}</ul></article></aside></div>`;
+    document.getElementById("page-root").innerHTML = `<div class="grid gap-6 xl:grid-cols-[1.15fr,0.85fr]"><section class="space-y-4"><div class="flex flex-wrap gap-3">${tracks.map((track) => `<button data-track="${track.id}" class="quickstart-tab rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-orange-400/40">${track.name}</button>`).join("")}</div><article id="quickstart-panel" class="${cardSurfaceClass}"></article><article class="${cardSurfaceClass}"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.stacksTitle)}</h2><div class="mt-4 grid gap-3 md:grid-cols-3">${resourceText.stacks[state.currentLang].map((stack) => `<div class="${insetPanelClass} p-4"><div class="font-medium text-white">${stack.name}</div><div class="mt-2 text-sm text-slate-300">${stack.outcome}</div></div>`).join("")}</div></article></section><aside class="space-y-4 xl:sticky xl:top-24 xl:self-start"><article class="${cardSurfaceClass}"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.checklistTitle)}</h2><div id="quickstart-checklist" class="mt-4 space-y-3"></div></article><article class="${cardSurfaceClass}"><h2 class="text-lg font-semibold text-white">${t(pageText.quickstart.nextTitle)}</h2><ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">${pageText.quickstart.nextList[state.currentLang].map((item) => `<li>${item}</li>`).join("")}</ul></article></aside></div>`;
     const panel = document.getElementById("quickstart-panel");
     const checklistRoot = document.getElementById("quickstart-checklist");
     function renderTrack() {
       const current = tracks.find((item) => item.id === state.quickStartTrack) || tracks[0];
       const localized = resourceText.quickStartTracks[current.id] || resourceText.quickStartTracks.windows;
-      panel.innerHTML = `<div class="flex flex-wrap items-start justify-between gap-4"><div><span class="rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-orange-200">${t(localized.badge)}</span><h2 class="mt-3 text-2xl font-semibold text-white">${current.name}</h2></div><button id="copy-quickstart-command" class="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-slate-950">${t(pageText.quickstart.copyCommand)}</button></div><div class="mt-4 grid gap-4 2xl:grid-cols-[1.1fr,0.9fr]"><pre class="whitespace-pre-wrap rounded-2xl border border-white/10 bg-slate-950/90 p-4 text-sm leading-6 text-slate-300">${current.command}</pre><ul class="space-y-3 text-sm leading-6 text-slate-300">${localized.notes[state.currentLang].map((item) => `<li class="rounded-2xl bg-white/5 px-3 py-3">${item}</li>`).join("")}</ul></div>`;
+      panel.innerHTML = `<div class="flex flex-wrap items-start justify-between gap-4"><div><span class="rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-orange-200">${t(localized.badge)}</span><h2 class="mt-3 text-2xl font-semibold text-white">${current.name}</h2></div><button id="copy-quickstart-command" class="rounded-full bg-orange-500 px-4 py-2.5 text-sm font-medium text-slate-950">${t(pageText.quickstart.copyCommand)}</button></div><div class="mt-4 grid gap-4 2xl:grid-cols-[1.1fr,0.9fr]"><pre class="whitespace-pre-wrap rounded-2xl border border-white/10 bg-slate-950/90 p-4 text-sm leading-6 text-slate-300">${current.command}</pre><ul class="space-y-3 text-sm leading-6 text-slate-300">${localized.notes[state.currentLang].map((item) => `<li class="${insetPanelClass} px-3 py-3">${item}</li>`).join("")}</ul></div>`;
       document.querySelectorAll(".quickstart-tab").forEach((button) => {
-        button.className = `quickstart-tab rounded-full border px-4 py-2 text-sm transition ${button.dataset.track === current.id ? "border-orange-400/40 bg-orange-500 text-slate-950" : "border-white/10 text-slate-200 hover:border-orange-400/40"}`;
+        button.className = `quickstart-tab rounded-full border px-4 py-2.5 text-sm transition ${button.dataset.track === current.id ? "border-orange-400/40 bg-orange-500 text-slate-950" : "border-white/10 bg-white/5 text-slate-200 hover:border-orange-400/40 hover:text-white"}`;
       });
       document.getElementById("copy-quickstart-command").addEventListener("click", () => {
         copyToClipboard(current.command, t(ui.common.copied));
@@ -1061,7 +1104,7 @@
     }
     function renderChecklist() {
       const stored = getStoredChecklist();
-      checklistRoot.innerHTML = resourceText.checklist[state.currentLang].map((item, index) => `<label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3"><input data-check="${index}" type="checkbox" class="mt-1 h-4 w-4 accent-orange-400" ${stored[index] ? "checked" : ""}><span class="text-sm leading-6 text-slate-300">${item}</span></label>`).join("");
+      checklistRoot.innerHTML = resourceText.checklist[state.currentLang].map((item, index) => `<label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/72 px-4 py-3"><input data-check="${index}" type="checkbox" class="mt-1 h-4 w-4 accent-orange-400" ${stored[index] ? "checked" : ""}><span class="text-sm leading-6 text-slate-300">${item}</span></label>`).join("");
     }
     document.getElementById("page-root").addEventListener("click", (event) => {
       const button = event.target.closest("[data-track]");
@@ -1088,13 +1131,13 @@
       { label: pageText.command.stats.focus, value: pageText.command.focusValue },
       { label: pageText.command.stats.actions, value: pageText.command.actionValue }
     ]);
-    document.getElementById("page-root").innerHTML = `<div class="space-y-4"><div class="rounded-3xl border border-white/10 bg-white/[0.03] p-4"><input id="command-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-orange-400" placeholder="${t(pageText.command.searchPlaceholder)}"></div><section id="command-sections" class="grid gap-4 xl:grid-cols-2"></section></div>`;
+    document.getElementById("page-root").innerHTML = `<div class="space-y-4"><div class="${searchShellClass}"><input id="command-search" class="${fieldClassOrange}" placeholder="${t(pageText.command.searchPlaceholder)}"></div><section id="command-sections" class="grid gap-4 xl:grid-cols-2"></section></div>`;
     const input = document.getElementById("command-search");
     const commandRoot = document.getElementById("command-sections");
     function draw() {
       const q = input.value.trim().toLowerCase();
       const cmdList = sections.filter((section) => `${section.title} ${section.description} ${section.commands.map((item) => `${item.label} ${item.code}`).join(" ")}`.toLowerCase().includes(q));
-      commandRoot.innerHTML = cmdList.map((section) => `<article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5"><h2 class="text-lg font-semibold text-white">${section.title}</h2><p class="mt-2 text-sm leading-6 text-slate-300">${section.description}</p><div class="mt-4 space-y-3">${section.commands.map((item) => `<div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><div class="flex items-center justify-between gap-3"><div class="font-medium text-white">${item.label}</div><button data-copy-code="${encodeURIComponent(item.code)}" class="rounded-full bg-white/5 px-3 py-1 text-xs text-slate-200 transition hover:bg-white/10">${t(ui.common.copy)}</button></div><pre class="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">${item.code}</pre></div>`).join("")}</div></article>`).join("");
+      commandRoot.innerHTML = cmdList.map((section) => `<article class="${cardSurfaceClass}"><h2 class="text-lg font-semibold text-white">${section.title}</h2><p class="mt-2 text-sm leading-6 text-slate-300">${section.description}</p><div class="mt-4 space-y-3">${section.commands.map((item) => `<div class="${insetPanelClass} p-4"><div class="flex items-center justify-between gap-3"><div class="font-medium text-white">${item.label}</div><button data-copy-code="${encodeURIComponent(item.code)}" class="${buttonSecondaryCompactClass}">${t(ui.common.copy)}</button></div><pre class="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">${item.code}</pre></div>`).join("")}</div></article>`).join("");
     }
     document.getElementById("page-root").addEventListener("click", (event) => {
       const button = event.target.closest("[data-copy-code]");
@@ -1109,6 +1152,9 @@
   function renderTroubleshootingPage() {
     setPage("troubleshooting", renderTroubleshootingPage);
     const issues = troubleshooting[state.currentLang];
+    const type = getTypeScale();
+    const bodyClass = type.body;
+    const compactBodyClass = type.compactBody;
     pageShell("troubleshooting", [
       { label: pageText.troubleshooting.stats.issues, value: issues.length },
       { label: pageText.troubleshooting.stats.fixes, value: 6 },
@@ -1118,13 +1164,13 @@
       ? "先按现象判断问题落在哪一层，再决定要不要继续下钻。"
       : "Start by mapping the symptom to a layer before you go deeper.";
     const issueTitle = state.currentLang === "zh" ? "高频症状" : "Common Failure Signals";
-    document.getElementById("page-root").innerHTML = `<div class="space-y-6"><div class="rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.82),rgba(15,23,42,0.68))] p-4 shadow-2xl shadow-slate-950/20"><div class="mb-3 inline-flex rounded-full border border-red-300/15 bg-red-500/10 px-3 py-1 text-[11px] uppercase tracking-[0.28em] text-red-100/80">${t(pageText.troubleshooting.stats.actions)}</div><input id="troubleshooting-search" class="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-slate-100 outline-none transition focus:border-red-400" placeholder="${t(pageText.troubleshooting.searchPlaceholder)}"></div><div class="grid gap-6 xl:grid-cols-[320px,minmax(0,1fr)] xl:items-start"><aside class="space-y-5 xl:sticky xl:top-24"><article class="overflow-hidden rounded-[30px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.24),rgba(15,23,42,0.92))] p-5 shadow-2xl shadow-red-950/15"><div class="inline-flex rounded-full border border-red-300/20 bg-red-500/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-red-100">${t(ui.nav.troubleshooting)}</div><h2 class="mt-4 text-xl font-semibold text-white">${t(pageText.troubleshooting.ladderTitle)}</h2><ol class="mt-4 space-y-3">${pageText.troubleshooting.ladder[state.currentLang].map((item, index) => `<li class="grid grid-cols-[34px,1fr] items-start gap-3 rounded-2xl bg-slate-950/60 px-4 py-4"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-red-400/25 bg-red-500/10 text-xs font-semibold text-red-100">${index + 1}</span><span class="text-sm leading-6 text-slate-200">${item}</span></li>`).join("")}</ol></article><article class="rounded-[30px] border border-white/10 bg-white/[0.03] p-5"><h2 class="text-xl font-semibold text-white">${t(pageText.troubleshooting.escalationTitle)}</h2><p class="mt-4 text-sm leading-7 text-slate-300">${t(pageText.troubleshooting.escalationBody)}</p><div class="mt-5 flex flex-wrap gap-3"><a href="/pages/command-center.html" class="rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-400">${t(ui.nav["command-center"])}</a><a href="/pages/quickstart.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${t(ui.nav.quickstart)}</a></div></article></aside><section class="space-y-6"><section class="rounded-[30px] border border-white/10 bg-white/[0.03] p-5"><div class="flex flex-wrap items-end justify-between gap-4"><div><p class="text-xs uppercase tracking-[0.28em] text-red-200/80">${t(pageText.troubleshooting.stats.issues)}</p><div class="mt-3 flex flex-wrap items-center gap-3"><h2 class="text-2xl font-semibold text-white">${issueTitle}</h2><span class="rounded-full border border-red-300/15 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-100">${issues.length}</span></div></div><p class="max-w-2xl text-sm leading-7 text-slate-300">${issueIntro}</p></div><div id="troubleshooting-sections" class="mt-5 grid gap-4 md:grid-cols-2 2xl:grid-cols-3"></div></section><section id="troubleshooting-extra-root" class="space-y-6"></section></section></div></div>`;
+    document.getElementById("page-root").innerHTML = `<div class="space-y-6"><div class="rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.82),rgba(15,23,42,0.68))] p-4 shadow-2xl shadow-slate-950/20"><div class="mb-3 inline-flex rounded-full border border-red-300/15 bg-red-500/10 px-3 py-1 text-[11px] uppercase tracking-[0.28em] text-red-100/80">${t(pageText.troubleshooting.stats.actions)}</div><input id="troubleshooting-search" class="${fieldClass}" placeholder="${t(pageText.troubleshooting.searchPlaceholder)}"></div><div class="grid gap-6 xl:grid-cols-[320px,minmax(0,1fr)] xl:items-start"><aside class="space-y-5 xl:sticky xl:top-24"><article class="overflow-hidden rounded-[30px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.24),rgba(15,23,42,0.92))] p-5 shadow-2xl shadow-red-950/15"><div class="inline-flex rounded-full border border-red-300/20 bg-red-500/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-red-100">${t(ui.nav.troubleshooting)}</div><h2 class="mt-4 ${type.cardTitle} text-white">${t(pageText.troubleshooting.ladderTitle)}</h2><ol class="mt-4 space-y-3">${pageText.troubleshooting.ladder[state.currentLang].map((item, index) => `<li class="grid grid-cols-[34px,1fr] items-start gap-3 rounded-2xl bg-slate-950/60 px-4 py-4"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-red-400/25 bg-red-500/10 text-xs font-semibold text-red-100">${index + 1}</span><span class="${compactBodyClass} text-slate-200">${item}</span></li>`).join("")}</ol></article><article class="${cardSurfaceClass}"><h2 class="${type.cardTitle} text-white">${t(pageText.troubleshooting.escalationTitle)}</h2><p class="mt-4 ${bodyClass} text-slate-300">${t(pageText.troubleshooting.escalationBody)}</p><div class="mt-5 flex flex-wrap gap-3"><a href="/pages/command-center.html" class="${buttonPrimaryClass}">${t(ui.nav["command-center"])}</a><a href="/pages/quickstart.html" class="${buttonSecondaryClass}">${t(ui.nav.quickstart)}</a></div></article></aside><section class="space-y-6"><section class="${cardSurfaceClass}"><div class="flex flex-wrap items-end justify-between gap-4"><div><p class="text-xs uppercase tracking-[0.28em] text-red-200/80">${t(pageText.troubleshooting.stats.issues)}</p><div class="mt-3 flex flex-wrap items-center gap-3"><h2 class="${type.sectionTitle} text-white">${issueTitle}</h2><span class="rounded-full border border-red-300/15 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-100">${issues.length}</span></div></div><p class="max-w-2xl ${bodyClass} text-slate-300">${issueIntro}</p></div><div id="troubleshooting-sections" class="mt-5 grid gap-4 md:grid-cols-2 2xl:grid-cols-3"></div></section><section id="troubleshooting-extra-root" class="space-y-6"></section></section></div></div>`;
     const input = document.getElementById("troubleshooting-search");
     const issueRoot = document.getElementById("troubleshooting-sections");
     function draw() {
       const q = input.value.trim().toLowerCase();
       const issueList = issues.filter((item) => `${item.title} ${item.symptoms} ${item.diagnosis} ${item.fix.join(" ")}`.toLowerCase().includes(q));
-      issueRoot.innerHTML = issueList.length ? issueList.map((item) => `<article class="flex h-full min-h-[272px] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(248,113,113,0.08),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02))] p-5 shadow-lg shadow-slate-950/10"><div class="flex flex-wrap items-start justify-between gap-3"><h3 class="max-w-[14rem] text-lg font-semibold leading-7 text-white">${item.title}</h3><span class="rounded-full border border-red-300/15 bg-red-500/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-red-100">${item.symptoms}</span></div><p class="mt-4 min-h-[64px] text-sm leading-7 text-slate-300">${item.diagnosis}</p><div class="mt-auto space-y-2 pt-5">${item.fix.map((step, index) => `<div class="grid grid-cols-[26px,1fr] items-start gap-3 rounded-2xl border border-white/5 bg-slate-950/72 px-3 py-3 text-sm text-slate-200"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-red-400/20 bg-red-500/10 text-[11px] font-semibold text-red-100">${index + 1}</span><span>${step}</span></div>`).join("")}</div></article>`).join("") : `<article class="rounded-[28px] border border-dashed border-white/10 bg-slate-950/40 p-6 text-sm leading-7 text-slate-300 md:col-span-2 2xl:col-span-3">${t(ui.common.noResult)}</article>`;
+      issueRoot.innerHTML = issueList.length ? issueList.map((item) => `<article class="flex h-full min-h-[272px] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(248,113,113,0.08),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02))] p-5 shadow-lg shadow-slate-950/10"><div class="flex flex-wrap items-start justify-between gap-3"><h3 class="max-w-[14rem] ${type.cardTitle} leading-7 text-white">${item.title}</h3><span class="rounded-full border border-red-300/15 bg-red-500/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-red-100">${item.symptoms}</span></div><p class="mt-4 min-h-[64px] ${bodyClass} text-slate-300">${item.diagnosis}</p><div class="mt-auto space-y-2 pt-5">${item.fix.map((step, index) => `<div class="grid grid-cols-[26px,1fr] items-start gap-3 rounded-2xl border border-white/5 bg-slate-950/72 px-3 py-3 ${compactBodyClass} text-slate-200"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-red-400/20 bg-red-500/10 text-[11px] font-semibold text-red-100">${index + 1}</span><span>${step}</span></div>`).join("")}</div></article>`).join("") : `<article class="rounded-[28px] border border-dashed border-white/10 bg-slate-950/40 p-6 ${bodyClass} text-slate-300 md:col-span-2 2xl:col-span-3">${t(ui.common.noResult)}</article>`;
     }
     input.addEventListener("input", draw);
     draw();
@@ -1134,6 +1180,7 @@
     setPage("release-notes", renderReleaseNotesPage);
     const notes = releaseNotes[state.currentLang];
     const roadmap = roadmapItems[state.currentLang];
+    const type = getTypeScale();
     const timelineLabel = state.currentLang === "zh" ? "版本时间线" : "Release Timeline";
     const latestBadge = "Latest";
     const latestSummary = state.currentLang === "zh"
@@ -1155,7 +1202,7 @@
           <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p class="text-xs uppercase tracking-[0.32em] text-red-200/80">Timeline</p>
-              <h2 class="mt-3 text-2xl font-semibold text-white">${timelineLabel}</h2>
+              <h2 class="mt-3 ${type.sectionTitle} text-white">${timelineLabel}</h2>
             </div>
             <div class="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-emerald-200">
               ${t(pageText.release.stats.status)} · ${t(pageText.release.statusValue)}
@@ -1170,16 +1217,16 @@
                   <div class="flex flex-wrap items-start justify-between gap-3">
                     <div class="min-w-0">
                       <div class="flex flex-wrap items-center gap-3">
-                        <h3 class="text-xl font-semibold text-white">${item.version}</h3>
+                        <h3 class="${type.cardTitle} text-white">${item.version}</h3>
                         ${index === 0 ? `<span class="rounded-full border border-red-300/30 bg-red-500/15 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-red-100">${latestBadge}</span>` : ""}
                       </div>
-                      <p class="mt-2 text-sm text-slate-400">${index === 0 ? latestSummary : sprintSummary}</p>
+                      <p class="mt-2 ${type.meta} text-slate-400">${index === 0 ? latestSummary : sprintSummary}</p>
                     </div>
                     <span class="rounded-full border border-white/10 bg-slate-950/70 px-3 py-1 text-xs text-slate-300">${item.date}</span>
                   </div>
                   <div class="mt-5 grid gap-3">
                     ${item.highlights.map((highlight, highlightIndex) => `
-                      <div class="rounded-2xl border ${index === 0 && highlightIndex === 0 ? "border-red-400/20 bg-red-500/10" : "border-white/10 bg-slate-950/70"} px-4 py-3 text-sm leading-6 text-slate-200">
+                      <div class="rounded-2xl border ${index === 0 && highlightIndex === 0 ? "border-red-400/20 bg-red-500/10" : "border-white/10 bg-slate-950/70"} px-4 py-3 ${type.compactBody} text-slate-200">
                         ${highlight}
                       </div>
                     `).join("")}
@@ -1192,7 +1239,7 @@
         <aside class="space-y-4">
           <article class="overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(15,23,42,0.88))] p-5">
             <div class="flex items-center justify-between gap-3">
-              <h2 class="text-lg font-semibold text-white">${t(pageText.release.nextTitle)}</h2>
+              <h2 class="${type.cardTitle} text-white">${t(pageText.release.nextTitle)}</h2>
               <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">${roadmap.length}</span>
             </div>
             <div class="mt-4 space-y-3">
@@ -1200,15 +1247,15 @@
                 <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
                   <div class="flex items-start gap-3">
                     <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/5 text-xs font-medium text-slate-300">${index + 1}</span>
-                    <p class="text-sm leading-6 text-slate-300">${item}</p>
+                    <p class="${type.compactBody} text-slate-300">${item}</p>
                   </div>
                 </div>
               `).join("")}
             </div>
           </article>
           <article class="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.92),rgba(2,6,23,0.88))] p-5">
-            <h2 class="text-lg font-semibold text-white">${t(pageText.release.ideaTitle)}</h2>
-            <p class="mt-3 text-sm leading-7 text-slate-300">${t(pageText.release.ideaBody)}</p>
+            <h2 class="${type.cardTitle} text-white">${t(pageText.release.ideaTitle)}</h2>
+            <p class="mt-3 ${type.body} text-slate-300">${t(pageText.release.ideaBody)}</p>
           </article>
         </aside>
       </div>

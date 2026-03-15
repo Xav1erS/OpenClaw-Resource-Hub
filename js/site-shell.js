@@ -30,15 +30,15 @@
                 <span class="block truncate text-lg font-semibold text-white">${brandBottom}</span>
               </span>
             </a>
-            <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs">
-              <button data-lang="zh" class="rounded-full px-3 py-1 transition ${lang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">中文</button>
-              <button data-lang="en" class="rounded-full px-3 py-1 transition ${lang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">EN</button>
+            <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs shadow-[0_10px_30px_rgba(2,6,23,0.2)]">
+              <button data-lang="zh" class="rounded-full px-3 py-1.5 transition ${lang === "zh" ? "bg-white text-slate-950 shadow-sm" : "text-slate-300 hover:text-white"}">中文</button>
+              <button data-lang="en" class="rounded-full px-3 py-1.5 transition ${lang === "en" ? "bg-white text-slate-950 shadow-sm" : "text-slate-300 hover:text-white"}">EN</button>
             </div>
           </div>
           <nav class="mt-4 flex gap-2 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             ${navItems.map((item) => {
               const active = item.id === currentPage;
-              return `<a href="${item.href}" class="shrink-0 rounded-full px-4 py-2.5 transition ${active ? "bg-red-500 text-white shadow-lg shadow-red-950/30" : "border border-white/10 bg-white/5 text-slate-300 hover:border-red-400/40 hover:text-white"}">${labelFor(item, lang)}</a>`;
+              return `<a href="${item.href}" class="shrink-0 rounded-full px-4 py-2.5 transition ${active ? "bg-red-500 text-white shadow-lg shadow-red-950/30" : "border border-white/10 bg-white/5 text-slate-300 hover:border-red-400/40 hover:bg-white/10 hover:text-white"}">${labelFor(item, lang)}</a>`;
             }).join("")}
           </nav>
         </div>

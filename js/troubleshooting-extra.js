@@ -158,6 +158,11 @@
     if (!root || !issueRoot || !input || !extraRoot) return;
 
     const text = extra[currentLang()];
+    const isZh = currentLang() === "zh";
+    const bodyClass = isZh ? "text-[15px] leading-7" : "text-[14px] leading-[1.72]";
+    const compactBodyClass = isZh ? "text-[14px] leading-6" : "text-[13.5px] leading-[1.65]";
+    const cardTitleClass = isZh ? "text-xl font-semibold" : "text-[1.18rem] font-semibold tracking-[-0.015em]";
+    const sectionTitleClass = isZh ? "text-2xl font-semibold" : "text-[1.85rem] font-semibold tracking-[-0.02em]";
     const q = input.value.trim().toLowerCase();
     const issues = text.issues.filter((item) =>
       `${item.title} ${item.body} ${item.steps.join(" ")}`.toLowerCase().includes(q)
@@ -170,21 +175,21 @@
           <div>
             <p class="text-xs uppercase tracking-[0.28em] text-red-200/80">${text.sectionTitle}</p>
             <div class="mt-3 flex flex-wrap items-center gap-3">
-              <h2 class="text-2xl font-semibold text-white">${text.sectionTitle}</h2>
+              <h2 class="${sectionTitleClass} text-white">${text.sectionTitle}</h2>
               <span class="rounded-full border border-red-300/15 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-100">${issues.length}</span>
             </div>
           </div>
-          <p class="max-w-2xl text-sm leading-7 text-slate-300">${text.sectionBody}</p>
+          <p class="max-w-2xl ${bodyClass} text-slate-300">${text.sectionBody}</p>
         </div>
         <div class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           ${issues.length
             ? issues.map((item) => `
               <article class="flex h-full min-h-[228px] flex-col rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(248,113,113,0.06),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02))] p-5">
-                <h3 class="text-lg font-semibold leading-7 text-white">${item.title}</h3>
-                <p class="mt-3 min-h-[64px] text-sm leading-7 text-slate-300">${item.body}</p>
+                <h3 class="${cardTitleClass} leading-7 text-white">${item.title}</h3>
+                <p class="mt-3 min-h-[64px] ${bodyClass} text-slate-300">${item.body}</p>
                 <div class="mt-auto space-y-2 pt-5">
                   ${item.steps.map((step, index) => `
-                    <div class="grid grid-cols-[24px,1fr] items-start gap-3 rounded-2xl border border-white/5 bg-slate-950/72 px-3 py-2.5 text-sm text-slate-200">
+                    <div class="grid grid-cols-[24px,1fr] items-start gap-3 rounded-2xl border border-white/5 bg-slate-950/72 px-3 py-2.5 ${compactBodyClass} text-slate-200">
                       <span class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-red-400/20 bg-red-500/10 text-[11px] font-semibold text-red-100">${index + 1}</span>
                       <span>${step}</span>
                     </div>
@@ -192,16 +197,16 @@
                 </div>
               </article>
             `).join("")
-            : `<article class="rounded-[28px] border border-dashed border-white/10 bg-slate-950/40 p-6 text-sm leading-7 text-slate-300 md:col-span-2 xl:col-span-3">${text.empty}</article>`}
+            : `<article class="rounded-[28px] border border-dashed border-white/10 bg-slate-950/40 p-6 ${bodyClass} text-slate-300 md:col-span-2 xl:col-span-3">${text.empty}</article>`}
         </div>
       </section>
       <section class="grid gap-4 lg:grid-cols-[1.1fr,0.9fr]">
         <article class="rounded-[30px] border border-white/10 bg-white/[0.03] p-5">
           <div class="flex items-center justify-between gap-3">
-            <h2 class="text-xl font-semibold text-white">${text.issueTitle}</h2>
+            <h2 class="${cardTitleClass} text-white">${text.issueTitle}</h2>
             <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">${escalation.length}</span>
           </div>
-          <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+          <ul class="mt-4 space-y-3 ${bodyClass} text-slate-300">
             ${escalation.map((item, index) => `
               <li class="grid grid-cols-[26px,1fr] items-start gap-3 rounded-2xl bg-slate-950/70 px-4 py-3">
                 <span class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/10 text-[11px] text-slate-300">${index + 1}</span>
@@ -212,8 +217,8 @@
         </article>
         <article class="rounded-[30px] border border-red-400/20 bg-[linear-gradient(180deg,rgba(127,29,29,0.2),rgba(15,23,42,0.92))] p-5">
           <div class="inline-flex rounded-full border border-red-300/20 bg-red-500/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-red-100">${text.nextBadge}</div>
-          <h2 class="mt-4 text-xl font-semibold text-white">${text.nextTitle}</h2>
-          <p class="mt-4 text-sm leading-7 text-slate-300">${text.nextBody}</p>
+          <h2 class="mt-4 ${cardTitleClass} text-white">${text.nextTitle}</h2>
+          <p class="mt-4 ${bodyClass} text-slate-300">${text.nextBody}</p>
           <div class="mt-5 flex flex-wrap gap-3">
             <a href="/pages/command-center.html" class="rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-400">${text.commandLink}</a>
             <a href="/pages/tutorials.html" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:border-red-400/40 hover:text-white">${text.tutorialLink}</a>
