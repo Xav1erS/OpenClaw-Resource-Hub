@@ -91,11 +91,11 @@
         }
       },
       "command-center": {
-        eyebrow: { zh: "速查与排错", en: "Cheatsheet + Troubleshooting" },
-        title: { zh: "命令中心", en: "Command Center" },
+        eyebrow: { zh: "官方速查", en: "Official Cheatsheet" },
+        title: { zh: "命令中心 / Cheatsheet", en: "Command Center / Cheatsheet" },
         subtitle: {
-          zh: "把 CLI 命令、配置片段和常见故障集中到一个可搜索的页面。",
-          en: "A searchable page for CLI commands, config snippets, and troubleshooting notes."
+          zh: "把官方 cheatsheet 的主干命令、运行状态、频道管理、模型探针和 fast fixes 集中到一个可搜索页面。",
+          en: "A searchable mirror of the official cheatsheet for runtime commands, channels, model probes, and fast fixes."
         }
       },
       "release-notes": {
@@ -336,12 +336,12 @@
     },
     command: {
       stats: {
-        groups: { zh: "命令组", en: "Command Sets" },
-        issues: { zh: "故障场景", en: "Failure Cases" },
-        actions: { zh: "动作", en: "Actions" }
+        groups: { zh: "速查分组", en: "Cheatsheet Blocks" },
+        issues: { zh: "Fast Fixes", en: "Fast Fixes" },
+        actions: { zh: "入口", en: "Entry Points" }
       },
-      actionValue: { zh: "搜索 / 复制 / 排错", en: "Search / Debug" },
-      searchPlaceholder: { zh: "搜索命令、配置或故障关键词", en: "Search commands, config snippets, or issues" }
+      actionValue: { zh: "搜索 / 复制 / 探针", en: "Search / Copy / Probe" },
+      searchPlaceholder: { zh: "搜索 gateway、channels、memory、slash commands、故障关键词", en: "Search gateway, channels, memory, slash commands, or fixes" }
     },
     release: {
       stats: {
@@ -459,11 +459,15 @@
   const commandSections = {
     zh: [
       { title: "CLI 启动", description: "最常用的本地初始化和排错命令。", commands: [{ label: "初始化项目", code: "openclaw init" }, { label: "启动服务", code: "openclaw start" }, { label: "环境体检", code: "openclaw doctor" }, { label: "查看版本", code: "openclaw --version" }] },
+      { title: "Gateway 与运行状态", description: "对齐官方 cheatsheet 的第一层运行控制。先确认 gateway 活着，再判断频道和模型是否正常。", commands: [{ label: "启动 gateway", code: "openclaw gateway start" }, { label: "查看 gateway 状态", code: "openclaw gateway status" }, { label: "重启 gateway", code: "openclaw gateway restart" }, { label: "查看 agent 会话", code: "openclaw sessions list" }] },
+      { title: "模型与授权", description: "当模型探针失败或 provider 权限有问题时，先从这里排。", commands: [{ label: "列出模型", code: "openclaw models list --provider anthropic" }, { label: "模型状态探针", code: "openclaw models status --probe" }, { label: "切换默认模型", code: "openclaw models set claude-3-5-sonnet" }, { label: "设置 provider token", code: "openclaw models auth setup-token --provider anthropic" }] },
       { title: "配置片段", description: "当前阶段最值得保留的 YAML 片段。", commands: [{ label: "轻量模型", code: "model: claude-haiku-4.6\nmax_steps: 24" }, { label: "心跳配置", code: "heartbeat:\n  enabled: true\n  interval: 60" }, { label: "日志输出", code: "logging:\n  level: info\n  file: openclaw.log" }] },
       { title: "上线前检查", description: "避免最常见的首发事故。", commands: [{ label: "检查端口", code: "netstat -ano | findstr 8080" }, { label: "检查环境变量", code: "echo %OPENCLAW_API_KEY%" }, { label: "检查日志", code: "type openclaw.log" }] }
     ],
     en: [
       { title: "CLI Startup", description: "Most-used commands for local setup and debugging.", commands: [{ label: "Initialize project", code: "openclaw init" }, { label: "Start service", code: "openclaw start" }, { label: "Health check", code: "openclaw doctor" }, { label: "Show version", code: "openclaw --version" }] },
+      { title: "Gateway and Runtime", description: "Aligned with the first operating layer in the official cheatsheet. Prove the gateway is alive before you debug channels or models.", commands: [{ label: "Start gateway", code: "openclaw gateway start" }, { label: "Gateway status", code: "openclaw gateway status" }, { label: "Restart gateway", code: "openclaw gateway restart" }, { label: "List sessions", code: "openclaw sessions list" }] },
+      { title: "Models and Auth", description: "Use these when model probes fail or provider authorization looks suspicious.", commands: [{ label: "List models", code: "openclaw models list --provider anthropic" }, { label: "Model probe", code: "openclaw models status --probe" }, { label: "Set default model", code: "openclaw models set claude-3-5-sonnet" }, { label: "Setup provider token", code: "openclaw models auth setup-token --provider anthropic" }] },
       { title: "Config Snippets", description: "Small YAML fragments worth keeping around.", commands: [{ label: "Light model", code: "model: claude-haiku-4.6\nmax_steps: 24" }, { label: "Heartbeat", code: "heartbeat:\n  enabled: true\n  interval: 60" }, { label: "Logging", code: "logging:\n  level: info\n  file: openclaw.log" }] },
       { title: "Pre-Launch Checks", description: "Avoid the most common launch mistakes.", commands: [{ label: "Check port", code: "netstat -ano | findstr 8080" }, { label: "Check env var", code: "echo %OPENCLAW_API_KEY%" }, { label: "Inspect log", code: "type openclaw.log" }] }
     ]
@@ -473,12 +477,16 @@
     zh: [
       { title: "API Key 无效或未加载", symptoms: "启动时报 401 / 模型调用立即失败", diagnosis: "优先检查配置文件是否把换行、引号或空格一起带进去了。", fix: ["重新复制 API Key，避免尾部空格。", "把 Key 放进环境变量，再在配置里读取。", "先用最小配置做一次单步请求验证。"] },
       { title: "请求频率过高", symptoms: "429 rate limit / 批量任务间歇性失败", diagnosis: "通常不是 OpenClaw 本身故障，而是并发或重试策略过猛。", fix: ["把批处理改成队列执行。", "降低 max_steps 或减少同时运行的 Agent 数量。", "高峰时段切到轻量模型。"] },
-      { title: "日志里出现 timeout", symptoms: "步骤卡住 / 浏览器工具返回慢", diagnosis: "常见于网页抓取链路过长，或者模型输出太大。", fix: ["先缩短输入上下文。", "把一个长任务拆成两到三段。", "必要时限制每步输出格式。"] }
+      { title: "日志里出现 timeout", symptoms: "步骤卡住 / 浏览器工具返回慢", diagnosis: "常见于网页抓取链路过长，或者模型输出太大。", fix: ["先缩短输入上下文。", "把一个长任务拆成两到三段。", "必要时限制每步输出格式。"] },
+      { title: "频道不回消息", symptoms: "DM 无回复 / 群聊沉默", diagnosis: "先不要猜是 prompt 或模型问题。官方 cheatsheet 的第一步是做频道探针。", fix: ["运行 openclaw channels status --probe。", "确认 bot token 和频道登录还有效。", "先在私聊验证，再回到群聊检查权限。"] },
+      { title: "Memory 结果不准", symptoms: "记忆搜索不到 / 返回旧内容", diagnosis: "多半是索引陈旧或 memory provider 状态异常。", fix: ["运行 openclaw memory status。", "检查当前索引和 provider 是否健康。", "必要时执行 openclaw memory index --force。"] }
     ],
     en: [
       { title: "API key is invalid or missing", symptoms: "401 on startup / model calls fail immediately", diagnosis: "Check whether line breaks, quotes, or whitespace were copied into the config.", fix: ["Copy the API key again without trailing spaces.", "Load the key from environment variables.", "Validate with a minimal one-step request first."] },
       { title: "Rate limit is too high", symptoms: "429 rate limit / intermittent batch failures", diagnosis: "This is usually concurrency or retry pressure, not an OpenClaw platform issue.", fix: ["Move batch work into a queue.", "Reduce max_steps or active agents.", "Switch to a lighter model during peak usage."] },
-      { title: "Timeout appears in logs", symptoms: "A step hangs / browser tool responds slowly", diagnosis: "Often caused by long page-fetching chains or overly large outputs.", fix: ["Reduce input context first.", "Split one long task into two or three stages.", "Constrain output format per step."] }
+      { title: "Timeout appears in logs", symptoms: "A step hangs / browser tool responds slowly", diagnosis: "Often caused by long page-fetching chains or overly large outputs.", fix: ["Reduce input context first.", "Split one long task into two or three stages.", "Constrain output format per step."] },
+      { title: "Channel does not reply", symptoms: "No DM reply / silent group chat", diagnosis: "Do not start by blaming the prompt or model. The official cheatsheet says to probe the channel first.", fix: ["Run openclaw channels status --probe.", "Confirm the bot token or login is still valid.", "Prove the bot works in DM first, then inspect group permissions."] },
+      { title: "Memory search looks wrong", symptoms: "Missing memories / stale results", diagnosis: "This is usually a stale index or an unhealthy memory provider.", fix: ["Run openclaw memory status.", "Check the current index and provider health.", "If needed, run openclaw memory index --force."] }
     ]
   };
 
