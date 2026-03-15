@@ -1076,13 +1076,13 @@
     setPage("release-notes", renderReleaseNotesPage);
     const notes = releaseNotes[state.currentLang];
     const roadmap = roadmapItems[state.currentLang];
-    const timelineLabel = state.currentLang === "zh" ? "鐗堟湰鏃堕棿绾? : "Release Timeline";
+    const timelineLabel = state.currentLang === "zh" ? "版本时间线" : "Release Timeline";
     const latestBadge = "Latest";
     const latestSummary = state.currentLang === "zh"
-      ? "褰撳墠鍙叕寮€璁块棶鐗堟湰鐨勪笂绾垮熀绾裤€?
+      ? "当前可公开访问版本的上线基线。"
       : "The launch baseline for the current public version.";
     const sprintSummary = state.currentLang === "zh"
-      ? "杩欎竴杞凯浠ｅ畬鎴愮殑鏍稿績鏇存柊銆?
+      ? "这一轮迭代完成的核心更新。"
       : "Core updates completed in this iteration.";
 
     pageShell("release-notes", [
@@ -1100,7 +1100,7 @@
               <h2 class="mt-3 text-2xl font-semibold text-white">${timelineLabel}</h2>
             </div>
             <div class="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-emerald-200">
-              ${t(pageText.release.stats.status)} 路 ${t(pageText.release.statusValue)}
+              ${t(pageText.release.stats.status)} · ${t(pageText.release.statusValue)}
             </div>
           </div>
           <div class="relative pl-0 lg:pl-8">
@@ -1156,6 +1156,7 @@
       </div>
     `;
   }
+
   window.modulePages = {
     renderTaskLibraryPage,
     renderWorkflowPage,
