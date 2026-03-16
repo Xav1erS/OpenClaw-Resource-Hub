@@ -314,7 +314,7 @@
     ctx.textAlign = "center";
     ctx.fillStyle = "#f8fafc";
     ctx.font = isEn ? "700 14px Arial" : "700 16px Arial";
-    ctx.fillText(label(summary, "鎵爜鐪嬪畬鏁存垚鏈〉", "Open full calculator"), panel.x + panel.width / 2, titleY);
+    ctx.fillText(label(summary, "扫码看完整成本页", "Open full calculator"), panel.x + panel.width / 2, titleY);
 
     ctx.fillStyle = "rgba(203,213,225,0.72)";
     ctx.font = isEn ? "600 11px Arial" : "600 12px Arial";
