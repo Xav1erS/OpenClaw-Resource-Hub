@@ -34,12 +34,12 @@
               <button data-lang="en" class="rounded-full px-3 py-1.5 transition ${lang === "en" ? "bg-white text-slate-950 shadow-sm" : "text-slate-300 hover:text-white"}">EN</button>
             </div>
           </div>
-          <nav class="mt-2 flex gap-2 overflow-x-auto pb-1 text-sm sm:mt-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          ${options.hideNav ? "" : `<nav class="mt-2 flex gap-2 overflow-x-auto pb-1 text-sm sm:mt-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             ${navItems.map((item) => {
               const active = item.id === currentPage;
               return `<a href="${item.href}" class="shrink-0 rounded-full px-4 py-2.5 transition ${active ? "bg-red-500 text-white shadow-lg shadow-red-950/30" : "border border-white/10 bg-white/5 text-slate-300 hover:border-red-400/40 hover:bg-white/10 hover:text-white"}">${labelFor(item, lang)}</a>`;
             }).join("")}
-          </nav>
+          </nav>`}
         </div>
       </header>
     `;

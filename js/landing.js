@@ -118,21 +118,7 @@
     document.getElementById("landing-root").innerHTML = `
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(239,68,68,0.18),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(153,27,27,0.18),_transparent_32%),linear-gradient(180deg,_#020617_0%,_#0f172a_45%,_#111827_100%)] text-slate-100">
         <div class="pointer-events-none fixed inset-0 opacity-40" style="background-image:linear-gradient(rgba(148,163,184,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.07) 1px, transparent 1px); background-size: 32px 32px;"></div>
-        <header class="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-          <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-            <a href="/index.html" class="flex min-w-0 items-center gap-3">
-              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-red-400/30 bg-red-500/15 text-sm font-semibold tracking-[0.18em] text-red-100">OC</span>
-              <div class="min-w-0">
-                <div class="truncate text-sm uppercase tracking-[0.28em] text-slate-400">${text.brandTop}</div>
-                <div class="truncate text-lg font-semibold text-white">${text.brandBottom}</div>
-              </div>
-            </a>
-            <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-xs">
-              <button data-lang="zh" class="rounded-full px-3 py-1 transition ${state.lang === "zh" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langZh}</button>
-              <button data-lang="en" class="rounded-full px-3 py-1 transition ${state.lang === "en" ? "bg-white text-slate-950" : "text-slate-300"}">${text.langEn}</button>
-            </div>
-          </div>
-        </header>
+        ${window.openClawSiteShell.renderHeader({ lang: state.lang, hideNav: true })}
         <main class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <section class="grid gap-10 lg:grid-cols-[1.2fr,0.8fr] lg:items-end">
             <div class="min-w-0">
@@ -158,7 +144,7 @@
                 return `
                   <article class="rounded-3xl border border-white/10 bg-white/5 p-5">
                     <div class="text-sm text-slate-400">${item.label}</div>
-                    <div class="mt-2 ${compact ? "text-[clamp(1.1rem,1.7vw,1.7rem)] break-words" : "text-[clamp(1rem,2.4vw,2.2rem)] whitespace-nowrap"} font-semibold leading-tight text-white">${item.value}</div>
+                    <div class="mt-2 ${compact ? "text-[clamp(1.1rem,1.7vw,1.7rem)] break-words" : "text-[clamp(1rem,2.4vw,1.6rem)]"} font-semibold leading-tight text-white">${item.value}</div>
                   </article>
                 `;
               }).join("")}
