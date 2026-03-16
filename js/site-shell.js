@@ -20,7 +20,7 @@
 
     return `
       <header class="sticky top-0 z-40 border-b border-white/10 bg-slate-950/85 backdrop-blur-xl">
-        <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl px-4 py-2 sm:px-6 sm:py-4 lg:px-8">
           <div class="flex items-center justify-between gap-4">
             <a href="/index.html" class="flex min-w-0 items-center gap-3">
               <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-red-400/30 bg-[radial-gradient(circle_at_top,_rgba(248,113,113,0.22),rgba(127,29,29,0.22)),linear-gradient(180deg,rgba(69,10,10,0.94),rgba(31,41,55,0.94))] text-sm font-semibold tracking-[0.18em] text-red-100 shadow-lg shadow-red-950/30">OC</span>
@@ -34,7 +34,7 @@
               <button data-lang="en" class="rounded-full px-3 py-1.5 transition ${lang === "en" ? "bg-white text-slate-950 shadow-sm" : "text-slate-300 hover:text-white"}">EN</button>
             </div>
           </div>
-          <nav class="mt-4 flex gap-2 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <nav class="mt-2 flex gap-2 overflow-x-auto pb-1 text-sm sm:mt-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             ${navItems.map((item) => {
               const active = item.id === currentPage;
               return `<a href="${item.href}" class="shrink-0 rounded-full px-4 py-2.5 transition ${active ? "bg-red-500 text-white shadow-lg shadow-red-950/30" : "border border-white/10 bg-white/5 text-slate-300 hover:border-red-400/40 hover:bg-white/10 hover:text-white"}">${labelFor(item, lang)}</a>`;

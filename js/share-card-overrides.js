@@ -35,12 +35,14 @@
     return (meta && meta.content) || window.location.origin || "https://openclawtools.org";
   }
 
-  function getShareLandingUrl() {
-    return `${getSiteUrl().replace(/\/$/, "")}/pages/cost-calculator.html`;
+  function getShareLandingUrl(utmSource) {
+    const base = `${getSiteUrl().replace(/\/$/, "")}/pages/cost-calculator.html`;
+    if (!utmSource) return base;
+    return `${base}?utm_source=${utmSource}&utm_medium=share_card&utm_campaign=cost_calc`;
   }
 
   function getDesktopUrl() {
-    return "openclawtools.org";
+    return "openclawtools.org/pages/cost-calculator.html";
   }
 
   let qrImagePromise = null;
@@ -86,9 +88,9 @@
 
   function buildShareText(summary, lang = "en") {
     if (lang === "zh") {
-      return `我测了下 OpenClaw Agent 成本：${summary.modelName} 约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${getWarningSentence(summary, "zh")} ${getShareLandingUrl()}`;
+      return `我测了下 AI Agent 成本：${summary.modelName} 约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${getWarningSentence(summary, "zh")} ${getShareLandingUrl("wechat")}`;
     }
-    return `I estimated an OpenClaw agent on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${getWarningSentence(summary, "en")} ${getShareLandingUrl()}`;
+    return `I estimated an OpenClaw agent on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${getWarningSentence(summary, "en")} ${getShareLandingUrl("social")}`;
   }
 
   function wrapLines(ctx, text, maxWidth, maxLines) {

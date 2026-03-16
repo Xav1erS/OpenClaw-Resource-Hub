@@ -84,7 +84,7 @@
       suggestionsTitle: "最重要的优化建议",
       comparisonTitle: "同任务强度下的模型对比",
       comparisonBody: "如果想换模型，先在同一组任务强度下看成本差距。",
-      shareTitle: "最后再分享",
+      shareTitle: "分享",
       shareBody: "确认结果没问题后，再刷新卡片、下载 PNG 或复制分享文案。",
       generateCard: "刷新卡片",
       downloadCard: "下载 PNG",
@@ -160,7 +160,7 @@
       suggestionsTitle: "Top optimization moves",
       comparisonTitle: "Model comparison under the same workload",
       comparisonBody: "If you want to switch models, compare monthly cost under the exact same task intensity first.",
-      shareTitle: "Share after review",
+      shareTitle: "Share",
       shareBody: "Once the result looks right, refresh the card, download the PNG, or copy the share copy here.",
       generateCard: "Refresh card",
       downloadCard: "Download PNG",
@@ -186,11 +186,9 @@
     if (state.lang === "zh") {
       return {
         title: "价格来源与更新时间",
-        body: "全球主流模型价格基于官方 API 定价页整理。分享卡里的二维码会直接回到当前成本页，方便继续查看或转发。",
+        body: "全球主流模型价格基于官方 API 定价页整理，定期维护更新。",
         updatedLabel: "价格更新",
         updatedValue: "2026-03-15",
-        qrLabel: "扫码打开成本页",
-        qrHint: "适合放进截图、群聊或朋友圈继续引流。",
         sources: [
           { label: "OpenAI API Pricing", url: "https://openai.com/api/pricing/" },
           { label: "Anthropic Pricing", url: "https://docs.anthropic.com/en/docs/about-claude/pricing" },
@@ -202,11 +200,9 @@
 
     return {
       title: "Pricing sources and freshness",
-      body: "Global model pricing is based on official API pricing pages. The QR code on the share card routes people back to this calculator for the next step.",
+      body: "Global model pricing is sourced from official API pricing pages and kept up to date.",
       updatedLabel: "Price snapshot",
       updatedValue: "2026-03-15",
-      qrLabel: "Open this calculator",
-      qrHint: "Useful for screenshots, group chats, and outbound sharing.",
       sources: [
         { label: "OpenAI API Pricing", url: "https://openai.com/api/pricing/" },
         { label: "Anthropic Pricing", url: "https://docs.anthropic.com/en/docs/about-claude/pricing" },
@@ -450,9 +446,9 @@
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(239,68,68,0.14),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(127,29,29,0.18),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#111827_100%)]">
         <div class="pointer-events-none fixed inset-0 opacity-40" style="background-image:linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px); background-size: 30px 30px;"></div>
         ${renderHeader()}
-        <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <section class="grid gap-5 xl:grid-cols-[minmax(0,1.24fr)_minmax(320px,0.76fr)] xl:items-stretch">
-            <div class="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.55),rgba(15,23,42,0.18))] p-6 shadow-[0_24px_80px_rgba(2,6,23,0.28)] sm:p-7">
+        <main class="relative mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
+          <section class="grid gap-3 sm:gap-5 xl:grid-cols-[minmax(0,1.24fr)_minmax(320px,0.76fr)] xl:items-stretch">
+            <div class="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.55),rgba(15,23,42,0.18))] p-4 shadow-[0_24px_80px_rgba(2,6,23,0.28)] sm:p-6 lg:p-7">
               <p class="mb-4 text-xs uppercase tracking-[0.38em] text-red-200">${text.pageTag}</p>
               <h1 class="max-w-4xl ${heroTitleClass} font-semibold text-white">${text.title}</h1>
               <p class="mt-4 max-w-3xl ${heroBodyClass} text-slate-300">${text.subtitle}</p>
@@ -467,30 +463,30 @@
                 const compact = String(item.value).length > 12;
                 const numeric = /^[0-9]+$/.test(String(item.value).trim());
                 const spanClass = item === text.stats[2] ? "xl:col-span-2" : "";
-                return `<article class="${spanClass} relative min-w-0 overflow-hidden rounded-[28px] bg-[radial-gradient(circle_at_top_left,rgba(248,113,113,0.08),transparent_38%),linear-gradient(180deg,rgba(15,23,42,0.92),rgba(15,23,42,0.7))] p-4 shadow-[0_18px_50px_rgba(2,6,23,0.2),inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur"><div class="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-red-200/15 to-transparent"></div><div class="flex h-full flex-col justify-between"><div class="flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-slate-400"><span class="h-1.5 w-1.5 rounded-full bg-red-300/55"></span><span>${item.label}</span></div><div class="mt-6 ${numeric ? "text-[clamp(2.15rem,4vw,3rem)]" : compact ? "text-[clamp(1.28rem,1.8vw,1.86rem)] max-w-[12ch]" : "text-[clamp(1.5rem,2vw,2.1rem)]"} font-semibold leading-[1.02] text-white break-words">${item.value}</div></div></article>`;
+                return `<article class="${spanClass} relative min-w-0 overflow-hidden rounded-[28px] bg-[radial-gradient(circle_at_top_left,rgba(248,113,113,0.08),transparent_38%),linear-gradient(180deg,rgba(15,23,42,0.92),rgba(15,23,42,0.7))] p-4 shadow-[0_18px_50px_rgba(2,6,23,0.2),inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur"><div class="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-red-200/15 to-transparent"></div><div class="flex h-full flex-col justify-between"><div class="flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-slate-400"><span class="h-1.5 w-1.5 rounded-full bg-red-300/55"></span><span>${item.label}</span></div><div class="mt-6 ${numeric ? "text-[clamp(2.15rem,4vw,3rem)]" : compact ? "text-[clamp(1.28rem,1.8vw,1.86rem)]" : "text-[clamp(1.5rem,2vw,2.1rem)]"} font-semibold leading-[1.02] text-white break-words">${item.value}</div></div></article>`;
               }).join("")}
             </div>
           </section>
-          <section class="mt-7 space-y-6">
-            <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-slate-950/20">
+          <section class="mt-4 space-y-4 sm:mt-7 sm:space-y-6">
+            <article class="rounded-[32px] border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-slate-950/20 sm:p-6">
               <div class="max-w-3xl">
                 <div class="text-xs uppercase tracking-[0.24em] text-red-200">${text.setupTag}</div>
                 <h2 class="mt-3 text-3xl font-semibold text-white">${text.setupTitle}</h2>
                 <p class="mt-3 text-sm leading-7 text-slate-300">${text.setupBody}</p>
               </div>
-              <div class="mt-8 space-y-6">
+              <div class="mt-5 space-y-4 sm:mt-8 sm:space-y-6">
                 ${renderModelSelector()}
-                <article class="rounded-[28px] border border-white/10 bg-slate-950/55 p-6">
+                <article class="rounded-[28px] border border-white/10 bg-slate-950/55 p-4 sm:p-6">
                   <h3 class="text-2xl font-semibold text-white">${text.presetTitle}</h3>
                   <p class="mt-2 text-sm leading-7 text-slate-300">${text.presetBody}</p>
                   <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">${renderPresetCards()}</div>
                 </article>
-                <article class="rounded-[28px] border border-white/10 bg-slate-950/55 p-6">
+                <article class="rounded-[28px] border border-white/10 bg-slate-950/55 p-4 sm:p-6">
                   <h3 class="text-2xl font-semibold text-white">${text.questionnaireTitle}</h3>
                   <p class="mt-2 text-sm leading-7 text-slate-300">${text.questionnaireBody}</p>
                   <div class="mt-6 grid gap-4 xl:grid-cols-2">${renderQuestionBlocks()}</div>
                 </article>
-                <article class="rounded-[28px] border border-white/10 bg-slate-950/55 p-6">
+                <article class="rounded-[28px] border border-white/10 bg-slate-950/55 p-4 sm:p-6">
                   <div class="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <h3 class="text-2xl font-semibold text-white">${text.advancedTitle}</h3>
@@ -503,7 +499,7 @@
                 </article>
               </div>
             </article>
-            <article class="rounded-[32px] border border-white/10 bg-white/[0.05] p-6 shadow-2xl shadow-slate-950/30">
+            <article class="rounded-[32px] border border-white/10 bg-white/[0.05] p-4 shadow-2xl shadow-slate-950/30 sm:p-6">
               <div class="max-w-3xl">
                 <div class="text-xs uppercase tracking-[0.24em] text-red-200">${text.resultTag}</div>
                 <h2 class="mt-3 text-3xl font-semibold text-white">${text.resultTitle}</h2>
@@ -527,7 +523,7 @@
                 <p class="mt-4 text-base leading-8 text-white">${state.summary.takeaway}</p>
               </div>
             </article>
-            <article class="rounded-[32px] border border-white/10 bg-white/[0.05] p-6 shadow-2xl shadow-slate-950/30">
+            <article class="rounded-[32px] border border-white/10 bg-white/[0.05] p-4 shadow-2xl shadow-slate-950/30 sm:p-6">
               <h2 class="text-2xl font-semibold text-white">${text.shareTitle}</h2>
               <p class="mt-3 text-sm leading-7 text-slate-300">${text.shareBody}</p>
               <div class="mt-5 grid gap-3 lg:grid-cols-2">
@@ -551,7 +547,7 @@
                 <div class="mb-3 flex items-center justify-between gap-3"><div class="text-sm uppercase tracking-[0.24em] text-slate-400">${text.generatedLabel}</div><div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">${state.summary.warningLabel}</div></div>
                 <img src="${state.shareDataUrl}" alt="Share card preview" class="${state.shareFormat === "portrait" ? "aspect-[4/5] max-w-[640px]" : "aspect-square max-w-[760px]"} w-full rounded-[24px] border border-white/10 bg-slate-950 object-cover shadow-2xl shadow-slate-950/40">
               </div>
-              <div class="mt-5 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+              <div class="mt-5">
                 <article class="rounded-[28px] border border-white/10 bg-slate-950/60 p-5">
                   <div class="flex flex-wrap items-center justify-between gap-3">
                     <h3 class="text-lg font-semibold text-white">${pricingMeta.title}</h3>
@@ -560,13 +556,6 @@
                   <p class="mt-3 text-sm leading-7 text-slate-300">${pricingMeta.body}</p>
                   <div class="mt-4 flex flex-wrap gap-2">
                     ${pricingMeta.sources.map((source) => `<a href="${source.url}" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-slate-200 transition hover:border-red-300/30 hover:text-white">${source.label}</a>`).join("")}
-                  </div>
-                </article>
-                <article class="rounded-[28px] border border-white/10 bg-slate-950/60 p-5">
-                  <div class="text-sm font-medium text-white">${pricingMeta.qrLabel}</div>
-                  <p class="mt-2 text-sm leading-7 text-slate-300">${pricingMeta.qrHint}</p>
-                  <div class="mt-4 inline-flex rounded-[24px] bg-white p-3 shadow-[0_14px_40px_rgba(15,23,42,0.38)]">
-                    <img src="/assets/cost-calculator-qr.png" alt="Cost calculator QR code" class="h-40 w-40 rounded-[16px] object-cover">
                   </div>
                 </article>
               </div>

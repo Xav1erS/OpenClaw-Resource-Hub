@@ -158,7 +158,7 @@
                 return `
                   <article class="rounded-3xl border border-white/10 bg-white/5 p-5">
                     <div class="text-sm text-slate-400">${item.label}</div>
-                    <div class="mt-2 ${compact ? "text-[clamp(1.1rem,1.7vw,1.7rem)] max-w-[8ch]" : "text-[clamp(1.4rem,2.4vw,2.2rem)]"} font-semibold leading-tight text-white break-words">${item.value}</div>
+                    <div class="mt-2 ${compact ? "text-[clamp(1.1rem,1.7vw,1.7rem)] break-words" : "text-[clamp(1rem,2.4vw,2.2rem)] whitespace-nowrap"} font-semibold leading-tight text-white">${item.value}</div>
                   </article>
                 `;
               }).join("")}

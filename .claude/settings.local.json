@@ -3,7 +3,8 @@
     "allow": [
       "Bash(xargs sed:*)",
       "Bash(python -:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(head -20 grep -n \"py-8\\\\|py-6\\\\|p-6\\\\|space-y-6\\\\|mt-7\\\\|mt-8\" c:/Users/Windows11/Documents/GitHub/OpenClaw-Resource-Hub/js/module-pages.js)"
     ]
   }
 }

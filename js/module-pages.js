@@ -792,9 +792,9 @@
       <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(239,68,68,0.16),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(127,29,29,0.16),_transparent_28%),linear-gradient(180deg,_#020617_0%,_#0f172a_50%,_#111827_100%)] text-slate-100">
         <div class="pointer-events-none fixed inset-0 opacity-50" style="background-image:linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px); background-size: 32px 32px;"></div>
         ${headerMarkup}
-        <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <section class="grid gap-5 xl:grid-cols-[minmax(0,1.24fr)_minmax(320px,0.76fr)] xl:items-stretch">
-            <div class="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.55),rgba(15,23,42,0.18))] p-6 shadow-[0_24px_80px_rgba(2,6,23,0.28)] sm:p-7">
+        <main class="relative mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
+          <section class="grid gap-3 sm:gap-5 xl:grid-cols-[minmax(0,1.24fr)_minmax(320px,0.76fr)] xl:items-stretch">
+            <div class="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.55),rgba(15,23,42,0.18))] p-4 shadow-[0_24px_80px_rgba(2,6,23,0.28)] sm:p-6 lg:p-7">
               <p class="mb-4 text-xs uppercase tracking-[0.36em] text-red-200">${t(meta.eyebrow)}</p>
               <h1 class="max-w-4xl ${type.heroTitle} font-semibold text-white break-words">${t(meta.title)}</h1>
               <p class="mt-4 max-w-3xl ${type.heroBody} text-slate-300">${t(meta.subtitle)}</p>
@@ -807,10 +807,10 @@
               ${safeArray(stats).map((item, index) => renderHeroStatCard(item, index)).join("")}
             </div>
           </section>
-          <section class="relative mt-7 overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.82),rgba(2,6,23,0.72))] shadow-[0_28px_90px_rgba(2,6,23,0.28)]">
+          <section class="relative mt-4 overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.82),rgba(2,6,23,0.72))] shadow-[0_28px_90px_rgba(2,6,23,0.28)] sm:mt-7">
             <div class="pointer-events-none absolute inset-x-0 mt-px h-px bg-gradient-to-r from-transparent via-white/18 to-transparent"></div>
-            <div class="rounded-[31px] bg-[linear-gradient(180deg,rgba(15,23,42,0.42),rgba(2,6,23,0.12))] p-3 sm:p-5 lg:p-6">
-              <div id="page-root" class="space-y-6"></div>
+            <div class="rounded-[31px] bg-[linear-gradient(180deg,rgba(15,23,42,0.42),rgba(2,6,23,0.12))] p-3 sm:p-4 lg:p-6">
+              <div id="page-root" class="space-y-4 sm:space-y-6"></div>
             </div>
           </section>
         </main>
