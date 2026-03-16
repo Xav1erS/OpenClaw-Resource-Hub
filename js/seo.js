@@ -115,4 +115,20 @@
     s.src = "/_vercel/insights/script.js";
     document.head.appendChild(s);
   })();
+
+  // Google Analytics 4
+  (function () {
+    var gaIdMeta = document.querySelector('meta[name="openclaw-ga-id"]');
+    var gaId = (gaIdMeta && gaIdMeta.content) ? gaIdMeta.content : "G-G9FKFQ3GZD";
+    if (!gaId) return;
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + gaId;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", gaId);
+  })();
 })();
