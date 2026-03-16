@@ -118,7 +118,7 @@ def main() -> int:
 
     sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8") if (ROOT / "sitemap.xml").exists() else ""
     for expected in (
-        "https://openclaw-resource-hub.vercel.app/",
+        "https://openclawtools.org/",
         "/pages/quickstart.html",
         "/pages/command-center.html",
         "/pages/troubleshooting.html",

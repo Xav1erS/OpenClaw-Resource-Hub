@@ -3,7 +3,7 @@ from urllib.request import urlopen
 import esprima
 
 
-URL = "https://openclaw-resource-hub.vercel.app/js/module-pages.js"
+URL = "https://openclawtools.org/js/module-pages.js"
 
 
 def main() -> None:

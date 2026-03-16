@@ -4,13 +4,13 @@ from urllib.request import urlopen
 
 
 URLS = [
-    "https://openclaw-resource-hub.vercel.app/pages/command-center.html",
-    "https://openclaw-resource-hub.vercel.app/pages/quickstart.html",
-    "https://openclaw-resource-hub.vercel.app/pages/task-library.html",
-    "https://openclaw-resource-hub.vercel.app/pages/tutorials.html",
-    "https://openclaw-resource-hub.vercel.app/pages/release-notes.html",
-    "https://openclaw-resource-hub.vercel.app/pages/cost-calculator.html",
-    "https://openclaw-resource-hub.vercel.app/js/module-pages.js",
+    "https://openclawtools.org/pages/command-center.html",
+    "https://openclawtools.org/pages/quickstart.html",
+    "https://openclawtools.org/pages/task-library.html",
+    "https://openclawtools.org/pages/tutorials.html",
+    "https://openclawtools.org/pages/release-notes.html",
+    "https://openclawtools.org/pages/cost-calculator.html",
+    "https://openclawtools.org/js/module-pages.js",
 ]
 
 

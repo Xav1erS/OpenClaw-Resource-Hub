@@ -508,10 +508,10 @@ function buildCostNarrative(summary, lang = "en") {
 
 function buildShareText(summary, lang = "en") {
   if (lang === "zh") {
-    return `我测了一下 OpenClaw Agent 成本：${summary.modelName} 大约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${summary.takeawayZh} openclaw-resource-hub.vercel.app/pages/cost-calculator.html`;
+    return `我测了一下 OpenClaw Agent 成本：${summary.modelName} 大约 $${summary.dailyCost.toFixed(2)}/天，$${summary.monthlyCost.toFixed(2)}/月。${summary.takeawayZh} openclawtools.org/pages/cost-calculator.html`;
   }
 
-  return `I estimated my OpenClaw agent cost on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${summary.takeawayEn} openclaw-resource-hub.vercel.app/pages/cost-calculator.html`;
+  return `I estimated my OpenClaw agent cost on ${summary.modelName}: about $${summary.dailyCost.toFixed(2)}/day and $${summary.monthlyCost.toFixed(2)}/month. ${summary.takeawayEn} openclawtools.org/pages/cost-calculator.html`;
 }
 
 function drawRoundedRect(ctx, x, y, width, height, radius) {
@@ -642,7 +642,7 @@ function generateShareCard(summary) {
 
   ctx.fillStyle = "rgba(248,250,252,0.64)";
   ctx.font = "500 22px Arial";
-  ctx.fillText("openclaw-resource-hub.vercel.app/pages/cost-calculator.html", 140, 1080);
+  ctx.fillText("openclawtools.org/pages/cost-calculator.html", 140, 1080);
 
   return canvas;
 }

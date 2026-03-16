@@ -20,7 +20,7 @@
 ## Current Constraints
 - This is still a static-file site. There is no build pipeline and no framework runtime.
 - The public site is currently hosted on the default Vercel domain:
-  `https://openclaw-resource-hub.vercel.app`
+  `https://openclawtools.org`
 - Google Analytics wiring exists, but `openclaw-ga-id` is still blank in page metadata, so real analytics is not live yet.
 - The share card system is canvas-based and uses a local QR asset:
   `assets/cost-calculator-qr.png`

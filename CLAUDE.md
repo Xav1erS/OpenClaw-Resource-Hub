@@ -23,7 +23,7 @@ OpenClaw Resource Hub is a static resource site deployed on Vercel. Most pages a
 
 ## Search Submission Readiness
 - Use the public sitemap:
-  `https://openclaw-resource-hub.vercel.app/sitemap.xml`
+  `https://openclawtools.org/sitemap.xml`
 - Keep only public, index-worthy pages inside the sitemap.
 - If a page is hidden for product reasons, it should usually also be removed from the sitemap and set to `noindex`.
 

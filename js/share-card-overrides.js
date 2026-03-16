@@ -32,7 +32,7 @@
 
   function getSiteUrl() {
     const meta = document.querySelector('meta[name="openclaw-site-url"]');
-    return (meta && meta.content) || window.location.origin || "https://openclaw-resource-hub.vercel.app";
+    return (meta && meta.content) || window.location.origin || "https://openclawtools.org";
   }
 
   function getShareLandingUrl() {
@@ -40,7 +40,7 @@
   }
 
   function getDesktopUrl() {
-    return "openclaw-resource-hub.vercel.app";
+    return "openclawtools.org";
   }
 
   let qrImagePromise = null;

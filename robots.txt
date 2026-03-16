@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://openclaw-resource-hub.vercel.app/sitemap.xml
+Sitemap: https://openclawtools.org/sitemap.xml

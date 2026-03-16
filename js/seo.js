@@ -2,7 +2,7 @@
   const metaSiteUrl = document.querySelector('meta[name="openclaw-site-url"]');
   const configuredSiteUrl = metaSiteUrl && metaSiteUrl.content
     ? metaSiteUrl.content.replace(/\/+$/, "")
-    : "https://openclaw-resource-hub.vercel.app";
+    : "https://openclawtools.org";
 
   const defaultImage = `${configuredSiteUrl}/openclaw-og.svg`;
 
@@ -107,4 +107,12 @@
   };
 
   updateSeo();
+
+  // Vercel Analytics (static site injection)
+  (function () {
+    var s = document.createElement("script");
+    s.defer = true;
+    s.src = "/_vercel/insights/script.js";
+    document.head.appendChild(s);
+  })();
 })();
