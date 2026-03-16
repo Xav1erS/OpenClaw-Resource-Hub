@@ -147,13 +147,14 @@
   }
 
   function drawHeader(ctx, summary, preset) {
+    const isEn = summary.lang === "en";
     ctx.fillStyle = "#f8fafc";
     ctx.font = preset.width === 1080 ? "600 40px Georgia, serif" : "600 48px Georgia, serif";
     ctx.fillText("OpenClaw Agent Cost", 96, 132);
 
     fillRoundedRect(ctx, 96, 154, 262, 52, 26, "rgba(255,255,255,0.05)");
     ctx.fillStyle = "rgba(226,232,240,0.78)";
-    ctx.font = "600 16px Arial";
+    ctx.font = isEn ? "600 15px Arial" : "600 16px Arial";
     ctx.fillText(label(summary, "一眼看懂的成本卡", "A cost card built to repost"), 120, 186);
 
     fillRoundedRect(ctx, 96, 220, 214, 40, 20, "rgba(255,255,255,0.05)");
@@ -248,6 +249,7 @@
   }
 
   function drawQrPanel(ctx, summary, qrImage, panel) {
+    const isEn = summary.lang === "en";
     fillRoundedRect(ctx, panel.x, panel.y, panel.width, panel.height, 30, "rgba(9,13,28,0.82)");
 
     const qrWrapX = panel.x + (panel.width - panel.qrBox) / 2;
@@ -259,25 +261,26 @@
 
     ctx.textAlign = "center";
     ctx.fillStyle = "#f8fafc";
-    ctx.font = "700 17px Arial";
+    ctx.font = isEn ? "700 15px Arial" : "700 17px Arial";
     ctx.fillText(label(summary, "扫码看完整成本页", "Scan for the full calculator"), panel.x + panel.width / 2, panel.y + panel.qrBox + 48);
 
     ctx.fillStyle = "rgba(203,213,225,0.72)";
-    ctx.font = "600 14px Arial";
+    ctx.font = isEn ? "600 13px Arial" : "600 14px Arial";
     const desktopLines = wrapLines(ctx, label(summary, `桌面端：${getDesktopUrl()}`, `Desktop: ${getDesktopUrl()}`), panel.width - 36, 2);
     desktopLines.forEach((line, index) => {
-      ctx.fillText(line, panel.x + panel.width / 2, panel.y + panel.qrBox + 74 + index * 18);
+      ctx.fillText(line, panel.x + panel.width / 2, panel.y + panel.qrBox + 72 + index * 16);
     });
     ctx.textAlign = "start";
   }
 
   function drawBrandPanel(ctx, summary, x, y, width, height) {
+    const isEn = summary.lang === "en";
     fillRoundedRect(ctx, x, y, width, height, 24, "rgba(255,255,255,0.05)");
     ctx.fillStyle = "#f8fafc";
-    ctx.font = "700 18px Arial";
+    ctx.font = isEn ? "700 16px Arial" : "700 18px Arial";
     ctx.fillText(label(summary, "OpenClaw 资源中心", "OpenClaw Resource Hub"), x + 22, y + 28);
     ctx.fillStyle = "rgba(203,213,225,0.68)";
-    ctx.font = "600 15px Arial";
+    ctx.font = isEn ? "600 13px Arial" : "600 15px Arial";
     ctx.fillText(label(summary, "模板、排错、命令速查", "Templates, fixes, and commands"), x + 22, y + 54);
   }
 
@@ -295,14 +298,14 @@
   function renderSquareCard(ctx, summary, qrImage, preset) {
     drawHeader(ctx, summary, preset);
 
-    drawMetricCard(ctx, { x: 96, y: 286, width: 474, height: 180, title: label(summary, "预计每日成本", "Estimated daily cost"), value: `$${summary.dailyCost.toFixed(2)}`, note: label(summary, "按当前模型与任务强度估算", "Based on your model and workload"), large: true });
-    drawMetricCard(ctx, { x: 628, y: 286, width: 474, height: 180, title: label(summary, "预计每月成本", "Estimated monthly cost"), value: `$${summary.monthlyCost.toFixed(2)}`, note: label(summary, "按 30 天估算", "Assuming 30 active days"), large: true });
+    drawMetricCard(ctx, { x: 96, y: 316, width: 474, height: 180, title: label(summary, "预计每日成本", "Estimated daily cost"), value: `$${summary.dailyCost.toFixed(2)}`, note: label(summary, "按当前模型与任务强度估算", "Based on your model and workload"), large: true });
+    drawMetricCard(ctx, { x: 628, y: 316, width: 474, height: 180, title: label(summary, "预计每月成本", "Estimated monthly cost"), value: `$${summary.monthlyCost.toFixed(2)}`, note: label(summary, "按 30 天估算", "Assuming 30 active days"), large: true });
 
-    drawMetricCard(ctx, { x: 96, y: 500, width: 474, height: 170, title: label(summary, "当前模型", "Current model"), value: summary.modelName, note: summary.providerName });
-    drawWorkloadSummaryCard(ctx, summary, { x: 628, y: 500, width: 474, height: 170 });
+    drawMetricCard(ctx, { x: 96, y: 532, width: 474, height: 170, title: label(summary, "当前模型", "Current model"), value: summary.modelName, note: summary.providerName });
+    drawWorkloadSummaryCard(ctx, summary, { x: 628, y: 532, width: 474, height: 170 });
 
-    drawSummaryPanel(ctx, summary, { x: 96, y: 714, width: 710, height: 232 });
-    drawQrPanel(ctx, summary, qrImage, { x: 846, y: 742, width: 212, height: 236, qrBox: 132 });
+    drawSummaryPanel(ctx, summary, { x: 96, y: 760, width: 710, height: 214 });
+    drawQrPanel(ctx, summary, qrImage, { x: 846, y: 784, width: 212, height: 224, qrBox: 128 });
 
     drawWatermark(ctx, preset.width, preset.height);
   }
@@ -310,13 +313,13 @@
   function renderPortraitCard(ctx, summary, qrImage, preset) {
     drawHeader(ctx, summary, preset);
 
-    drawMetricCard(ctx, { x: 86, y: 286, width: 908, height: 176, title: label(summary, "预计每月成本", "Estimated monthly cost"), value: `$${summary.monthlyCost.toFixed(2)}`, note: label(summary, "最适合直接转发的一行结果", "The one line most worth sharing"), large: true });
-    drawMetricCard(ctx, { x: 86, y: 500, width: 438, height: 156, title: label(summary, "当前模型", "Current model"), value: summary.modelName, note: summary.providerName });
-    drawMetricCard(ctx, { x: 556, y: 500, width: 438, height: 156, title: label(summary, "任务强度", "Task intensity"), value: summary.complexityLabel, note: `${summary.dailyTasks} ${label(summary, "次/天", "runs/day")}` });
+    drawMetricCard(ctx, { x: 86, y: 308, width: 908, height: 176, title: label(summary, "预计每月成本", "Estimated monthly cost"), value: `$${summary.monthlyCost.toFixed(2)}`, note: label(summary, "最适合直接转发的一行结果", "The one line most worth sharing"), large: true });
+    drawMetricCard(ctx, { x: 86, y: 530, width: 438, height: 156, title: label(summary, "当前模型", "Current model"), value: summary.modelName, note: summary.providerName });
+    drawMetricCard(ctx, { x: 556, y: 530, width: 438, height: 156, title: label(summary, "任务强度", "Task intensity"), value: summary.complexityLabel, note: `${summary.dailyTasks} ${label(summary, "次/天", "runs/day")}` });
 
-    drawSummaryPanel(ctx, summary, { x: 86, y: 692, width: 908, height: 208 });
-    drawBrandPanel(ctx, summary, 86, 1202, 292, 76);
-    drawQrPanel(ctx, summary, qrImage, { x: 786, y: 968, width: 208, height: 236, qrBox: 128 });
+    drawSummaryPanel(ctx, summary, { x: 86, y: 726, width: 908, height: 198 });
+    drawBrandPanel(ctx, summary, 86, 1212, 292, 76);
+    drawQrPanel(ctx, summary, qrImage, { x: 786, y: 992, width: 208, height: 224, qrBox: 124 });
     drawWatermark(ctx, preset.width, preset.height);
   }
 

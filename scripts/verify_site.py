@@ -65,6 +65,7 @@ HTML_CHECKS = {
         'meta name="openclaw-site-url"',
         'meta name="openclaw-ga-id"',
         'meta name="description"',
+        'meta name="robots" content="noindex,follow"',
         'meta property="og:title"',
         'meta name="twitter:card"',
         '<script src="/js/seo.js"></script>',
@@ -117,17 +118,19 @@ def main() -> int:
 
     sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8") if (ROOT / "sitemap.xml").exists() else ""
     for expected in (
-        "/index.html",
+        "https://openclaw-resource-hub.vercel.app/",
         "/pages/quickstart.html",
         "/pages/command-center.html",
         "/pages/troubleshooting.html",
         "/pages/task-library.html",
         "/pages/cost-calculator.html",
-        "/pages/tutorials.html",
         "/pages/release-notes.html",
     ):
         if expected not in sitemap:
             failures.append(f"sitemap.xml: missing {expected}")
+
+    if "/pages/tutorials.html" in sitemap:
+        failures.append("sitemap.xml: tutorials should stay out while hidden")
 
     if failures:
         print("FAIL")
