@@ -295,6 +295,36 @@
     ctx.restore();
   }
 
+  function drawQrPanelAligned(ctx, summary, qrImage, panel) {
+    const isEn = summary.lang === "en";
+    fillRoundedRect(ctx, panel.x, panel.y, panel.width, panel.height, 30, "rgba(9,13,28,0.82)");
+
+    const qrInset = 9;
+    const qrWrapX = panel.x + (panel.width - panel.qrBox) / 2;
+    const qrWrapY = panel.y + 16;
+    const titleY = qrWrapY + panel.qrBox + 26;
+    const desktopBottom = panel.y + panel.height - 22;
+
+    fillRoundedRect(ctx, qrWrapX, qrWrapY, panel.qrBox, panel.qrBox, 22, "#ffffff");
+    if (qrImage) {
+      const qrSize = panel.qrBox - qrInset * 2;
+      ctx.drawImage(qrImage, panel.x + (panel.width - qrSize) / 2, qrWrapY + qrInset, qrSize, qrSize);
+    }
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#f8fafc";
+    ctx.font = isEn ? "700 14px Arial" : "700 16px Arial";
+    ctx.fillText(label(summary, "鎵爜鐪嬪畬鏁存垚鏈〉", "Open full calculator"), panel.x + panel.width / 2, titleY);
+
+    ctx.fillStyle = "rgba(203,213,225,0.72)";
+    ctx.font = isEn ? "600 11px Arial" : "600 12px Arial";
+    const desktopLines = wrapLines(ctx, getDesktopUrl(), panel.width - 32, 2);
+    desktopLines.forEach((line, index) => {
+      ctx.fillText(line, panel.x + panel.width / 2, desktopBottom - (desktopLines.length - 1 - index) * 14);
+    });
+    ctx.textAlign = "start";
+  }
+
   function renderSquareCard(ctx, summary, qrImage, preset) {
     drawHeader(ctx, summary, preset);
 
@@ -305,7 +335,7 @@
     drawWorkloadSummaryCard(ctx, summary, { x: 628, y: 532, width: 474, height: 170 });
 
     drawSummaryPanel(ctx, summary, { x: 96, y: 760, width: 710, height: 214 });
-    drawQrPanel(ctx, summary, qrImage, { x: 846, y: 784, width: 212, height: 224, qrBox: 128 });
+    drawQrPanelAligned(ctx, summary, qrImage, { x: 846, y: 760, width: 212, height: 224, qrBox: 128 });
 
     drawWatermark(ctx, preset.width, preset.height);
   }
@@ -318,8 +348,8 @@
     drawMetricCard(ctx, { x: 556, y: 530, width: 438, height: 156, title: label(summary, "任务强度", "Task intensity"), value: summary.complexityLabel, note: `${summary.dailyTasks} ${label(summary, "次/天", "runs/day")}` });
 
     drawSummaryPanel(ctx, summary, { x: 86, y: 726, width: 908, height: 198 });
-    drawBrandPanel(ctx, summary, 86, 1212, 292, 76);
-    drawQrPanel(ctx, summary, qrImage, { x: 786, y: 992, width: 208, height: 224, qrBox: 124 });
+    drawBrandPanel(ctx, summary, 86, 1208, 292, 76);
+    drawQrPanelAligned(ctx, summary, qrImage, { x: 786, y: 972, width: 208, height: 224, qrBox: 124 });
     drawWatermark(ctx, preset.width, preset.height);
   }
 
